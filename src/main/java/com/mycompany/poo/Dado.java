@@ -18,5 +18,5 @@ public class Dado {
     public static int tirarDado() {
         return (int) (Math.random() * numCaras) + 1;
     }
-
+//prueba para ver si ya me deja
 }
