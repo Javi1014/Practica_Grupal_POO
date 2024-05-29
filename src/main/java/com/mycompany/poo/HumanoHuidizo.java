@@ -16,7 +16,7 @@ public class HumanoHuidizo extends Humano {
 
     
     @Override
-    public void reaccionar(Zombie zombie, Ataque ataque) {
+    public void reaccionar(Zombie zombie, Ataque ataque) {//ESTO HAY QUE QUITARLO PORQUE ES ATACAR O MOVERSE
         //SE VA HACIA LA CASILLA DE SALIDA
     }
 

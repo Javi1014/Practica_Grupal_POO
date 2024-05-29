@@ -5,16 +5,18 @@
 package com.mycompany.poo;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
  * @author nieto
  */
 public class Zombie implements Activable {
+
     private String nombre;
-    private String estado;
-    private final int maxAcciones=3;
-    private int numAcciones =0;
+    private String estado = "ACTIVO";
+    private final int maxAcciones = 3;
+    private int numAcciones = 0;
     private ArrayList<Comestible> elementosConsumidos = new ArrayList<>();
     private int numHeridas;
     private int hambre;
@@ -29,7 +31,6 @@ public class Zombie implements Activable {
         this.hambre = hambre;
         this.casilla = casilla;
     }
-
 
     public String getNombre() {
         return nombre;
@@ -110,12 +111,45 @@ public class Zombie implements Activable {
 
     @Override
     public void activarse() {
-        
+        if (estado.equals("ACTIVO")) {
+            while (numAcciones < maxAcciones) {
+                System.out.println("Ingrese la accion que desea hacer (Atacar(1)/Moverse(2)/Buscar Comida(3)/No Hacer Nada(4)");
+                Scanner ent = new Scanner(System.in);
+                int opcion =ent.nextInt();
+                switch(opcion){
+                    case 1:
+                        System.out.println("Ingrese la coordenada que desea atacar X:");
+                        int x=ent.nextInt();
+                        System.out.println("Y:");
+                        int y =ent.nextInt();
+                        Coordenada coordAtacar=new Coordenada(x,y);
+                        Casilla objetivo =new Casilla(coordAtacar);
+                        atacar(objetivo);
+                    case 2:
+                    case 3:
+                    case 4:
+                }
+            }
+            setNumAcciones(0);
+        }
     }
 
     @Override
     public void atacar(Casilla posicion) {
-        
+        Scanner ent = new Scanner(System.in);
+        System.out.println("Que ataque desea ejercer (Devorar(1)/AtaqueEspecial(2): ");
+        int opcion = ent.nextInt();
+        if (opcion == 1) {
+            devorar.realizarAtaque(this, this.getCasilla());
+        } else if (opcion == 2) {
+            int dx = this.getCoordenada().getX() - posicion.getCoordenada().getX();
+            int dy = this.getCoordenada().getY() - posicion.getCoordenada().getY();
+            if ((Math.abs(dx) + Math.abs(dy)) <= ataqueEspecial.getAlcance()) {
+                ataqueEspecial.realizarAtaque(this, posicion);
+            } else {
+                System.out.println("No se puede realizar un ataque a esta posicion");
+            }
+        }
     }
 
     @Override
@@ -124,13 +158,13 @@ public class Zombie implements Activable {
     }
 
     public void buscarComida() {
-       int aleatorio = (int) ((Math.random() * 10) + 1);
-       if (aleatorio <5){
-           //aparece conejo
-       }else if ((aleatorio<8)&&(aleatorio>5) ){
-           //aparece humano huidizo
-    } 
-       }
-            
+        int aleatorio = (int) ((Math.random() * 10) + 1);
+        if (aleatorio < 5) {
+            //aparece conejo
+        } else if ((aleatorio < 8) && (aleatorio > 5)) {
+            //aparece humano huidizo
+        }
+    }
+
 }
 //PARA EL ATAQUE HACER EQUIPO=ATAQUE, VIVERES=ATAQUE ESPECIAL Y DEVORAR ES LO MISMO QUE UN ATAQUE ESPECIAL EN CONCRETO.

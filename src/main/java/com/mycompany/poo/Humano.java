@@ -46,9 +46,7 @@ public abstract class Humano implements Comestible,Activable{
     public  void aparicion(){
         
     }
-    public void reaccionar(Zombie zombie,Ataque ataque){
-        
-    }
+    
 
         
     }

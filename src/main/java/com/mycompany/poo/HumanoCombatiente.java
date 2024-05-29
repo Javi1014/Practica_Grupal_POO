@@ -15,7 +15,7 @@ public abstract class HumanoCombatiente extends Humano {
     }
 
     @Override
-    public abstract void reaccionar(Zombie zombie, Ataque ataque);
+    public abstract void reaccionar(Zombie zombie, Ataque ataque);//ESTO HAY QUE QUITARLO PORQUE ES ATACAR O MOVERSE
     
     }
     

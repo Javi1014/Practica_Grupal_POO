@@ -16,7 +16,7 @@ public class Informatico extends HumanoCombatiente {
 
     
     @Override
-    public void reaccionar(Zombie zombie, Ataque ataque) {
+    public void reaccionar(Zombie zombie, Ataque ataque) {//ESTO HAY QUE QUITARLO PORQUE ES ATACAR O MOVERSE
         if(zombie.getCasilla().equals(this.getCasilla())){
             zombie.setNumHeridas(zombie.getNumHeridas()+2);
         }else if(1==1){

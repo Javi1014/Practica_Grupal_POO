@@ -4,6 +4,8 @@
 
 package com.mycompany.poo;
 
+import java.util.Scanner;
+
 /**
  *
  * @author delac
@@ -11,7 +13,10 @@ package com.mycompany.poo;
 public class POO {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-        System.out.println("Prueba de git de Dani");
+        Scanner ent= new Scanner(System.in);
+        System.out.println("Introduzca el numero de jugadores: ");
+        int numJug= ent.nextInt();
+        Juego juego = new Juego(numJug);
+        juego.incializarJuego();
     }
 }
