@@ -120,10 +120,9 @@ public class Zombie implements Activable {
 
     @Override
     public Coordenada getCoordenada() {
-        return ;
+        return casilla.getCoordenada();
     }
 
-    @Override
     public void buscarComida() {
        int aleatorio = (int) ((Math.random() * 10) + 1);
        if (aleatorio <5){

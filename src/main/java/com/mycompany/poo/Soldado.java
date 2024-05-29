@@ -11,15 +11,14 @@ package com.mycompany.poo;
 public class Soldado extends HumanoCombatiente {
 
     public Soldado(Casilla casilla) {
-        super(1,1,casilla);
+        super(1, 1, casilla);
     }
 
     @Override
-        public void reaccionar(Zombie zombie, Ataque ataque) {
-            if(zombie.getCasilla().equals(this.getCasilla())){
-                zombie.setNumHeridas(zombie.getNumHeridas()+1);
-            }
-        else{
+    public void reaccionar(Zombie zombie, Ataque ataque) {
+        if (zombie.getCasilla().equals(this.getCasilla())) {
+            zombie.setNumHeridas(zombie.getNumHeridas() + 1);
+        } else {
             //SE MUEVE HACIA EL ZOMBIE MAS CERCANO
         }
     }
@@ -28,12 +27,4 @@ public class Soldado extends HumanoCombatiente {
     public void calmarHambreZombie(Zombie zombie) {
         zombie.setHambre(0);
     }
-}
-    
-    
-
-    
-
-    
-    
 }

@@ -8,7 +8,7 @@ package com.mycompany.poo;
  *
  * @author delac
  */
-public abstract class Humano implements Comestible{
+public abstract class Humano implements Comestible,Activable{
     private int num_activaciones;
     private int aguante;
     private Casilla casilla;
