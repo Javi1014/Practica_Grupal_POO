@@ -123,8 +123,15 @@ public class Zombie implements Activable {
         return ;
     }
 
-    
-    
-    
+    @Override
+    public void buscarComida() {
+       int aleatorio = (int) ((Math.random() * 10) + 1);
+       if (aleatorio <5){
+           //aparece conejo
+       }else if ((aleatorio<8)&&(aleatorio>5) ){
+           //aparece humano huidizo
+    } 
+       }
+            
 }
 //PARA EL ATAQUE HACER EQUIPO=ATAQUE, VIVERES=ATAQUE ESPECIAL Y DEVORAR ES LO MISMO QUE UN ATAQUE ESPECIAL EN CONCRETO.

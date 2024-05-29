@@ -13,4 +13,5 @@ public interface Activable {
     public void activarse();
     public void atacar (Casilla posicion);
     public Coordenada getCoordenada();
+    public void buscarComida();
 }
