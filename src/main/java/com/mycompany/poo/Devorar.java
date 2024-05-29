@@ -68,6 +68,7 @@ public class Devorar extends Ataque {
                     if (comestible instanceof Humano humano) {
                         if (humano.getAguante() <= impactos) {
                             humano.calmarHambreZombie(zombie); // Devorar al humano
+                            //AQUI DEBERIAMOS METER EL SYSTEM.OUT.PRINTLN("TAL HUMANO HA MUERTO O HA SIDO DEVORADO POR TAL ZOMBIE")
                             humanosEnCasilla.remove(humano);
                             objetivo.setNumHumano(humanosEnCasilla); // Eliminar el humano de la casilla
                             ArrayList<Comestible> elementosConsumidos = zombie.getElementosConsumidos();
@@ -77,6 +78,7 @@ public class Devorar extends Ataque {
                         }
                     } else if (comestible instanceof Conejo conejo) {
                         conejo.calmarHambreZombie(zombie); // Devorar al conejo y calmar el hambre del zombie
+                        //AQUI DEBERIAMOS METER EL SYSTEM.OUT.PRINTLN("TAL HUMANO HA MUERTO O HA SIDO DEVORADO POR TAL ZOMBIE")
                         conejosEnCasilla.remove(conejo);
                         objetivo.setNumConejos(conejosEnCasilla); // Eliminar el conejo de la casilla
                         ArrayList<Comestible> elementosConsumidos = zombie.getElementosConsumidos();
