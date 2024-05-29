@@ -16,8 +16,13 @@ public class HumanoHuidizo extends Humano {
 
     
     @Override
-    public void reaccionar(Zombie zombie, Object ataque) {
+    public void reaccionar(Zombie zombie, Ataque ataque) {
         //SE VA HACIA LA CASILLA DE SALIDA
+    }
+
+    @Override
+    public void calmarHambreZombie(Zombie zombie) {
+        zombie.setHambre(0);
     }
     
 }

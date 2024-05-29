@@ -16,16 +16,27 @@ public class Informatico extends HumanoCombatiente {
 
     
     @Override
-    public void reaccionar(Zombie zombie, Object ataque) {
+    public void reaccionar(Zombie zombie, Ataque ataque) {
         if(zombie.getCasilla().equals(this.getCasilla())){
             zombie.setNumHeridas(zombie.getNumHeridas()+2);
-        }
-        else if(){
+        }else if(1==1){
             //ATACA A UN ZOMBIE QUE ESTE A UNA DISTACIA MAXIMA DE 1 CASILLA 
         }
         else{
             //SE MUEVE DOS CASILLAS HASTA EL ZOMBIE MAS CERCANO
-        }
-    }
-    
+        }  
 }
+
+    @Override
+    public void calmarHambreZombie(Zombie zombie) {
+        if(zombie.getHambre()>=4){
+            zombie.setHambre(zombie.getHambre()-2);
+        
+            //el informatico podia dañar si se lo comen
+            if (((Math.random() * 2) + 1)==1){
+                zombie.setNumHeridas(zombie.getNumHeridas()+1);
+        }
+        }
+        
+    }
+    }

@@ -23,6 +23,11 @@ public class Soldado extends HumanoCombatiente {
             //SE MUEVE HACIA EL ZOMBIE MAS CERCANO
         }
     }
+
+    @Override
+    public void calmarHambreZombie(Zombie zombie) {
+        zombie.setHambre(0);
+    }
 }
     
     

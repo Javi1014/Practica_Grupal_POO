@@ -103,6 +103,26 @@ public class Zombie implements Activable {
         this.casilla = casilla;
     }
 
+    @Override
+    public void moverse(Casilla posicion) {
+        
+    }
+
+    @Override
+    public void activarse() {
+        
+    }
+
+    @Override
+    public void atacar(Casilla posicion) {
+        
+    }
+
+    @Override
+    public Coordenada getCoordenada() {
+        return ;
+    }
+
     
     
     

@@ -9,8 +9,8 @@ package com.mycompany.poo;
  * @author nieto
  */
 public interface Activable {
-    public void moverse(Coordenada posicion);
+    public void moverse(Casilla posicion);
     public void activarse();
-    public void atacar (Coordenada posicion);
+    public void atacar (Casilla posicion);
     public Coordenada getCoordenada();
 }

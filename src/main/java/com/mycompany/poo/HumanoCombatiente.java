@@ -17,4 +17,6 @@ public abstract class HumanoCombatiente extends Humano {
     @Override
     public abstract void reaccionar(Zombie zombie, Ataque ataque);
     
-}
+    }
+    
+
