@@ -10,5 +10,5 @@ package com.mycompany.poo;
  */
 public interface Comestible {
    
-    public void calmarHambreZombi(Zombie zombie);
+    public void calmarHambreZombie(Zombie zombie);
 }

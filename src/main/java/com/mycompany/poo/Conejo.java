@@ -45,7 +45,7 @@ public class Conejo implements Comestible {
     
      
     @Override
-    public void calmarHambreZombi(Zombie zombie){
+    public void calmarHambreZombie(Zombie zombie){
         if(zombie.getHambre()>0){
             zombie.setHambre(zombie.getHambre()-1);
         }

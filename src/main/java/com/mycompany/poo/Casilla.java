@@ -29,7 +29,29 @@ public class Casilla {
     public void setCoordenada(Coordenada coordenada) {
         this.coordenada = coordenada;
     }
+    
+    public ArrayList<Zombie> getNumZombie() {
+        return numZombie;
+    }
 
-    //FALTARIA AÑADIR SI ESO SETYGET DE ZOMBIES Y SUPERVIVIENTES CND LOS TENGAMOS HECHOS
+    public void setNumZombie(ArrayList<Zombie> numZombie) {
+        this.numZombie = numZombie;
+    }
+
+    public ArrayList<Humano> getNumHumano() {
+        return numHumano;
+    }
+
+    public void setNumHumano(ArrayList<Humano> numHumano) {
+        this.numHumano = numHumano;
+    }
+
+    public ArrayList<Conejo> getNumConejos() {
+        return numConejos;
+    }
+
+    public void setNumConejos(ArrayList<Conejo> numConejos) {
+        this.numConejos = numConejos;
+    }
 
 }
