@@ -20,6 +20,91 @@ public class Zombie implements Activable {
     private int hambre;
     private Ataque devorar;
     private Ataque ataqueEspecial;
-    private Coordenada coordenada;
+    private Casilla casilla;
+
+    public Zombie(String nombre, String estado, int numHeridas, int hambre, Casilla casilla) {
+        this.nombre = nombre;
+        this.estado = estado;
+        this.numHeridas = numHeridas;
+        this.hambre = hambre;
+        this.casilla = casilla;
+    }
+
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public int getNumAcciones() {
+        return numAcciones;
+    }
+
+    public void setNumAcciones(int numAcciones) {
+        this.numAcciones = numAcciones;
+    }
+
+    public ArrayList<Comestible> getElementosConsumidos() {
+        return elementosConsumidos;
+    }
+
+    public void setElementosConsumidos(ArrayList<Comestible> elementosConsumidos) {
+        this.elementosConsumidos = elementosConsumidos;
+    }
+
+    public int getNumHeridas() {
+        return numHeridas;
+    }
+
+    public void setNumHeridas(int numHeridas) {
+        this.numHeridas = numHeridas;
+    }
+
+    public int getHambre() {
+        return hambre;
+    }
+
+    public void setHambre(int hambre) {
+        this.hambre = hambre;
+    }
+
+    public Ataque getDevorar() {
+        return devorar;
+    }
+
+    public void setDevorar(Ataque devorar) {
+        this.devorar = devorar;
+    }
+
+    public Ataque getAtaqueEspecial() {
+        return ataqueEspecial;
+    }
+
+    public void setAtaqueEspecial(Ataque ataqueEspecial) {
+        this.ataqueEspecial = ataqueEspecial;
+    }
+
+    public Casilla getCasilla() {
+        return casilla;
+    }
+
+    public void setCasilla(Casilla casilla) {
+        this.casilla = casilla;
+    }
+
+    
+    
+    
 }
 //PARA EL ATAQUE HACER EQUIPO=ATAQUE, VIVERES=ATAQUE ESPECIAL Y DEVORAR ES LO MISMO QUE UN ATAQUE ESPECIAL EN CONCRETO.
