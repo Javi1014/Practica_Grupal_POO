@@ -24,8 +24,33 @@ public class Devorar extends Ataque {
 
         // Obtener todos los objetivos (conejos y humanos) en la casilla
         ArrayList<Comestible> comestiblesEnCasilla = new ArrayList<>();
+        // Agregar los ingenieros informáticos
+        for (Humano humano : humanosEnCasilla) {
+            if (humano instanceof Informatico) {
+                comestiblesEnCasilla.add(humano);
+            }
+        }
+        for (Humano humano : humanosEnCasilla) {
+            if (humano instanceof Soldado) {
+                comestiblesEnCasilla.add(humano);
+            }
+        }
+        for (Humano humano : humanosEnCasilla) {
+            if (humano instanceof Blindado) {
+                comestiblesEnCasilla.add(humano);
+            }
+        }
+        for (Humano humano : humanosEnCasilla) {
+            if (humano instanceof Especialista) {
+                comestiblesEnCasilla.add(humano);
+            }
+        }
         comestiblesEnCasilla.addAll(conejosEnCasilla);
-        comestiblesEnCasilla.addAll(humanosEnCasilla);
+        for (Humano humano : humanosEnCasilla) {
+            if (humano instanceof HumanoHuidizo) {
+                comestiblesEnCasilla.add(humano);
+            }
+        }
 
         // Realizar el ataque
         if (!comestiblesEnCasilla.isEmpty()) {
@@ -39,15 +64,8 @@ public class Devorar extends Ataque {
             }
             for (Comestible comestible : comestiblesEnCasilla) {
                 if (impactos > 0) {
-                    if (comestible instanceof Conejo conejo) {
-                        conejo.calmarHambreZombie(zombie); // Devorar al conejo y calmar el hambre del zombie
-                        conejosEnCasilla.remove(conejo);
-                        objetivo.setNumConejos(conejosEnCasilla); // Eliminar el conejo de la casilla
-                        ArrayList<Comestible> elementosConsumidos = zombie.getElementosConsumidos();
-                        elementosConsumidos.add(conejo);
-                        zombie.setElementosConsumidos(elementosConsumidos);
-                        break; // Salir del bucle después de devorar un objetivo
-                    } else if (comestible instanceof Humano humano) {
+
+                    if (comestible instanceof Humano humano) {
                         if (humano.getAguante() <= impactos) {
                             humano.calmarHambreZombie(zombie); // Devorar al humano
                             humanosEnCasilla.remove(humano);
@@ -57,12 +75,20 @@ public class Devorar extends Ataque {
                             zombie.setElementosConsumidos(elementosConsumidos);
                             break; // Salir del bucle después de devorar un objetivo
                         }
-
+                    } else if (comestible instanceof Conejo conejo) {
+                        conejo.calmarHambreZombie(zombie); // Devorar al conejo y calmar el hambre del zombie
+                        conejosEnCasilla.remove(conejo);
+                        objetivo.setNumConejos(conejosEnCasilla); // Eliminar el conejo de la casilla
+                        ArrayList<Comestible> elementosConsumidos = zombie.getElementosConsumidos();
+                        elementosConsumidos.add(conejo);
+                        zombie.setElementosConsumidos(elementosConsumidos);
+                        break; // Salir del bucle después de devorar un objetivo
                     }
                 } else {
                     break; // Salir del bucle si no quedan impactos disponibles
                 }
             }
+
         }
 
     }
