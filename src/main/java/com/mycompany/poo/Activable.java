@@ -9,7 +9,7 @@ package com.mycompany.poo;
  * @author nieto
  */
 public interface Activable {
-    public void moverse(Tablero tablero ,Coordenada posicion);
+    public void moverse(Coordenada posicion);  
     public void activarse();
     public void atacar (Casilla posicion);
     public Coordenada getCoordenada();

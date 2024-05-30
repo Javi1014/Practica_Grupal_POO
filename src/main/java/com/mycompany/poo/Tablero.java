@@ -4,6 +4,8 @@
  */
 package com.mycompany.poo;
 
+import static java.lang.Math.abs;
+
 /**
  *
  * @author ramir
@@ -13,6 +15,7 @@ public class Tablero {
     private Casilla[][] casillas;
     private int filas;
     private int columnas;
+
 
     //Implementar todo lo relacionado con juego
     public Tablero(Integer numJug) {
@@ -83,5 +86,16 @@ public class Tablero {
     public void setColumnas(int columnas) {
         this.columnas = columnas;
     }
-
+    
+    public int calcularDistancia(Casilla c1, Casilla c2){
+        int disttotal = 0;
+        if (!(c1.getCoordenada().getX()==c2.getCoordenada().getX())){
+            disttotal = disttotal+abs(c1.getCoordenada().getX()-c2.getCoordenada().getX());
+        }
+        if (!(c1.getCoordenada().getY()==c2.getCoordenada().getY())){
+            disttotal = disttotal+abs(c1.getCoordenada().getY()-c2.getCoordenada().getY());
+        }
+        
+       return disttotal; 
+    }
 }

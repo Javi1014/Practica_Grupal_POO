@@ -31,6 +31,15 @@ public class HumanoHuidizo extends Humano {
 
     @Override
     public void activarse() {
+        Coordenada casSalida(tablero.getFilas(),tablero.getColumnas()); 
+        //
+        if(this.getCoordenada()==casSalida){
+            //sale del juego
+        }else if(!(this.getCoordenada().getX()==casSalida.getX())){
+            this.moverse(tablero, this.getCoordenada().setX(this.getCoordenada().getX()+1));
+        }else{
+            this.moverse( this.getCoordenada().sety(this.getCoordenada().getY()+1));
+        }
     }
 
     @Override

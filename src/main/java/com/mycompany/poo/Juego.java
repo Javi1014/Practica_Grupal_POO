@@ -4,6 +4,8 @@
  */
 package com.mycompany.poo;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author nieto
@@ -11,6 +13,7 @@ package com.mycompany.poo;
 public class Juego {
     private int numJug;
     private Tablero tablero;
+    private ArrayList<Zombie> listaZombies = new ArrayList<>();
     public Juego(int numJug){
         this.numJug=numJug;
         this.tablero= new Tablero(numJug);
@@ -23,6 +26,11 @@ public class Juego {
     public void setNumJug(int numJug) {
         this.numJug = numJug;
     }
+
+    public ArrayList<Zombie> getListaZombies() {
+        return listaZombies;
+    }
+    
     public void iniciarJuego(){
         
     }

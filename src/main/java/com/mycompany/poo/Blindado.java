@@ -24,7 +24,20 @@ public class Blindado extends HumanoCombatiente {
             //SE MUEVE HACIA EL ZOMBIE MAS CERCANO
         }
     }
-
+    
+    public void moverse(){
+        
+        
+    }
+    //se activa cuando es su turno y hace lo que le toque
+    @Override
+    public void activarse(){
+        if(this.getCasilla().getNumZombie().isEmpty()){
+            this.moverse(tablero, posicion);
+        }else{
+            this.atacar(this.getCasilla());
+        }
+}
    
 
     @Override

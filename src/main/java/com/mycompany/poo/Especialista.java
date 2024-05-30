@@ -25,6 +25,7 @@ public class Especialista extends HumanoCombatiente {
         }
     }
      */
+    
 
     public void calmarHambreZombie(Zombie zombie) {
         zombie.setHambre(0);

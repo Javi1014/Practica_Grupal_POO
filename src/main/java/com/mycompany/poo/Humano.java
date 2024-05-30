@@ -47,5 +47,8 @@ public abstract class Humano implements Comestible, Activable {
     public void aparicion() {
 
     }
-
+    
+  public void zombieMasCercano(){
+      
+  }
 }
