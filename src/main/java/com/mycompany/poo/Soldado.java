@@ -13,7 +13,8 @@ public class Soldado extends HumanoCombatiente {
     public Soldado(Casilla casilla) {
         super(1, 1, casilla);
     }
-
+    
+    /* 
     @Override
     public void reaccionar(Zombie zombie, Ataque ataque) {//ESTO HAY QUE QUITARLO PORQUE ES ATACAR O MOVERSE
         if (zombie.getCasilla().equals(this.getCasilla())) {
@@ -22,6 +23,7 @@ public class Soldado extends HumanoCombatiente {
             //SE MUEVE HACIA EL ZOMBIE MAS CERCANO
         }
     }
+    */
 
     @Override
     public void calmarHambreZombie(Zombie zombie) {

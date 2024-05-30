@@ -9,66 +9,64 @@ package com.mycompany.poo;
  * @author ramir
  */
 public class Tablero {
+
     private Casilla[][] casillas;
     private int filas;
     private int columnas;
 
-        //Implementar todo lo relacionado con juego
-        public Tablero(Integer numJug){
-            switch(numJug){
-                case 1: casillas= new Casilla[7][7];
-                        filas=7;
-                        columnas=7;
-                        for(int i=0;i<filas;i++){
-                            for(int j=0;j<columnas;j++){
-                                Coordenada cor=new Coordenada(i,j);
-                                casillas[i][j]= new Casilla(cor);
-                            }
-                        }
-                        break;
-                case 2: casillas = new Casilla[8][8];
-                        filas=8;
-                        columnas=8;
-                        for(int i=0;i<filas;i++){
-                            for(int j=0;j<columnas;j++){
-                                Coordenada cor=new Coordenada(i,j);
-                                casillas[i][j]= new Casilla(cor);
-                            }
-                        }
-                        break;
-                case 3: casillas = new Casilla [9][9];
-                        filas=9;
-                        columnas=9;
-                        for(int i=0;i<filas;i++){
-                            for(int j=0;j<columnas;j++){
-                                Coordenada cor=new Coordenada(i,j);
-                                casillas[i][j]= new Casilla(cor);
-                            }
-                        }
-                        break;
-                case 4: casillas=new Casilla [10][10];
-                        filas=10;
-                        columnas=10;
-                        for(int i=0;i<filas;i++){
-                            for(int j=0;j<columnas;j++){
-                                Coordenada cor=new Coordenada(i,j);
-                                casillas[i][j]= new Casilla(cor);
-                            }
-                        }
-                        break;
-            }
-        }
-        public Casilla getCasilla(Coordenada coordenada){
-            Casilla encontrada=null;
-            for (int i = 0; i < casillas.length; i++) {
-                for (int j = 0; j < casillas[i].length; j++) {
-                    if (casillas[i][j].getCoordenada().equals(coordenada)) {
-                        encontrada = casillas[i][j];
+    //Implementar todo lo relacionado con juego
+    public Tablero(Integer numJug) {
+        switch (numJug) {
+            case 1:
+                casillas = new Casilla[7][7];
+                filas = 7;
+                columnas = 7;
+                for (int i = 0; i < filas; i++) {
+                    for (int j = 0; j < columnas; j++) {
+                        Coordenada cor = new Coordenada(i, j);
+                        casillas[i][j] = new Casilla(cor);
                     }
                 }
-            }
-        return encontrada;
+                break;
+            case 2:
+                casillas = new Casilla[8][8];
+                filas = 8;
+                columnas = 8;
+                for (int i = 0; i < filas; i++) {
+                    for (int j = 0; j < columnas; j++) {
+                        Coordenada cor = new Coordenada(i, j);
+                        casillas[i][j] = new Casilla(cor);
+                    }
+                }
+                break;
+            case 3:
+                casillas = new Casilla[9][9];
+                filas = 9;
+                columnas = 9;
+                for (int i = 0; i < filas; i++) {
+                    for (int j = 0; j < columnas; j++) {
+                        Coordenada cor = new Coordenada(i, j);
+                        casillas[i][j] = new Casilla(cor);
+                    }
+                }
+                break;
+            case 4:
+                casillas = new Casilla[10][10];
+                filas = 10;
+                columnas = 10;
+                for (int i = 0; i < filas; i++) {
+                    for (int j = 0; j < columnas; j++) {
+                        Coordenada cor = new Coordenada(i, j);
+                        casillas[i][j] = new Casilla(cor);
+                    }
+                }
+                break;
         }
+    }
+
+    public Casilla getCasilla(Coordenada coordenada) {
+        return casillas[coordenada.getX()][coordenada.getY()];
+    }
 
     public int getFilas() {
         return filas;
@@ -85,6 +83,5 @@ public class Tablero {
     public void setColumnas(int columnas) {
         this.columnas = columnas;
     }
-        
-        
+
 }

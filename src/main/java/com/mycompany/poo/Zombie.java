@@ -5,6 +5,7 @@
 package com.mycompany.poo;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -105,7 +106,7 @@ public class Zombie implements Activable {
     }
 
     @Override
-    public void moverse(Casilla posicion) {
+    public void moverse(Tablero tablero,Coordenada posicion) {
         
     }
 
@@ -115,15 +116,15 @@ public class Zombie implements Activable {
             while (numAcciones < maxAcciones) {
                 System.out.println("Ingrese la accion que desea hacer (Atacar(1)/Moverse(2)/Buscar Comida(3)/No Hacer Nada(4)");
                 Scanner ent = new Scanner(System.in);
-                int opcion =ent.nextInt();
-                switch(opcion){
+                int opcion = ent.nextInt();
+                switch (opcion) {
                     case 1:
                         System.out.println("Ingrese la coordenada que desea atacar X:");
-                        int x=ent.nextInt();
+                        int x = ent.nextInt();
                         System.out.println("Y:");
-                        int y =ent.nextInt();
-                        Coordenada coordAtacar=new Coordenada(x,y);
-                        Casilla objetivo =new Casilla(coordAtacar);
+                        int y = ent.nextInt();
+                        Coordenada coordAtacar = new Coordenada(x, y);
+                        Casilla objetivo = new Casilla(coordAtacar);
                         atacar(objetivo);
                     case 2:
                     case 3:
@@ -157,12 +158,45 @@ public class Zombie implements Activable {
         return casilla.getCoordenada();
     }
 
-    public void buscarComida() {
-        int aleatorio = (int) ((Math.random() * 10) + 1);
-        if (aleatorio < 5) {
-            //aparece conejo
-        } else if ((aleatorio < 8) && (aleatorio > 5)) {
-            //aparece humano huidizo
+    public void buscarComida(Tablero tablero) {
+        Random random = new Random();
+        int resultado = random.nextInt(100); // Genera un número entre 0 y 99
+
+        if (resultado < 30) {
+            // 30% de probabilidad de aparecer un humano huidizo
+
+            //GENERAMOS UNA COORDENADA ALEATORIA DONDE NO HAYA MAS DE 3 HUMANOS EN ESA CASILLA
+            Random random1 = new Random();
+            int x, y;
+            Coordenada coord = null;
+            do {
+                x = random1.nextInt(tablero.getColumnas()); // Genera un número entre 0 y el ancho del tablero(columnas)
+                y = random1.nextInt(tablero.getFilas()); // Genera un número entre 0 y (alto-1)
+                coord = new Coordenada(x, y);
+            } while (tablero.getCasilla(coord).getNumHumano().size() > 3);
+            Casilla casillaHumano = new Casilla(coord);
+            //CONSTRUCTOR DE HUMANO HUIDIZO
+            HumanoHuidizo humano1 = new HumanoHuidizo(casillaHumano);
+            //AGREGAMOS EL HUMANO HUIDIZO A ESA CASILLA
+            ArrayList<Humano> humanosEnCasilla = tablero.getCasilla(humano1.getCoordenada()).getNumHumano();
+            humanosEnCasilla.add(humano1);
+            tablero.getCasilla(humano1.getCoordenada()).setNumHumano(humanosEnCasilla);
+            System.out.println("Ha aparecido un Humano Huidizo en la coordenada " + humano1.getCoordenada().toString());
+        } else if (resultado < 80) {
+            // 50% de probabilidad de aparecer un conejo (30+50=80)
+            Random random1 = new Random();
+            int x = random1.nextInt(tablero.getColumnas());
+            int y = random1.nextInt(tablero.getFilas());
+            Coordenada coord = new Coordenada(x, y);
+            Casilla casillaConejo = new Casilla(coord);
+            Conejo nuevoConejo = new Conejo("ConejoPrueba", 1, casillaConejo);
+            ArrayList<Conejo> conejosEnCasilla = tablero.getCasilla(nuevoConejo.getCasilla().getCoordenada()).getNumConejos();
+            conejosEnCasilla.add(nuevoConejo);
+            tablero.getCasilla(nuevoConejo.getCasilla().getCoordenada()).setNumConejos(conejosEnCasilla);
+            System.out.println("Ha aparecido un Conejo en la coordenada " + nuevoConejo.getCasilla().getCoordenada().toString());
+        } else {
+            // 20% de probabilidad de no aparecer nada
+            System.out.println("No ha aparecido ningún comestible.");
         }
     }
 

@@ -13,6 +13,8 @@ public class Especialista extends HumanoCombatiente {
     public Especialista(Casilla casilla) {
         super(2, 1, casilla);
     }
+
+    /* 
     @Override
     public void reaccionar(Zombie zombie, Ataque ataque) {//ESTO HAY QUE QUITARLO PORQUE ES ATACAR O MOVERSE
         if(zombie.getCasilla().equals(this.getCasilla())){
@@ -22,10 +24,10 @@ public class Especialista extends HumanoCombatiente {
             //SE MUEVE HACIA EL ZOMBIE MAS CERCANO 
         }
     }
+     */
 
     public void calmarHambreZombie(Zombie zombie) {
         zombie.setHambre(0);
     }
-    
-    
+
 }

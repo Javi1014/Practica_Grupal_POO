@@ -14,7 +14,7 @@ public class Informatico extends HumanoCombatiente {
         super(1, 3, casilla);
     }
 
-    
+    /* 
     @Override
     public void reaccionar(Zombie zombie, Ataque ataque) {//ESTO HAY QUE QUITARLO PORQUE ES ATACAR O MOVERSE
         if(zombie.getCasilla().equals(this.getCasilla())){
@@ -26,17 +26,17 @@ public class Informatico extends HumanoCombatiente {
             //SE MUEVE DOS CASILLAS HASTA EL ZOMBIE MAS CERCANO
         }  
 }
-
+     */
     @Override
     public void calmarHambreZombie(Zombie zombie) {
-        if(zombie.getHambre()>=4){
-            zombie.setHambre(zombie.getHambre()-2);
-        
+        if (zombie.getHambre() >= 4) {
+            zombie.setHambre(zombie.getHambre() - 2);
+
             //el informatico podia dañar si se lo comen
-            if (((Math.random() * 2) + 1)==1){
-                zombie.setNumHeridas(zombie.getNumHeridas()+1);
+            if (((Math.random() * 2) + 1) == 1) {
+                zombie.setNumHeridas(zombie.getNumHeridas() + 1);
+            }
         }
-        }
-        
+
     }
-    }
+}

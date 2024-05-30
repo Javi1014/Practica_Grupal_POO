@@ -9,14 +9,15 @@ package com.mycompany.poo;
  * @author delac
  */
 public abstract class HumanoCombatiente extends Humano {
-    
+
     public HumanoCombatiente(int num_activaciones, int aguante, Casilla casilla) {
         super(num_activaciones, aguante, casilla);
     }
 
+    /* 
     @Override
     public abstract void reaccionar(Zombie zombie, Ataque ataque);//ESTO HAY QUE QUITARLO PORQUE ES ATACAR O MOVERSE
     
     }
-    
-
+     */
+}

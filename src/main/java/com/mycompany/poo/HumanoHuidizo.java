@@ -14,15 +14,32 @@ public class HumanoHuidizo extends Humano {
         super(1, 1, casilla);
     }
 
-    
+    /* 
     @Override
     public void reaccionar(Zombie zombie, Ataque ataque) {//ESTO HAY QUE QUITARLO PORQUE ES ATACAR O MOVERSE
         //SE VA HACIA LA CASILLA DE SALIDA
     }
-
+     */
     @Override
     public void calmarHambreZombie(Zombie zombie) {
         zombie.setHambre(0);
     }
-    
+
+    @Override
+    public void moverse(Tablero tablero,Coordenada posicion) {
+    }
+
+    @Override
+    public void activarse() {
+    }
+
+    @Override
+    public void atacar(Casilla posicion) {
+    }
+
+    @Override
+    public Coordenada getCoordenada() {
+        return this.getCasilla().getCoordenada();
+    }
+
 }
