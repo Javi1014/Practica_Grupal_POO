@@ -13,15 +13,18 @@ public abstract class HumanoCombatiente extends Humano {
     public HumanoCombatiente(int num_activaciones, int aguante, Casilla casilla) {
         super(num_activaciones, aguante, casilla);
     }
-    public void zombieMasCercano(){
+    
+    public Coordenada zombieMasCercano(){
         Coordenada coormascerca;
         int distancia = 300;
+        
         for(int i=1,i<juego.getNumJug(),i++){
-            tablero.calcularDistancia(this.getCasilla(),juego.getListaZombies(i));
-            if( (tablero.calcularDistancia(this.getCasilla(),juego.getListaZombies(i)) < distancia)){
-                
+            if( (tablero.calcularDistancia(this.getCasilla(),juego.getListaJugadores(i)) < distancia)){
+                coormascerca.setX(juego.getListaJugadores(i).getCasilla.getX());
+                coormascerca.setY(juego.getListaJugadores(i).getCasilla.getY());
             }
         }
+        return coormascerca;
     }
     /* 
     @Override

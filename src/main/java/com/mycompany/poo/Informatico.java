@@ -39,4 +39,22 @@ public class Informatico extends HumanoCombatiente {
         }
 
     }
+    
+    public void moverse(){
+        Coordenada objetivo;
+        objetivo = this.zombieMasCercano();
+        if(!(this.getCasilla().getCoordenada().getX() == objetivo.getX())){
+            if(this.getCasilla().getCoordenada().getX() < objetivo.getX()){
+                this.getCasilla().getCoordenada().setX(this.getCasilla().getCoordenada().getX()+1);
+            }else{
+                this.getCasilla().getCoordenada().setX(this.getCasilla().getCoordenada().getX()-1);
+            }
+        }else{
+            if(this.getCasilla().getCoordenada().getY() < objetivo.getY()){
+                this.getCasilla().getCoordenada().setY(this.getCasilla().getCoordenada().getY()+1);
+            }else{
+                this.getCasilla().getCoordenada().setY(this.getCasilla().getCoordenada().getY()-1);
+            }
+        }
+}
 }

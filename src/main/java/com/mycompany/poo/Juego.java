@@ -13,7 +13,8 @@ import java.util.ArrayList;
 public class Juego {
     private int numJug;
     private Tablero tablero;
-    private ArrayList<Zombie> listaZombies = new ArrayList<>();
+    private ArrayList<Zombie> listaJugadores = new ArrayList<>();
+    private ArrayList<Humano> listaHumanos = new ArrayList<>();
     public Juego(int numJug){
         this.numJug=numJug;
         this.tablero= new Tablero(numJug);
@@ -27,9 +28,14 @@ public class Juego {
         this.numJug = numJug;
     }
 
-    public ArrayList<Zombie> getListaZombies() {
-        return listaZombies;
+    public ArrayList<Zombie> getListaJugadores() {
+        return listaJugadores;
     }
+
+    public ArrayList<Humano> getListaHumanos() {
+        return listaHumanos;
+    }
+    
     
     public void iniciarJuego(){
         
