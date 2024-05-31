@@ -5,6 +5,7 @@
 package com.mycompany.poo;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -15,6 +16,7 @@ public class Juego {
     private Tablero tablero;
     private ArrayList<Zombie> listaJugadores = new ArrayList<>();
     private ArrayList<Humano> listaHumanos = new ArrayList<>();
+    
     public Juego(int numJug){
         this.numJug=numJug;
         this.tablero= new Tablero(numJug);
@@ -38,6 +40,19 @@ public class Juego {
     
     
     public void iniciarJuego(){
-        
+        Tablero tabla=new Tablero(this.numJug);
+        Coordenada inicio=new Coordenada(0,0);
+        Casilla comienzo=new Casilla(inicio);
+        for(int i=1;i<=this.numJug;i++){
+            Scanner ent = new Scanner(System.in);
+            System.out.println("Nombre "+i);
+            String nombre=ent.nextLine();
+            Zombie zom=new Zombie(nombre, "VIVO",0,0,comienzo );
+            tabla.getCasilla(inicio).getNumZombie().add(zom);
+            tabla.getCasilla(inicio).setNumZombie(tabla.getCasilla(inicio).getNumZombie());
+        }
+        tabla.imprimirTablero();
     }
+        
 }
+

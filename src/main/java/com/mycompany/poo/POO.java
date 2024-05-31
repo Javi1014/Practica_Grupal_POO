@@ -17,6 +17,8 @@ public class POO {
         System.out.println("Introduzca el numero de jugadores: ");
         int numJug= ent.nextInt();
         Juego juego = new Juego(numJug);
-        juego.inciarJuego();
+        juego.iniciarJuego();
+        
+        
     }
 }

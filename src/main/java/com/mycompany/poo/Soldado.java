@@ -14,22 +14,7 @@ public class Soldado extends HumanoCombatiente {
         super(1, 1, casilla);
     }
     
-    /* 
     @Override
-    public void reaccionar(Zombie zombie, Ataque ataque) {//ESTO HAY QUE QUITARLO PORQUE ES ATACAR O MOVERSE
-        if (zombie.getCasilla().equals(this.getCasilla())) {
-            zombie.setNumHeridas(zombie.getNumHeridas() + 1);
-        } else {
-            //SE MUEVE HACIA EL ZOMBIE MAS CERCANO
-        }
-    }
-    */
-
-    @Override
-    public void calmarHambreZombie(Zombie zombie) {
-        zombie.setHambre(0);
-    }
-    
     public void moverse(){
         Coordenada objetivo;
         objetivo = this.zombieMasCercano();
@@ -46,5 +31,35 @@ public class Soldado extends HumanoCombatiente {
                 this.getCasilla().getCoordenada().setY(this.getCasilla().getCoordenada().getY()-1);
             }
         }
-}
+        
+    }
+    //se activa cuando es su turno y hace lo que le toque
+    @Override
+    public void activarse(){
+        if(this.getCasilla().getNumZombie().isEmpty()){
+            this.moverse();
+        }else{
+            this.atacar(this.getCasilla());
+        }
+    }
+
+
+
+    @Override
+    public void atacar(Casilla posicion){
+        this.getCasilla().getNumZombie().get(0).setNumHeridas(+1);
+    }
+
+    @Override
+    public Casilla getCasilla() {
+        Casilla nueva = new Casilla(this.getCasilla().getCoordenada());
+        return nueva;
+    }
+
+    @Override
+    public void calmarHambreZombie(Zombie zombie) {
+        zombie.setHambre(0);
+    }
+    
+    
 }

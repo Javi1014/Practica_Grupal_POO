@@ -14,19 +14,6 @@ public class Informatico extends HumanoCombatiente {
         super(1, 3, casilla);
     }
 
-    /* 
-    @Override
-    public void reaccionar(Zombie zombie, Ataque ataque) {//ESTO HAY QUE QUITARLO PORQUE ES ATACAR O MOVERSE
-        if(zombie.getCasilla().equals(this.getCasilla())){
-            zombie.setNumHeridas(zombie.getNumHeridas()+2);
-        }else if(1==1){
-            //ATACA A UN ZOMBIE QUE ESTE A UNA DISTACIA MAXIMA DE 1 CASILLA 
-        }
-        else{
-            //SE MUEVE DOS CASILLAS HASTA EL ZOMBIE MAS CERCANO
-        }  
-}
-     */
     @Override
     public void calmarHambreZombie(Zombie zombie) {
         if (zombie.getHambre() >= 4) {
@@ -40,6 +27,7 @@ public class Informatico extends HumanoCombatiente {
 
     }
     
+    @Override
     public void moverse(){
         Coordenada objetivo;
         objetivo = this.zombieMasCercano();
@@ -56,5 +44,37 @@ public class Informatico extends HumanoCombatiente {
                 this.getCasilla().getCoordenada().setY(this.getCasilla().getCoordenada().getY()-1);
             }
         }
-}
+    }
+    /*
+    @Override
+    public void activarse() {
+        Coordenada casSalida(tablero.getFilas(),tablero.getColumnas()); 
+        //
+        if(this.getCoordenada()==casSalida){
+            //sale del juego
+        }
+        else if(!(this.getCoordenada().getX()==casSalida.getX())){
+            this.moverse(tablero, this.getCoordenada().setX(this.getCoordenada().getX()+1));
+        }
+        else{
+            this.moverse( this.getCoordenada().sety(this.getCoordenada().getY()+1));
+        }
+    }
+    */
+
+    @Override
+    public void atacar(Casilla posicion){
+        this.getCasilla().getNumZombie().get(0).setNumHeridas(+1);
+    }
+
+    @Override
+    public Casilla getCasilla() {
+        Casilla nueva = new Casilla(this.getCasilla().getCoordenada());
+        return nueva;
+    }
+
+    @Override
+    public void activarse() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

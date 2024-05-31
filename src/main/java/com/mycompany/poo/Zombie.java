@@ -106,7 +106,7 @@ public class Zombie implements Activable {
     }
 
     @Override
-    public void moverse(Tablero tablero,Coordenada posicion) {
+    public void moverse() {
         
     }
 
@@ -143,8 +143,8 @@ public class Zombie implements Activable {
         if (opcion == 1) {
             devorar.realizarAtaque(this, this.getCasilla());
         } else if (opcion == 2) {
-            int dx = this.getCoordenada().getX() - posicion.getCoordenada().getX();
-            int dy = this.getCoordenada().getY() - posicion.getCoordenada().getY();
+            int dx = this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX();
+            int dy = this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY();
             if ((Math.abs(dx) + Math.abs(dy)) <= ataqueEspecial.getAlcance()) {
                 ataqueEspecial.realizarAtaque(this, posicion);
             } else {
@@ -153,10 +153,7 @@ public class Zombie implements Activable {
         }
     }
 
-    @Override
-    public Coordenada getCoordenada() {
-        return casilla.getCoordenada();
-    }
+
 
     public void buscarComida(Tablero tablero) {
         Random random = new Random();
@@ -178,10 +175,10 @@ public class Zombie implements Activable {
             //CONSTRUCTOR DE HUMANO HUIDIZO
             HumanoHuidizo humano1 = new HumanoHuidizo(casillaHumano);
             //AGREGAMOS EL HUMANO HUIDIZO A ESA CASILLA
-            ArrayList<Humano> humanosEnCasilla = tablero.getCasilla(humano1.getCoordenada()).getNumHumano();
+            ArrayList<Humano> humanosEnCasilla = tablero.getCasilla(humano1.getCasilla().getCoordenada()).getNumHumano();
             humanosEnCasilla.add(humano1);
-            tablero.getCasilla(humano1.getCoordenada()).setNumHumano(humanosEnCasilla);
-            System.out.println("Ha aparecido un Humano Huidizo en la coordenada " + humano1.getCoordenada().toString());
+            tablero.getCasilla(humano1.getCasilla().getCoordenada()).setNumHumano(humanosEnCasilla);
+            System.out.println("Ha aparecido un Humano Huidizo en la coordenada " + humano1.getCasilla().getCoordenada().toString());
         } else if (resultado < 80) {
             // 50% de probabilidad de aparecer un conejo (30+50=80)
             Random random1 = new Random();
@@ -199,6 +196,7 @@ public class Zombie implements Activable {
             System.out.println("No ha aparecido ningún comestible.");
         }
     }
+
 
 }
 //PARA EL ATAQUE HACER EQUIPO=ATAQUE, VIVERES=ATAQUE ESPECIAL Y DEVORAR ES LO MISMO QUE UN ATAQUE ESPECIAL EN CONCRETO.

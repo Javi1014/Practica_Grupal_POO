@@ -16,54 +16,52 @@ public class Tablero {
     private int filas;
     private int columnas;
 
-
-    //Implementar todo lo relacionado con juego
     public Tablero(Integer numJug) {
         switch (numJug) {
             case 1:
-                casillas = new Casilla[7][7];
-                filas = 7;
-                columnas = 7;
-                for (int i = 0; i < filas; i++) {
-                    for (int j = 0; j < columnas; j++) {
-                        Coordenada cor = new Coordenada(i, j);
-                        casillas[i][j] = new Casilla(cor);
-                    }
-                }
+                inicializarTablero(7, 7);
                 break;
             case 2:
-                casillas = new Casilla[8][8];
-                filas = 8;
-                columnas = 8;
-                for (int i = 0; i < filas; i++) {
-                    for (int j = 0; j < columnas; j++) {
-                        Coordenada cor = new Coordenada(i, j);
-                        casillas[i][j] = new Casilla(cor);
-                    }
-                }
+                inicializarTablero(8, 8);
                 break;
             case 3:
-                casillas = new Casilla[9][9];
-                filas = 9;
-                columnas = 9;
-                for (int i = 0; i < filas; i++) {
-                    for (int j = 0; j < columnas; j++) {
-                        Coordenada cor = new Coordenada(i, j);
-                        casillas[i][j] = new Casilla(cor);
-                    }
-                }
+                inicializarTablero(9, 9);
                 break;
             case 4:
-                casillas = new Casilla[10][10];
-                filas = 10;
-                columnas = 10;
-                for (int i = 0; i < filas; i++) {
-                    for (int j = 0; j < columnas; j++) {
-                        Coordenada cor = new Coordenada(i, j);
-                        casillas[i][j] = new Casilla(cor);
-                    }
-                }
+                inicializarTablero(10, 10);
                 break;
+            default:
+                throw new IllegalArgumentException("Número no válido. Introduce un número del 1 al 4.");
+        }
+    }
+
+    private void inicializarTablero(int filas, int columnas) {
+        this.filas = filas;
+        this.columnas = columnas;
+        casillas = new Casilla[filas][columnas];
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                Coordenada cor = new Coordenada(i, j);
+                casillas[i][j] = new Casilla(cor);
+            }
+        }
+    }
+
+    public void imprimirTablero() {
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                if (!casillas[i][j].getNumZombie().isEmpty()) {
+                    String nombre = "";
+                    for(int x=0;x<casillas[i][j].getNumZombie().size();x++){
+                        nombre = nombre + casillas[i][j].getNumZombie().get(x).getNombre();
+                    }
+                    System.out.print("[" + nombre + "] ");
+                } 
+                else {
+                    System.out.print("[  ] ");
+                }
+            }
+            System.out.println();
         }
     }
 
