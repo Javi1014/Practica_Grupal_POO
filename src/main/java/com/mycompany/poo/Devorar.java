@@ -74,6 +74,7 @@ public class Devorar extends Ataque {
                             ArrayList<Comestible> elementosConsumidos = zombie.getElementosConsumidos();
                             elementosConsumidos.add(humano);
                             zombie.setElementosConsumidos(elementosConsumidos);
+                            System.out.println(this.getNombre() + " ha matado un humano ");
                             break; // Salir del bucle FOR COMESTIBLE después de devorar un objetivo
                         }
                     } else if (comestible instanceof Conejo conejo) {

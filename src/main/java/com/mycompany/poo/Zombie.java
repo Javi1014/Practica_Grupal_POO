@@ -22,7 +22,7 @@ public class Zombie implements Activable {
     private int numHeridas;
     private int hambre;
     private Ataque devorar = new Devorar();
-    private Ataque ataqueEspecial= new AtaqueEspecial();
+    private Ataque ataqueEspecial = new AtaqueEspecial();
     private Casilla casilla;
 
     public Zombie(String nombre, String estado, int numHeridas, int hambre, Casilla casilla) {
@@ -166,7 +166,7 @@ public class Zombie implements Activable {
     public void activarse(Tablero tablero) {
         if (estado.equals("ACTIVO")) {
             while (this.getNumAcciones() < this.maxAcciones) {
-                System.out.println("ZOMBIE : "+this.getNombre()+ " ACCIONES DISPONIBLES: "+this.getNumAcciones());
+                System.out.println("ZOMBIE : " + this.getNombre() + " ACCIONES DISPONIBLES: " + this.getNumAcciones());
                 System.out.println("Ingrese la accion que desea hacer (Atacar(1)/Moverse(2)/Buscar Comida(3)/No Hacer Nada(4)");
                 Scanner ent = new Scanner(System.in);
                 int opcion = ent.nextInt();
@@ -188,7 +188,7 @@ public class Zombie implements Activable {
                         int y1 = ent.nextInt();
                         Coordenada coordMoverse = new Coordenada(x1, y1);
                         Casilla objetivoMoverse = new Casilla(coordMoverse);
-                        moverse(tablero,objetivoMoverse);
+                        moverse(tablero, objetivoMoverse);
                         tablero.imprimirTablero();//PROVISIONAL
                         break;
                     case 3:
@@ -201,8 +201,8 @@ public class Zombie implements Activable {
                         break;
                 }
             }
-            if(this.getHambre()<5){
-                this.setHambre(getHambre()+1);
+            if (this.getHambre() < 5) {
+                this.setHambre(getHambre() + 1);
             }
             setNumAcciones(0);
         }
@@ -213,17 +213,19 @@ public class Zombie implements Activable {
         //BUSCAMOS ESA CASILLA EN EL TABLERO
         Casilla casillaTablero = tablero.getCasilla(posicion.getCoordenada());
         Scanner ent = new Scanner(System.in);
+        System.out.println("Alcance de ataqueespecial: " + this.ataqueEspecial.getAlcance());
         System.out.println("Que ataque desea ejercer (Devorar(1)/AtaqueEspecial(2)): ");
         int opcion = ent.nextInt();
         if (opcion == 1) {
             devorar.realizarAtaque(this, casillaTablero);
         } else if (opcion == 2) {
-            int dx = this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX();
-            int dy = this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY();
-            if ((Math.abs(dx) + Math.abs(dy)) <= ataqueEspecial.getAlcance()) {
+            int dx = Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX());
+            int dy = Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY());
+
+            if ((dx + dy) <= ataqueEspecial.getAlcance()) {
                 ataqueEspecial.realizarAtaque(this, casillaTablero);
             } else {
-                System.out.println("El zombie " + this.getNombre() + " ha malgastado una accion ya que no se puede alcanzar con el ataque esta posicion");
+                System.out.println("El zombie " + this.getNombre() + " ha malgastado una accion ya que no se puede alcanzar con el ataque esta posicion " + this.getCasilla().getCoordenada().toString());
             }
         }
         numAcciones++;

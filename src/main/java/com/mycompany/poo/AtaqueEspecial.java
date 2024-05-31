@@ -141,7 +141,6 @@ public class AtaqueEspecial extends Ataque {
                 if (impactos <= 0) {
                     break; // No quedan impactos
                 }
-                System.out.println("Alcance de ataqueespecial: "+this.getAlcance());
                 if (comestible instanceof Humano humano) {
                     if (humano.getAguante() <= impactos) {
                         humano.calmarHambreZombie(zombie); // Devorar al humano
