@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class Coordenada {
     private int x;
     private int y;
-    private ArrayList<Humano> humanosCoordenada=new ArrayList<>();
-    private ArrayList<Zombie> zombiesCoordenada= new ArrayList<>();
+    private ArrayList<Humano> humanosCoordenada=new ArrayList<>();//ESTO NO HACE FALTA PER NO QUITARLO DE MOMENTO
+    private ArrayList<Zombie> zombiesCoordenada= new ArrayList<>();//ESTO NO HACE FALTA PER NO QUITARLO DE MOMENTO
     //Deberiamos añadir un atributo Casilla, siendo la casilla a la que pertenece?
     
     public Coordenada(int x,int y){
@@ -52,4 +52,9 @@ public class Coordenada {
     }
     
     //FALTARIA AÑADIR SI ESO SETYGET DE ZOMBIES Y SUPERVIVIENTES CND LOS TENGAMOS HECHOS
+
+    @Override
+    public String toString() {
+        return "{" + "x=" + x + ", y=" + y + '}';
+    }
 }

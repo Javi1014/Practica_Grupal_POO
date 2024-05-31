@@ -48,22 +48,41 @@ public class Tablero {
     }
 
     public void imprimirTablero() {
-        for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                if (!casillas[i][j].getNumZombie().isEmpty()) {
-                    String nombre = "";
-                    for(int x=0;x<casillas[i][j].getNumZombie().size();x++){
-                        nombre = nombre + casillas[i][j].getNumZombie().get(x).getNombre();
-                    }
-                    System.out.print("[" + nombre + "] ");
-                } 
-                else {
-                    System.out.print("[  ] ");
+    for (int i = 0; i < filas; i++) {
+        for (int j = 0; j < columnas; j++) {
+            String contenido = "";
+
+            // Añadir los nombres de los zombis en la casilla
+            if (!casillas[i][j].getNumZombie().isEmpty()) {
+                for (Zombie zombie : casillas[i][j].getNumZombie()) {
+                    contenido += "Z:" + zombie.getNombre() + " ";
                 }
             }
-            System.out.println();
+
+            // Añadir los nombres de los conejos en la casilla
+            if (!casillas[i][j].getNumConejos().isEmpty()) {
+                for (Conejo conejo : casillas[i][j].getNumConejos()) {
+                    contenido += "C:" + conejo.getNombre() + " ";
+                }
+            }
+
+            // Añadir los nombres de los humanos en la casilla
+            if (!casillas[i][j].getNumHumano().isEmpty()) {
+                for (Humano humano : casillas[i][j].getNumHumano()) {
+                    contenido += "H:" + humano.getClass().getSimpleName()+ " ";
+                }
+            }
+
+            // Si la casilla está vacía, dejar el espacio en blanco
+            if (contenido.isEmpty()) {
+                System.out.print("[  ] ");
+            } else {
+                System.out.print("[" + contenido.trim() + "] ");
+            }
         }
+        System.out.println();
     }
+}
 
     public Casilla getCasilla(Coordenada coordenada) {
         return casillas[coordenada.getX()][coordenada.getY()];

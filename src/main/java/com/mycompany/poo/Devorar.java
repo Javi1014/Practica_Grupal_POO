@@ -22,9 +22,9 @@ public class Devorar extends Ataque {
         ArrayList<Conejo> conejosEnCasilla = objetivo.getNumConejos();
         ArrayList<Humano> humanosEnCasilla = objetivo.getNumHumano();
 
-        // Obtener todos los objetivos (conejos y humanos) en la casilla
+        // Obtener todos los objetivos (conejos y humanos) en la casilla objetivo del tablero
         ArrayList<Comestible> comestiblesEnCasilla = new ArrayList<>();
-        // Agregar los ingenieros informáticos
+        // Agregar los comestibles por orden de prioridad
         for (Humano humano : humanosEnCasilla) {
             if (humano instanceof Informatico) {
                 comestiblesEnCasilla.add(humano);
@@ -74,7 +74,7 @@ public class Devorar extends Ataque {
                             ArrayList<Comestible> elementosConsumidos = zombie.getElementosConsumidos();
                             elementosConsumidos.add(humano);
                             zombie.setElementosConsumidos(elementosConsumidos);
-                            break; // Salir del bucle después de devorar un objetivo
+                            break; // Salir del bucle FOR COMESTIBLE después de devorar un objetivo
                         }
                     } else if (comestible instanceof Conejo conejo) {
                         conejo.calmarHambreZombie(zombie); // Devorar al conejo y calmar el hambre del zombie
@@ -84,13 +84,16 @@ public class Devorar extends Ataque {
                         ArrayList<Comestible> elementosConsumidos = zombie.getElementosConsumidos();
                         elementosConsumidos.add(conejo);
                         zombie.setElementosConsumidos(elementosConsumidos);
+                        System.out.println(this.getNombre() + " ha matado al conejo " + conejo.getNombre());
                         break; // Salir del bucle después de devorar un objetivo
                     }
                 } else {
-                    break; // Salir del bucle si no quedan impactos disponibles
+                    break; // Salir del bucle FOR COMESTIBLE si no quedan impactos disponibles
                 }
             }
 
+        } else {
+            System.out.println("Has malgastado la accion porque en esta casilla no habia ningun humano o conejo");
         }
 
     }

@@ -28,7 +28,7 @@ public class Informatico extends HumanoCombatiente {
     }
     
     @Override
-    public void moverse(){
+    public void moverse(Tablero tablero,Casilla posicion){
         Coordenada objetivo;
         objetivo = this.zombieMasCercano();
         if(!(this.getCasilla().getCoordenada().getX() == objetivo.getX())){
@@ -63,7 +63,7 @@ public class Informatico extends HumanoCombatiente {
     */
 
     @Override
-    public void atacar(Casilla posicion){
+    public void atacar(Tablero tablero,Casilla posicion){
         this.getCasilla().getNumZombie().get(0).setNumHeridas(+1);
     }
 
@@ -74,7 +74,7 @@ public class Informatico extends HumanoCombatiente {
     }
 
     @Override
-    public void activarse() {
+    public void activarse(Tablero tablero) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

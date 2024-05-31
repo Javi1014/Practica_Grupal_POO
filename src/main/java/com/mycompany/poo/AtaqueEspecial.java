@@ -5,12 +5,27 @@
 package com.mycompany.poo;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
  * @author nieto
  */
 public class AtaqueEspecial extends Ataque {
+
+    private static final String[] NOMBRES_ATAQUES = {
+        "Tsunami de Sangre",
+        "Lluvia de Huesos",
+        "Golpe de Terror",
+        "Vendaval de Garras",
+        "Explosión de Putrefacción",
+        "Grito Mortal",
+        "Sombra de la Muerte"
+    };
+    
+     public AtaqueEspecial() {
+        this(NOMBRES_ATAQUES[new Random().nextInt(NOMBRES_ATAQUES.length)]);
+    }
 
     public AtaqueEspecial(String nombre) {
         super(nombre, asignarPotencia(nombre), asignarValorExito(nombre), asignarAlcance(nombre));
@@ -126,6 +141,7 @@ public class AtaqueEspecial extends Ataque {
                 if (impactos <= 0) {
                     break; // No quedan impactos
                 }
+                System.out.println("Alcance de ataqueespecial: "+this.getAlcance());
                 if (comestible instanceof Humano humano) {
                     if (humano.getAguante() <= impactos) {
                         humano.calmarHambreZombie(zombie); // Devorar al humano
@@ -136,6 +152,7 @@ public class AtaqueEspecial extends Ataque {
                         elementosConsumidos.add(humano);
                         zombie.setElementosConsumidos(elementosConsumidos);
                         impactos -= humano.getAguante(); // Decrementar la cantidad de impactos restantes
+                        System.out.println(this.getNombre() + " ha matado a un " + humano.getClass().getSimpleName());
                     }
                 } else if (comestible instanceof Conejo conejo) {
                     if (impactos > 0) {
@@ -147,10 +164,13 @@ public class AtaqueEspecial extends Ataque {
                         elementosConsumidos.add(conejo);
                         zombie.setElementosConsumidos(elementosConsumidos);
                         impactos--; // Decrementar la cantidad de impactos restantes
+                        System.out.println(this.getNombre() + " ha matado al conejo " + conejo.getNombre());
                     }
                 }
             }
 
+        } else {
+            System.out.println("Has malgastado la accion porque en esta casilla no habia ningun humano o conejo");
         }
     }
 

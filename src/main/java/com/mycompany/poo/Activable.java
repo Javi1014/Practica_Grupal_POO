@@ -9,7 +9,7 @@ package com.mycompany.poo;
  * @author nieto
  */
 public interface Activable {
-    public void moverse();  
-    public void activarse();
-    public void atacar (Casilla posicion);
+    public void moverse(Tablero tablero, Casilla posicion);  
+    public void activarse(Tablero tablero);
+    public void atacar (Tablero tablero,Casilla posicion);
 }

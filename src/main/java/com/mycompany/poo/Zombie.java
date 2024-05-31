@@ -21,8 +21,8 @@ public class Zombie implements Activable {
     private ArrayList<Comestible> elementosConsumidos = new ArrayList<>();
     private int numHeridas;
     private int hambre;
-    private Ataque devorar;
-    private Ataque ataqueEspecial;
+    private Ataque devorar = new Devorar();
+    private Ataque ataqueEspecial= new AtaqueEspecial();
     private Casilla casilla;
 
     public Zombie(String nombre, String estado, int numHeridas, int hambre, Casilla casilla) {
@@ -35,10 +35,6 @@ public class Zombie implements Activable {
 
     public String getNombre() {
         return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public String getEstado() {
@@ -81,22 +77,6 @@ public class Zombie implements Activable {
         this.hambre = hambre;
     }
 
-    public Ataque getDevorar() {
-        return devorar;
-    }
-
-    public void setDevorar(Ataque devorar) {
-        this.devorar = devorar;
-    }
-
-    public Ataque getAtaqueEspecial() {
-        return ataqueEspecial;
-    }
-
-    public void setAtaqueEspecial(Ataque ataqueEspecial) {
-        this.ataqueEspecial = ataqueEspecial;
-    }
-
     public Casilla getCasilla() {
         return casilla;
     }
@@ -105,15 +85,88 @@ public class Zombie implements Activable {
         this.casilla = casilla;
     }
 
-    @Override
-    public void moverse() {
-        
+    public void incrementarAcciones() {
+        this.numAcciones++;
     }
 
     @Override
-    public void activarse() {
+    public void moverse(Tablero tablero, Casilla posicion) {
+        int xActual = this.getCasilla().getCoordenada().getX();
+        int yActual = this.getCasilla().getCoordenada().getY();
+        int xDestino = posicion.getCoordenada().getX();
+        int yDestino = posicion.getCoordenada().getY();
+
+        // Verifica si la casilla posicion es contigua en sentido vertical u horizontal
+        boolean esContiguaHorizontalmente = (xActual == xDestino) && (Math.abs(yActual - yDestino) == 1);
+        boolean esContiguaVerticalmente = (yActual == yDestino) && (Math.abs(xActual - xDestino) == 1);
+
+        if (esContiguaHorizontalmente || esContiguaVerticalmente) {
+            Casilla casillaActual = tablero.getCasilla(this.getCasilla().getCoordenada());
+            if (casillaActual.getNumHumano().size() == 0) {
+                ArrayList<Zombie> zombiesCasillaActual = casillaActual.getNumZombie();
+                zombiesCasillaActual.remove(this);
+                casillaActual.setNumZombie(zombiesCasillaActual);
+
+                Casilla casillaObjetivo = tablero.getCasilla(posicion.getCoordenada());
+                ArrayList<Zombie> zombiesCasillaObjetivo = casillaObjetivo.getNumZombie();
+                zombiesCasillaObjetivo.add(this);
+                casillaObjetivo.setNumZombie(zombiesCasillaObjetivo);
+
+                this.setCasilla(casillaObjetivo);
+                System.out.println("El zombie " + this.getNombre() + " se ha movido a la posicion " + posicion.toString());
+                numAcciones++;
+
+            } else if (casillaActual.getNumHumano().size() == 1) {
+                if (this.getNumAcciones() < 2) {
+                    ArrayList<Zombie> zombiesCasillaActual = casillaActual.getNumZombie();
+                    zombiesCasillaActual.remove(this);
+                    casillaActual.setNumZombie(zombiesCasillaActual);
+
+                    Casilla casillaObjetivo = tablero.getCasilla(posicion.getCoordenada());
+                    ArrayList<Zombie> zombiesCasillaObjetivo = casillaObjetivo.getNumZombie();
+                    zombiesCasillaObjetivo.add(this);
+                    casillaObjetivo.setNumZombie(zombiesCasillaObjetivo);
+
+                    this.setCasilla(casillaObjetivo);
+                    System.out.println("El zombie " + this.getNombre() + " se ha movido a la posicion " + posicion.toString());
+                    this.setNumAcciones(this.getNumAcciones() + 2);
+                } else {
+                    System.out.println("El zombie " + this.getNombre() + " no se puede mover, utiliza la accion en otra accion diferente a moverse");
+                }
+
+            } else if (casillaActual.getNumHumano().size() == 2) {
+                if (this.getNumAcciones() < 1) {
+                    ArrayList<Zombie> zombiesCasillaActual = casillaActual.getNumZombie();
+                    zombiesCasillaActual.remove(this);
+                    casillaActual.setNumZombie(zombiesCasillaActual);
+
+                    Casilla casillaObjetivo = tablero.getCasilla(posicion.getCoordenada());
+                    ArrayList<Zombie> zombiesCasillaObjetivo = casillaObjetivo.getNumZombie();
+                    zombiesCasillaObjetivo.add(this);
+                    casillaObjetivo.setNumZombie(zombiesCasillaObjetivo);
+
+                    this.setCasilla(casillaObjetivo);
+                    System.out.println("El zombie " + this.getNombre() + " se ha movido a la posicion " + posicion.toString());
+                    this.setNumAcciones(this.getNumAcciones() + 3);
+                } else {
+                    System.out.println("El zombie " + this.getNombre() + " no se puede mover, utiliza la accion en otra accion diferente a moverse");
+                }
+
+            } else {
+                System.out.println("El zombie " + this.getNombre() + " no se puede mover porque esta rodeado de zombies, utiliza la accion en otra accion diferente a moverse");
+            }
+
+        } else {
+            System.out.println("El zombie " + this.getNombre() + " no se puede mover hasta esa posicion porque esta muy lejos, prueba con una coordendad valida");
+        }
+
+    }
+
+    @Override
+    public void activarse(Tablero tablero) {
         if (estado.equals("ACTIVO")) {
-            while (numAcciones < maxAcciones) {
+            while (this.getNumAcciones() < this.maxAcciones) {
+                System.out.println("ZOMBIE : "+this.getNombre()+ " ACCIONES DISPONIBLES: "+this.getNumAcciones());
                 System.out.println("Ingrese la accion que desea hacer (Atacar(1)/Moverse(2)/Buscar Comida(3)/No Hacer Nada(4)");
                 Scanner ent = new Scanner(System.in);
                 int opcion = ent.nextInt();
@@ -124,37 +177,64 @@ public class Zombie implements Activable {
                         System.out.println("Y:");
                         int y = ent.nextInt();
                         Coordenada coordAtacar = new Coordenada(x, y);
-                        Casilla objetivo = new Casilla(coordAtacar);
-                        atacar(objetivo);
+                        Casilla objetivoAtacar = new Casilla(coordAtacar);
+                        atacar(tablero, objetivoAtacar);//ESTO SE PODRIA CAMBIAR ELIMINANDO EL ATRIBUTO DE TABLERO EN ATACAR Y PASNADOLE LA CASILLA DEL TABLERO DIRECT
+                        tablero.imprimirTablero();//PROVISIONAL
+                        break;
                     case 2:
+                        System.out.println("Ingrese la coordenada que desea moverse X:");
+                        int x1 = ent.nextInt();
+                        System.out.println("Y:");
+                        int y1 = ent.nextInt();
+                        Coordenada coordMoverse = new Coordenada(x1, y1);
+                        Casilla objetivoMoverse = new Casilla(coordMoverse);
+                        moverse(tablero,objetivoMoverse);
+                        tablero.imprimirTablero();//PROVISIONAL
+                        break;
                     case 3:
+                        buscarComida(tablero);
+                        tablero.imprimirTablero();//PROVISIONAL
+                        break;
                     case 4:
+                        noHacerNada();
+                        tablero.imprimirTablero();//PROVISIONAL
+                        break;
                 }
+            }
+            if(this.getHambre()<5){
+                this.setHambre(getHambre()+1);
             }
             setNumAcciones(0);
         }
     }
 
     @Override
-    public void atacar(Casilla posicion) {
+    public void atacar(Tablero tablero, Casilla posicion) {
+        //BUSCAMOS ESA CASILLA EN EL TABLERO
+        Casilla casillaTablero = tablero.getCasilla(posicion.getCoordenada());
         Scanner ent = new Scanner(System.in);
-        System.out.println("Que ataque desea ejercer (Devorar(1)/AtaqueEspecial(2): ");
+        System.out.println("Que ataque desea ejercer (Devorar(1)/AtaqueEspecial(2)): ");
         int opcion = ent.nextInt();
         if (opcion == 1) {
-            devorar.realizarAtaque(this, this.getCasilla());
+            devorar.realizarAtaque(this, casillaTablero);
         } else if (opcion == 2) {
             int dx = this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX();
             int dy = this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY();
             if ((Math.abs(dx) + Math.abs(dy)) <= ataqueEspecial.getAlcance()) {
-                ataqueEspecial.realizarAtaque(this, posicion);
+                ataqueEspecial.realizarAtaque(this, casillaTablero);
             } else {
-                System.out.println("No se puede realizar un ataque a esta posicion");
+                System.out.println("El zombie " + this.getNombre() + " ha malgastado una accion ya que no se puede alcanzar con el ataque esta posicion");
             }
         }
+        numAcciones++;
     }
 
-
-
+    /*
+    @Override
+    public Coordenada getCoordenada() {
+        return casilla.getCoordenada();
+    }
+     */
     public void buscarComida(Tablero tablero) {
         Random random = new Random();
         int resultado = random.nextInt(100); // Genera un número entre 0 y 99
@@ -195,8 +275,12 @@ public class Zombie implements Activable {
             // 20% de probabilidad de no aparecer nada
             System.out.println("No ha aparecido ningún comestible.");
         }
+        numAcciones++;
     }
 
-
+    public void noHacerNada() {
+        System.out.println("El zombie " + this.getNombre() + " no ha hecho nada");
+        numAcciones++;
+    }
 }
 //PARA EL ATAQUE HACER EQUIPO=ATAQUE, VIVERES=ATAQUE ESPECIAL Y DEVORAR ES LO MISMO QUE UN ATAQUE ESPECIAL EN CONCRETO.
