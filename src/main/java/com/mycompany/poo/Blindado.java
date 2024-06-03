@@ -36,10 +36,10 @@ public class Blindado extends HumanoCombatiente {
     //se activa cuando es su turno y hace lo que le toque
     /*
     @Override
-    public void activarse() {
-        Coordenada casSalida(tablero.getFilas(),tablero.getColumnas()); 
+    public void activarse(Tablero tablero) {
+        Coordenada casSalida= new Coordenada (tablero.getFilas(),tablero.getColumnas()); 
         //
-        if(this.getCoordenada()==casSalida){
+        if(this.getCasilla().getCoordenada().equals(casSalida)){
             //sale del juego
         }
         else if(!(this.getCoordenada().getX()==casSalida.getX())){
@@ -49,7 +49,7 @@ public class Blindado extends HumanoCombatiente {
             this.moverse( this.getCoordenada().sety(this.getCoordenada().getY()+1));
         }
     }
-*/
+    */
    
 
     @Override
