@@ -16,8 +16,7 @@ public class Soldado extends HumanoCombatiente {
     
     @Override
     public void moverse(Tablero tablero,Casilla posicion){
-        Coordenada objetivo;
-        objetivo = this.zombieMasCercano();
+        Coordenada objetivo=posicion.getCoordenada();
         if(!(this.getCasilla().getCoordenada().getX() == objetivo.getX())){
             if(this.getCasilla().getCoordenada().getX() < objetivo.getX()){
                 this.getCasilla().getCoordenada().setX(this.getCasilla().getCoordenada().getX()+1);
@@ -33,13 +32,15 @@ public class Soldado extends HumanoCombatiente {
         }
         
     }
-    //se activa cuando es su turno y hace lo que le toque
+    
     @Override
-    public void activarse(Tablero tablero){
+    public void activarse(Tablero tablero, Juego juego){
         if(this.getCasilla().getNumZombie().isEmpty()){
-            //this.moverse();
+            Coordenada objetivo=this.zombieMasCercano(tablero, juego);
+            Casilla nueva=new Casilla(objetivo);
+            this.moverse(tablero,nueva);
         }else{
-            //this.atacar(this.getCasilla());
+            this.atacar(tablero,this.getCasilla());
         }
     }
 

@@ -10,6 +10,6 @@ package com.mycompany.poo;
  */
 public interface Activable {
     public void moverse(Tablero tablero, Casilla posicion);  
-    public void activarse(Tablero tablero);
+    public void activarse(Tablero tablero, Juego juego);
     public void atacar (Tablero tablero,Casilla posicion);
 }

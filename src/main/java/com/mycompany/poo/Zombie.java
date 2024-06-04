@@ -163,7 +163,7 @@ public class Zombie implements Activable {
     }
 
     @Override
-    public void activarse(Tablero tablero) {
+    public void activarse(Tablero tablero, Juego juego) {
         if (estado.equals("ACTIVO")) {
             while (this.getNumAcciones() < this.maxAcciones) {
                 System.out.println("ZOMBIE : " + this.getNombre() + " ACCIONES DISPONIBLES: " + this.getNumAcciones());

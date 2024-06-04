@@ -4,6 +4,8 @@
  */
 package com.mycompany.poo;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author delac
@@ -17,25 +19,34 @@ public class HumanoHuidizo extends Humano {
    
     @Override
     public void moverse(Tablero tablero,Casilla posicion){
-        Coordenada objetivo;
-        objetivo = this.zombieMasCercano();
-        if(!(this.getCasilla().getCoordenada().getX() == objetivo.getX())){
-            if(this.getCasilla().getCoordenada().getX() < objetivo.getX()){
-                this.getCasilla().getCoordenada().setX(this.getCasilla().getCoordenada().getX()+1);
-            }else{
-                this.getCasilla().getCoordenada().setX(this.getCasilla().getCoordenada().getX()-1);
-            }
-        }else{
-            if(this.getCasilla().getCoordenada().getY() < objetivo.getY()){
-                this.getCasilla().getCoordenada().setY(this.getCasilla().getCoordenada().getY()+1);
-            }else{
-                this.getCasilla().getCoordenada().setY(this.getCasilla().getCoordenada().getY()-1);
-            }
+        int xActual = this.getCasilla().getCoordenada().getX();
+        int yActual = this.getCasilla().getCoordenada().getY();
+        int xDestino = posicion.getCoordenada().getX();
+        int yDestino = posicion.getCoordenada().getY();
+
+        // Verifica si la casilla posicion es contigua en sentido vertical u horizontal
+        boolean esContiguaHorizontalmente = (xActual == xDestino) && (Math.abs(yActual - yDestino) == 1);
+        boolean esContiguaVerticalmente = (yActual == yDestino) && (Math.abs(xActual - xDestino) == 1);
+
+        if (esContiguaHorizontalmente || esContiguaVerticalmente) {
+            Casilla casillaActual = tablero.getCasilla(this.getCasilla().getCoordenada());
+            ArrayList<Humano> humanosCasillaActual = casillaActual.getNumHumano();
+            humanosCasillaActual.remove(this);
+            casillaActual.setNumHumano(humanosCasillaActual);
+
+            Casilla casillaObjetivo = tablero.getCasilla(posicion.getCoordenada());
+            ArrayList<Humano> humanosCasillaObjetivo = casillaObjetivo.getNumHumano();
+            humanosCasillaObjetivo.add(this);
+            casillaObjetivo.setNumHumano(humanosCasillaObjetivo);
+
+            this.setCasilla(casillaObjetivo);
+            System.out.println("El humano se ha movido a la posicion " + posicion.toString());
         }
-        
+        else {
+            System.out.println("El humano no se puede mover porque esta rodeado de zombies, utiliza la accion en otra accion diferente a moverse");
+        }
     }
     
-
     @Override
     public void calmarHambreZombie(Zombie zombie) {
         zombie.setHambre(0);
@@ -45,29 +56,20 @@ public class HumanoHuidizo extends Humano {
     @Override
     public void atacar(Tablero tablero,Casilla posicion){
         this.getCasilla().getNumZombie().get(0).setNumHeridas(+1);
+        System.out.println("El zombie "+this.getCasilla().getNumZombie().get(0).getNombre()+" tiene "+this.getCasilla().getNumZombie().get(0).getNumHeridas()+" heridas");
+    }
+
+    @Override
+    public void activarse(Tablero tablero, Juego juego){
+        if(this.getCasilla().getNumZombie().isEmpty()){
+            Coordenada objetivo=this.zombieMasCercano(tablero, juego);
+            Casilla nueva=new Casilla(objetivo);
+            this.moverse(tablero,nueva);
+        }else{
+            this.atacar(tablero,this.getCasilla());
+        }
     }
 
     
-    /*
-    @Override
-    public void activarse() {
-        Coordenada casSalida(tablero.getFilas(),tablero.getColumnas()); 
-        //
-        if(this.getCoordenada()==casSalida){
-            //sale del juego
-        }
-        else if(!(this.getCoordenada().getX()==casSalida.getX())){
-            this.moverse(tablero, this.getCoordenada().setX(this.getCoordenada().getX()+1));
-        }
-        else{
-            this.moverse( this.getCoordenada().sety(this.getCoordenada().getY()+1));
-        }
-    }
-    */
-
-    @Override
-    public void activarse(Tablero tablero) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
 }

@@ -13,15 +13,15 @@ import java.util.Scanner;
 public class POO {
 
     public static void main(String[] args) {
-        PantallaInicio inicio = new PantallaInicio();
-        inicio.setVisible(true);
+        //PantallaInicio inicio = new PantallaInicio();
+        //inicio.setVisible(true);
         
         
-        //Scanner ent= new Scanner(System.in);
-        //System.out.println("Introduzca el numero de jugadores: ");
-        //int numJug= ent.nextInt();
-        //Juego juego = new Juego(numJug);
-        //juego.iniciarJuego();
+        Scanner ent= new Scanner(System.in);
+        System.out.println("Introduzca el numero de jugadores: ");
+        int numJug= ent.nextInt();
+        Juego juego = new Juego(numJug);
+        juego.iniciarJuego();
         
         
     }

@@ -16,8 +16,8 @@ public class Blindado extends HumanoCombatiente {
 
     @Override
     public void moverse(Tablero tablero,Casilla posicion){
-        Coordenada objetivo;
-        objetivo = this.zombieMasCercano();
+        Coordenada objetivo=null;
+        objetivo = posicion.getCoordenada();
         if(!(this.getCasilla().getCoordenada().getX() == objetivo.getX())){
             if(this.getCasilla().getCoordenada().getX() < objetivo.getX()){
                 this.getCasilla().getCoordenada().setX(this.getCasilla().getCoordenada().getX()+1);
@@ -33,23 +33,17 @@ public class Blindado extends HumanoCombatiente {
         }
         
     }
-    //se activa cuando es su turno y hace lo que le toque
-    /*
+    
     @Override
-    public void activarse(Tablero tablero) {
-        Coordenada casSalida= new Coordenada (tablero.getFilas(),tablero.getColumnas()); 
-        //
-        if(this.getCasilla().getCoordenada().equals(casSalida)){
-            //sale del juego
-        }
-        else if(!(this.getCoordenada().getX()==casSalida.getX())){
-            this.moverse(tablero, this.getCoordenada().setX(this.getCoordenada().getX()+1));
-        }
-        else{
-            this.moverse( this.getCoordenada().sety(this.getCoordenada().getY()+1));
+    public void activarse(Tablero tablero, Juego juego){
+        if(this.getCasilla().getNumZombie().isEmpty()){
+            Coordenada objetivo=this.zombieMasCercano(tablero, juego);
+            Casilla nueva=new Casilla(objetivo);
+            this.moverse(tablero,nueva);
+        }else{
+            this.atacar(tablero,this.getCasilla());
         }
     }
-    */
    
 
     @Override
@@ -69,9 +63,6 @@ public class Blindado extends HumanoCombatiente {
         return nueva;
     }
 
-    @Override
-    public void activarse(Tablero tablero) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
     
 }

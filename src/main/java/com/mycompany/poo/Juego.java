@@ -50,11 +50,14 @@ public class Juego {
             Zombie zom=new Zombie(nombre, "ACTIVO",0,0,comienzo );
             tabla.getCasilla(inicio).getNumZombie().add(zom);
             tabla.getCasilla(inicio).setNumZombie(tabla.getCasilla(inicio).getNumZombie());
+            this.listaJugadores.add(zom);
         }
         Humano humano1 = new HumanoHuidizo(tabla.getCasilla(new Coordenada(2,1)));
+        this.listaHumanos.add(humano1);
         tabla.getCasilla(new Coordenada(2,1)).getNumHumano().add(humano1);
         tabla.getCasilla(new Coordenada(2,1)).setNumHumano(tabla.getCasilla(new Coordenada(2,1)).getNumHumano());
         Humano humano2 = new HumanoHuidizo(tabla.getCasilla(new Coordenada(2,3)));
+        this.listaHumanos.add(humano2);
         tabla.getCasilla(new Coordenada(2,3)).getNumHumano().add(humano2);
         tabla.getCasilla(new Coordenada(2,3)).setNumHumano(tabla.getCasilla(new Coordenada(2,3)).getNumHumano());
         Conejo con1=new Conejo("Pep",1,tabla.getCasilla(new Coordenada(1,0)));
@@ -63,11 +66,18 @@ public class Juego {
         Zombie zombie1 = tabla.getCasilla(inicio).getNumZombie().get(0);
         Zombie zombie2 = tabla.getCasilla(inicio).getNumZombie().get(1);
         tabla.imprimirTablero();
-
-        for(int i=0;i<=1;i++){
-            zombie1.activarse(tabla);
-            zombie2.activarse(tabla);
-            
+           
+        Coordenada nueva=new Coordenada(tabla.getFilas(), tabla.getColumnas());
+        Casilla objetivo=new Casilla(nueva);
+        while(!zombie1.getCasilla().equals(objetivo)){
+            //for(int i=0;i<=1;i++){
+                zombie1.activarse(tabla,this);
+                zombie2.activarse(tabla,this);
+            //}
+            //for(int j=0;j<2;j++){
+                humano1.activarse(tabla, this);
+                humano2.activarse(tabla, this);
+            //}
         }
     }
         
