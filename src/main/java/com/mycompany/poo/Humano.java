@@ -51,7 +51,7 @@ public abstract class Humano implements Comestible, Activable {
     }
     
     public Coordenada zombieMasCercano(Tablero tablero, Juego juego){
-      Coordenada coormascerca=new Coordenada(0,0);
+      Coordenada coormascerca = juego.getListaJugadores().get(0).getCasilla().getCoordenada();
         int distancia = 300;
         for(int i=0;i<juego.getNumJug();i++){
             if( (tablero.calcularDistancia(this.getCasilla(),juego.getListaJugadores().get(i).getCasilla()) < distancia)){

@@ -4,6 +4,8 @@
  */
 package com.mycompany.poo;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author delac
@@ -16,20 +18,45 @@ public class Blindado extends HumanoCombatiente {
 
     @Override
     public void moverse(Tablero tablero,Casilla posicion){
-        Coordenada objetivo=null;
-        objetivo = posicion.getCoordenada();
-        if(!(this.getCasilla().getCoordenada().getX() == objetivo.getX())){
-            if(this.getCasilla().getCoordenada().getX() < objetivo.getX()){
-                this.getCasilla().getCoordenada().setX(this.getCasilla().getCoordenada().getX()+1);
-            }else{
-                this.getCasilla().getCoordenada().setX(this.getCasilla().getCoordenada().getX()-1);
-            }
-        }else{
-            if(this.getCasilla().getCoordenada().getY() < objetivo.getY()){
-                this.getCasilla().getCoordenada().setY(this.getCasilla().getCoordenada().getY()+1);
-            }else{
-                this.getCasilla().getCoordenada().setY(this.getCasilla().getCoordenada().getY()-1);
-            }
+        Casilla nueva;
+        if(Math.abs(this.getCasilla().getCoordenada().getX()-posicion.getCoordenada().getX())<Math.abs(this.getCasilla().getCoordenada().getY()-posicion.getCoordenada().getY())&&this.getCasilla().getCoordenada().getY()>posicion.getCoordenada().getY()){
+            nueva=new Casilla(new Coordenada (this.getCasilla().getCoordenada().getX(),this.getCasilla().getCoordenada().getY()-1));
+        }
+        else if(Math.abs(this.getCasilla().getCoordenada().getX()-posicion.getCoordenada().getX())<Math.abs(this.getCasilla().getCoordenada().getY()-posicion.getCoordenada().getY())&&this.getCasilla().getCoordenada().getY()<posicion.getCoordenada().getY()){
+            nueva=new Casilla(new Coordenada (this.getCasilla().getCoordenada().getX(),this.getCasilla().getCoordenada().getY()+1));
+        }
+        else if(Math.abs(this.getCasilla().getCoordenada().getX()-posicion.getCoordenada().getX())>Math.abs(this.getCasilla().getCoordenada().getY()-posicion.getCoordenada().getY())&&this.getCasilla().getCoordenada().getX()>posicion.getCoordenada().getX()){
+            nueva=new Casilla(new Coordenada (this.getCasilla().getCoordenada().getX()-1,this.getCasilla().getCoordenada().getY()));
+        }
+        else{
+            nueva=new Casilla(new Coordenada (this.getCasilla().getCoordenada().getX()+1,this.getCasilla().getCoordenada().getY()));
+        }
+        
+        int xActual = this.getCasilla().getCoordenada().getX();
+        int yActual = this.getCasilla().getCoordenada().getY();
+        int xDestino = nueva.getCoordenada().getX();
+        int yDestino = nueva.getCoordenada().getY();
+
+        // Verifica si la casilla posicion es contigua en sentido vertical u horizontal
+        boolean esContiguaHorizontalmente = (xActual == xDestino) && (Math.abs(yActual - yDestino) == 1);
+        boolean esContiguaVerticalmente = (yActual == yDestino) && (Math.abs(xActual - xDestino) == 1);
+
+        if (esContiguaHorizontalmente || esContiguaVerticalmente) {
+            Casilla casillaActual = tablero.getCasilla(this.getCasilla().getCoordenada());
+            ArrayList<Humano> humanosCasillaActual = casillaActual.getNumHumano();
+            humanosCasillaActual.remove(this);
+            casillaActual.setNumHumano(humanosCasillaActual);
+
+            Casilla casillaObjetivo = tablero.getCasilla(nueva.getCoordenada());
+            ArrayList<Humano> humanosCasillaObjetivo = casillaObjetivo.getNumHumano();
+            humanosCasillaObjetivo.add(this);
+            casillaObjetivo.setNumHumano(humanosCasillaObjetivo);
+
+            this.setCasilla(casillaObjetivo);
+            System.out.println("El humano se ha movido a la posicion " + nueva.toString());
+        }
+        else {
+            System.out.println("El humano no se puede mover porque esta rodeado de zombies, utiliza la accion en otra accion diferente a moverse");
         }
         
     }
