@@ -19,8 +19,6 @@ public class Casilla {
     public Casilla(Coordenada coordenada) {
         this.coordenada = coordenada;
     }
-    
-   
 
     public Coordenada getCoordenada(){
         return this.coordenada;

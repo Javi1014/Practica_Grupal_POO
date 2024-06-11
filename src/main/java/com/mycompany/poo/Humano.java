@@ -4,6 +4,8 @@
  */
 package com.mycompany.poo;
 
+import java.util.Random;
+
 /**
  *
  * @author delac
@@ -17,7 +19,7 @@ public abstract class Humano implements Comestible, Activable {
     public Humano(int num_activaciones, int aguante, Casilla casilla) {
         this.num_activaciones = num_activaciones;
         this.aguante = aguante;
-        this.casilla = casilla;
+        this.casilla=casilla;
     }
 
     public int getNum_activaciones() {
@@ -44,10 +46,23 @@ public abstract class Humano implements Comestible, Activable {
         this.casilla = casilla;
     }
 
-    
-    
-    public void aparicion() {
-
+    public static Humano aparicion(Casilla casilla) {
+        Humano humano;
+        Random random = new Random();
+        int numeroAleatorio= random.nextInt(99)+1;
+        if (numeroAleatorio<=33){
+            int numeroAleatorio2 = random.nextInt(100)+1;
+            if (numeroAleatorio2 <=60){
+                humano = new Blindado(casilla);
+            }else if (numeroAleatorio2>60 && numeroAleatorio2<=90){
+                humano = new Especialista(casilla);
+            }else {
+                humano = new Soldado(casilla);
+            }
+        }else{
+            humano=new HumanoHuidizo(casilla);
+        }
+        return humano;
     }
     
     public Coordenada zombieMasCercano(Tablero tablero, Juego juego){

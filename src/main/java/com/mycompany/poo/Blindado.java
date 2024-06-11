@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Blindado extends HumanoCombatiente {
 
     public Blindado(Casilla casilla) {
-        super(1, 2, casilla);
+        super(1,2,casilla);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class Blindado extends HumanoCombatiente {
             casillaObjetivo.setNumHumano(humanosCasillaObjetivo);
 
             this.setCasilla(casillaObjetivo);
-            System.out.println("El humano se ha movido a la posicion " + nueva.toString());
+            System.out.println("El humano se ha movido a la posicion "  + nueva.getCoordenada().getX()+" "+nueva.getCoordenada().getY());
         }
         else {
             System.out.println("El humano no se puede mover porque esta rodeado de zombies, utiliza la accion en otra accion diferente a moverse");
@@ -82,14 +82,5 @@ public class Blindado extends HumanoCombatiente {
     @Override
     public void atacar(Tablero tablero,Casilla posicion){
         this.getCasilla().getNumZombie().get(0).setNumHeridas(+1);
-    }
-
-    @Override
-    public Casilla getCasilla() {
-        Casilla nueva = new Casilla(this.getCasilla().getCoordenada());
-        return nueva;
-    }
-
-    
-    
+    }    
 }

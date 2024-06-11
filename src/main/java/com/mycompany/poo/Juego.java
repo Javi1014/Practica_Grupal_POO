@@ -5,6 +5,7 @@
 package com.mycompany.poo;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -40,7 +41,7 @@ public class Juego {
     
     
     public void iniciarJuego(){
-        Tablero tabla=new Tablero(this.numJug);
+        //INICIA JUEGO CON EL NUMERO DE JUGADORES QUE VAN A SER
         Coordenada inicio=new Coordenada(0,0);
         Casilla comienzo=new Casilla(inicio);
         for(int i=1;i<=this.numJug;i++){
@@ -48,36 +49,40 @@ public class Juego {
             System.out.println("Nombre "+i);
             String nombre=ent.nextLine();
             Zombie zom=new Zombie(nombre, "ACTIVO",0,0,comienzo );
-            tabla.getCasilla(inicio).getNumZombie().add(zom);
-            tabla.getCasilla(inicio).setNumZombie(tabla.getCasilla(inicio).getNumZombie());
+            tablero.getCasilla(inicio).getNumZombie().add(zom);
+            tablero.getCasilla(inicio).setNumZombie(tablero.getCasilla(inicio).getNumZombie());
             this.listaJugadores.add(zom);
         }
-        Humano humano1 = new HumanoHuidizo(tabla.getCasilla(new Coordenada(2,1)));
-        this.listaHumanos.add(humano1);
-        tabla.getCasilla(new Coordenada(2,1)).getNumHumano().add(humano1);
-        tabla.getCasilla(new Coordenada(2,1)).setNumHumano(tabla.getCasilla(new Coordenada(2,1)).getNumHumano());
-        Humano humano2 = new HumanoHuidizo(tabla.getCasilla(new Coordenada(2,3)));
-        this.listaHumanos.add(humano2);
-        tabla.getCasilla(new Coordenada(2,3)).getNumHumano().add(humano2);
-        tabla.getCasilla(new Coordenada(2,3)).setNumHumano(tabla.getCasilla(new Coordenada(2,3)).getNumHumano());
-        Conejo con1=new Conejo("Pep",1,tabla.getCasilla(new Coordenada(1,0)));
-        tabla.getCasilla(new Coordenada(1,0)).getNumConejos().add(con1);
-        tabla.getCasilla(new Coordenada(1,0)).setNumConejos(tabla.getCasilla(new Coordenada(1,0)).getNumConejos());
-        Zombie zombie1 = tabla.getCasilla(inicio).getNumZombie().get(0);
-        Zombie zombie2 = tabla.getCasilla(inicio).getNumZombie().get(1);
-        tabla.imprimirTablero();
+        //SE CREAN 3 HUMANOS POR CADA JUGADOR
+        for(int i=0;i<numJug;i++){
+            for(int j=0;j<3;j++){
+                Random random=new Random();
+                int numeroAleatorio1= random.nextInt(tablero.getFilas()-1);
+                int numeroAleatorio2= random.nextInt(tablero.getColumnas()-1);
+                Coordenada coor=new Coordenada(numeroAleatorio1, numeroAleatorio2);
+                Casilla posicion=new Casilla(coor);
+                Humano humano=Humano.aparicion(posicion);
+                this.listaHumanos.add(humano);
+                tablero.getCasilla(coor).getNumHumano().add(humano);
+                tablero.getCasilla(coor).setNumHumano(tablero.getCasilla(coor).getNumHumano());
+            }
+        }
+        //SE CREA UN CONEJO DE PRUEBA
+        Conejo con1=new Conejo("Pep",1,tablero.getCasilla(new Coordenada(1,0)));
+        tablero.getCasilla(new Coordenada(1,0)).getNumConejos().add(con1);
+        tablero.getCasilla(new Coordenada(1,0)).setNumConejos(tablero.getCasilla(new Coordenada(1,0)).getNumConejos());
+        
+        tablero.imprimirTablero();
            
-        Coordenada nueva=new Coordenada(tabla.getFilas(), tabla.getColumnas());
+        Coordenada nueva=new Coordenada(tablero.getFilas(), tablero.getColumnas());
         Casilla objetivo=new Casilla(nueva);
-        while(!zombie1.getCasilla().equals(objetivo)){
-            //for(int i=0;i<=1;i++){
-                zombie1.activarse(tabla,this);
-                zombie2.activarse(tabla,this);
-            //}
-            //for(int j=0;j<2;j++){
-                humano1.activarse(tabla, this);
-                humano2.activarse(tabla, this);
-            //}
+        while(!listaJugadores.get(0).getCasilla().equals(objetivo)){
+            for(int i=0;i<listaJugadores.size();i++){
+                listaJugadores.get(i).activarse(tablero,this);
+            }
+            for(int j=0;j<listaHumanos.size();j++){
+                listaHumanos.get(j).activarse(tablero, this);
+            }
         }
     }
         
