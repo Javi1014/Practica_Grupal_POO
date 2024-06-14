@@ -83,6 +83,18 @@ public class Juego {
             for(int j=0;j<listaHumanos.size();j++){
                 listaHumanos.get(j).activarse(tablero, this);
             }
+            for(int x=0;x<listaJugadores.size();x++){
+                Random random=new Random();
+                int numeroAleatorio1= random.nextInt(tablero.getFilas()-1);
+                int numeroAleatorio2= random.nextInt(tablero.getColumnas()-1);
+                Coordenada coor=new Coordenada(numeroAleatorio1, numeroAleatorio2);
+                Casilla posicion=new Casilla(coor);
+                Humano humano=Humano.aparicion(posicion);
+                this.listaHumanos.add(humano);
+                tablero.getCasilla(coor).getNumHumano().add(humano);
+                tablero.getCasilla(coor).setNumHumano(tablero.getCasilla(coor).getNumHumano());
+            }
+            tablero.imprimirTablero();
         }
     }
         

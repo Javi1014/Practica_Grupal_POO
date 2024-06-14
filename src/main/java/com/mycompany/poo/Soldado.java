@@ -17,7 +17,7 @@ public class Soldado extends HumanoCombatiente {
     }
     
     @Override
-    public void moverse(Tablero tablero,Casilla posicion){
+    public void moverse(Tablero tablero, Casilla posicion){
         Casilla nueva;
         if(Math.abs(this.getCasilla().getCoordenada().getX()-posicion.getCoordenada().getX())<Math.abs(this.getCasilla().getCoordenada().getY()-posicion.getCoordenada().getY())&&this.getCasilla().getCoordenada().getY()>posicion.getCoordenada().getY()){
             nueva=new Casilla(new Coordenada (this.getCasilla().getCoordenada().getX(),this.getCasilla().getCoordenada().getY()-1));
@@ -53,10 +53,10 @@ public class Soldado extends HumanoCombatiente {
             casillaObjetivo.setNumHumano(humanosCasillaObjetivo);
 
             this.setCasilla(casillaObjetivo);
-            System.out.println("El humano se ha movido a la posicion "  + nueva.getCoordenada().getX()+" "+nueva.getCoordenada().getY());
+            System.out.println("El soldado se ha movido a la posicion "  + nueva.getCoordenada().getX()+" "+nueva.getCoordenada().getY());
         }
         else {
-            System.out.println("El humano no se puede mover porque esta rodeado de zombies, utiliza la accion en otra accion diferente a moverse");
+            System.out.println("El soldado no se puede mover porque esta rodeado de zombies, utiliza la accion en otra accion diferente a moverse");
         }
         
     }
@@ -75,8 +75,9 @@ public class Soldado extends HumanoCombatiente {
 
 
     @Override
-    public void atacar(Tablero tablero,Casilla posicion){
-        this.getCasilla().getNumZombie().get(0).setNumHeridas(+1);
+    public void atacar(Tablero tablero, Casilla posicion){
+        this.getCasilla().getNumZombie().get(0).setNumHeridas(this.getCasilla().getNumZombie().get(0).getNumHeridas()+1);
+        System.out.println("El zombie "+this.getCasilla().getNumZombie().get(0).getNombre()+" tiene "+this.getCasilla().getNumZombie().get(0).getNumHeridas()+" heridas");
     }
 
     @Override

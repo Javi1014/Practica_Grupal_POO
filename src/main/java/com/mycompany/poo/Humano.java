@@ -50,7 +50,7 @@ public abstract class Humano implements Comestible, Activable {
         Humano humano;
         Random random = new Random();
         int numeroAleatorio= random.nextInt(99)+1;
-        if (numeroAleatorio<=33){
+        if (numeroAleatorio<=60){
             int numeroAleatorio2 = random.nextInt(100)+1;
             if (numeroAleatorio2 <=60){
                 humano = new Blindado(casilla);
@@ -59,8 +59,10 @@ public abstract class Humano implements Comestible, Activable {
             }else {
                 humano = new Soldado(casilla);
             }
-        }else{
+        }else if((numeroAleatorio>60)&&(numeroAleatorio<=85)){
             humano=new HumanoHuidizo(casilla);
+        }else{
+            humano = new Informatico(casilla);
         }
         return humano;
     }

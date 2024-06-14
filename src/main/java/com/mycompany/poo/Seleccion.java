@@ -12,7 +12,6 @@ import javax.swing.JLabel;
  */
 public class Seleccion extends javax.swing.JFrame {
         private int numeroJug;
-        private String[] nombres=new String[3];
     /**
      * Creates new form Seleccion
      */
@@ -200,7 +199,7 @@ public class Seleccion extends javax.swing.JFrame {
         jTextField2.setText("-");
         jTextField3.setText("--");
         jTextField4.setText("---");
-        nombres[0]=jTextField1.getText();
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -220,8 +219,6 @@ public class Seleccion extends javax.swing.JFrame {
         
         jTextField3.setText("--");
         jTextField4.setText("---");
-        nombres[0]=jTextField1.getText();
-        nombres[1]=jTextField2.getText();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -243,9 +240,7 @@ public class Seleccion extends javax.swing.JFrame {
         
 
         jTextField4.setText("---");
-        nombres[0]=jTextField1.getText();
-        nombres[1]=jTextField2.getText();
-        nombres[2]=jTextField3.getText();
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -266,18 +261,15 @@ public class Seleccion extends javax.swing.JFrame {
         jTextField4.setVisible(true);
         
         jButton5.setVisible(true);
-        nombres[0]=jTextField1.getText();
-        nombres[1]=jTextField2.getText();
-        nombres[2]=jTextField3.getText();
-        nombres[3]=jTextField4.getText();
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         if(jTextField1.getText().isEmpty()||jTextField2.getText().isEmpty()||jTextField3.getText().isEmpty()||jTextField4.getText().isEmpty()){
             jLabel6.setVisible(true);
         }else{
-            Principal juego=new Principal(this.numeroJug,this.nombres);
-            juego.setVisible(true);
+            Juego juego = new Juego(numeroJug);
+            //juego.iniciarJuego();
             this.dispose();
         }
     }//GEN-LAST:event_jButton5ActionPerformed

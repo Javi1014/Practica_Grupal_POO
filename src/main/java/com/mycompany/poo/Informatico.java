@@ -30,7 +30,7 @@ public class Informatico extends HumanoCombatiente {
     }
     
     @Override
-    public void moverse(Tablero tablero,Casilla posicion){
+    public void moverse(Tablero tablero, Casilla posicion){
         Casilla nueva;
         if(Math.abs(this.getCasilla().getCoordenada().getX()-posicion.getCoordenada().getX())<Math.abs(this.getCasilla().getCoordenada().getY()-posicion.getCoordenada().getY())&&this.getCasilla().getCoordenada().getY()>posicion.getCoordenada().getY()){
             nueva=new Casilla(new Coordenada (this.getCasilla().getCoordenada().getX(),this.getCasilla().getCoordenada().getY()-1));
@@ -66,26 +66,65 @@ public class Informatico extends HumanoCombatiente {
             casillaObjetivo.setNumHumano(humanosCasillaObjetivo);
 
             this.setCasilla(casillaObjetivo);
-            System.out.println("El humano se ha movido a la posicion "  + nueva.getCoordenada().getX()+" "+nueva.getCoordenada().getY());
+            System.out.println("El informatico se ha movido a la posicion "  + nueva.getCoordenada().getX()+" "+nueva.getCoordenada().getY());
         }
         else {
-            System.out.println("El humano no se puede mover porque esta rodeado de zombies, utiliza la accion en otra accion diferente a moverse");
+            System.out.println("El informatico no se puede mover porque esta rodeado de zombies, utiliza la accion en otra accion diferente a moverse");
         }
     }
 
     @Override
-    public void atacar(Tablero tablero,Casilla posicion){
-        this.getCasilla().getNumZombie().get(0).setNumHeridas(+1);
+    public void atacar(Tablero tablero, Casilla posicion){
+        this.getCasilla().getNumZombie().get(0).setNumHeridas(this.getCasilla().getNumZombie().get(0).getNumHeridas()+1);
+        System.out.println("El zombie "+this.getCasilla().getNumZombie().get(0).getNombre()+" tiene "+this.getCasilla().getNumZombie().get(0).getNumHeridas()+" heridas");
     }
 
     @Override
     public void activarse(Tablero tablero, Juego juego){
-        if(this.getCasilla().getNumZombie().isEmpty()){
+        Coordenada opc1 = new Coordenada(this.getCasilla().getCoordenada().getX()+1,this.getCasilla().getCoordenada().getY());
+        Casilla opcion1=null;
+        if(tablero.getCasilla(opc1)!=null){
+            opcion1 = tablero.getCasilla(opc1);
+        }
+        Coordenada opc2 = new Coordenada(this.getCasilla().getCoordenada().getX(),this.getCasilla().getCoordenada().getY()+1);
+        Casilla opcion2=null;
+        if(tablero.getCasilla(opc2)!=null){
+            opcion2 = tablero.getCasilla(opc2);
+        }
+        Coordenada opc3 = new Coordenada(this.getCasilla().getCoordenada().getX()-1,this.getCasilla().getCoordenada().getY());
+        Casilla opcion3=null;
+        if(tablero.getCasilla(opc3)!=null){
+            opcion3 = tablero.getCasilla(opc3);
+        }
+        Coordenada opc4 = new Coordenada(this.getCasilla().getCoordenada().getX(),this.getCasilla().getCoordenada().getY()-1);
+        Casilla opcion4=null;
+        if(tablero.getCasilla(opc4)!=null){
+            opcion4 = tablero.getCasilla(opc4);
+        }
+        if(!this.getCasilla().getNumZombie().isEmpty()){
+            this.atacar(tablero,this.getCasilla());
+            this.atacar(tablero,this.getCasilla());
+        }else if(opcion1.getNumZombie().isEmpty()&&opcion2.getNumZombie().isEmpty()&&opcion3.getNumZombie().isEmpty()&&opcion4.getNumZombie().isEmpty()){
             Coordenada objetivo=this.zombieMasCercano(tablero, juego);
             Casilla nueva=new Casilla(objetivo);
             this.moverse(tablero,nueva);
-        }else{
-            this.atacar(tablero,this.getCasilla());
+            Coordenada objetivo1 = this.zombieMasCercano(tablero, juego);
+            Casilla nueva1 = new Casilla(objetivo1);
+            this.moverse(tablero,nueva1);
+        }
+        else{
+            if(!opcion1.getNumZombie().isEmpty()){
+                this.atacar(tablero,opcion1);
+            }
+            else if(!opcion2.getNumZombie().isEmpty()){
+                this.atacar(tablero,opcion2);
+            }
+            else if(!opcion3.getNumZombie().isEmpty()){
+                this.atacar(tablero,opcion3);
+            }
+            else{
+                this.atacar(tablero,opcion4);
+            }
         }
     }
 }
