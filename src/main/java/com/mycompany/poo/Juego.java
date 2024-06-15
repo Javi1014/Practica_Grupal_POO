@@ -38,12 +38,21 @@ public class Juego {
     public ArrayList<Humano> getListaHumanos() {
         return listaHumanos;
     }
+
+    public void setListaJugadores(ArrayList<Zombie> listaJugadores) {
+        this.listaJugadores = listaJugadores;
+    }
+
+    public void setListaHumanos(ArrayList<Humano> listaHumanos) {
+        this.listaHumanos = listaHumanos;
+    }
+    
     
     
     public void iniciarJuego(){
         //INICIA JUEGO CON EL NUMERO DE JUGADORES QUE VAN A SER
         Coordenada inicio=new Coordenada(0,0);
-        Casilla comienzo=new Casilla(inicio);
+        Casilla comienzo=tablero.getCasilla(inicio);
         for(int i=1;i<=this.numJug;i++){
             Scanner ent = new Scanner(System.in);
             System.out.println("Nombre "+i);
@@ -60,7 +69,7 @@ public class Juego {
                 int numeroAleatorio1= random.nextInt(tablero.getFilas()-1);
                 int numeroAleatorio2= random.nextInt(tablero.getColumnas()-1);
                 Coordenada coor=new Coordenada(numeroAleatorio1, numeroAleatorio2);
-                Casilla posicion=new Casilla(coor);
+                Casilla posicion=tablero.getCasilla(coor);
                 Humano humano=Humano.aparicion(posicion);
                 this.listaHumanos.add(humano);
                 tablero.getCasilla(coor).getNumHumano().add(humano);
@@ -74,21 +83,26 @@ public class Juego {
         
         tablero.imprimirTablero();
            
-        Coordenada nueva=new Coordenada(tablero.getFilas(), tablero.getColumnas());
-        Casilla objetivo=new Casilla(nueva);
-        while(!listaJugadores.get(0).getCasilla().equals(objetivo)){
+        Coordenada nueva=new Coordenada(tablero.getFilas()-1, tablero.getColumnas()-1);
+        Casilla objetivo=tablero.getCasilla(nueva);
+        while(!listaJugadores.get(0).getCasilla().equals(objetivo)||!listaJugadores.isEmpty()){
             for(int i=0;i<listaJugadores.size();i++){
                 listaJugadores.get(i).activarse(tablero,this);
             }
             for(int j=0;j<listaHumanos.size();j++){
-                listaHumanos.get(j).activarse(tablero, this);
+                if(listaJugadores.isEmpty()){
+                    break;
+                }
+                else{
+                    listaHumanos.get(j).activarse(tablero, this);
+                }
             }
             for(int x=0;x<listaJugadores.size();x++){
                 Random random=new Random();
                 int numeroAleatorio1= random.nextInt(tablero.getFilas()-1);
                 int numeroAleatorio2= random.nextInt(tablero.getColumnas()-1);
                 Coordenada coor=new Coordenada(numeroAleatorio1, numeroAleatorio2);
-                Casilla posicion=new Casilla(coor);
+                Casilla posicion=tablero.getCasilla(coor);
                 Humano humano=Humano.aparicion(posicion);
                 this.listaHumanos.add(humano);
                 tablero.getCasilla(coor).getNumHumano().add(humano);
@@ -96,6 +110,9 @@ public class Juego {
             }
             tablero.imprimirTablero();
         }
+        if(listaJugadores.isEmpty()){
+                System.out.println("El juego ha terminado porque los zombies han muerto");
+            }
     }
         
 }

@@ -177,8 +177,8 @@ public class Zombie implements Activable {
                         System.out.println("Y:");
                         int y = ent.nextInt();
                         Coordenada coordAtacar = new Coordenada(x, y);
-                        Casilla objetivoAtacar = new Casilla(coordAtacar);
-                        atacar(tablero, objetivoAtacar);//ESTO SE PODRIA CAMBIAR ELIMINANDO EL ATRIBUTO DE TABLERO EN ATACAR Y PASNADOLE LA CASILLA DEL TABLERO DIRECT
+                        Casilla objetivoAtacar = tablero.getCasilla(coordAtacar);
+                        atacar(tablero, objetivoAtacar,juego);//ESTO SE PODRIA CAMBIAR ELIMINANDO EL ATRIBUTO DE TABLERO EN ATACAR Y PASNADOLE LA CASILLA DEL TABLERO DIRECT
                         tablero.imprimirTablero();//PROVISIONAL
                         break;
                     case 2:
@@ -187,7 +187,7 @@ public class Zombie implements Activable {
                         System.out.println("Y:");
                         int y1 = ent.nextInt();
                         Coordenada coordMoverse = new Coordenada(x1, y1);
-                        Casilla objetivoMoverse = new Casilla(coordMoverse);
+                        Casilla objetivoMoverse = tablero.getCasilla(coordMoverse);
                         moverse(tablero, objetivoMoverse);
                         tablero.imprimirTablero();//PROVISIONAL
                         break;
@@ -209,7 +209,7 @@ public class Zombie implements Activable {
     }
 
     @Override
-    public void atacar(Tablero tablero, Casilla posicion) {
+    public void atacar(Tablero tablero, Casilla posicion,Juego juego) {
         //BUSCAMOS ESA CASILLA EN EL TABLERO
         Casilla casillaTablero = tablero.getCasilla(posicion.getCoordenada());
         Scanner ent = new Scanner(System.in);
@@ -253,7 +253,7 @@ public class Zombie implements Activable {
                 y = random1.nextInt(tablero.getFilas()); // Genera un número entre 0 y (alto-1)
                 coord = new Coordenada(x, y);
             } while (tablero.getCasilla(coord).getNumHumano().size() > 3);
-            Casilla casillaHumano = new Casilla(coord);
+            Casilla casillaHumano = tablero.getCasilla(coord);
             //CONSTRUCTOR DE HUMANO HUIDIZO
             HumanoHuidizo humano1 = new HumanoHuidizo(casillaHumano);
             //AGREGAMOS EL HUMANO HUIDIZO A ESA CASILLA
@@ -267,7 +267,7 @@ public class Zombie implements Activable {
             int x = random1.nextInt(tablero.getColumnas());
             int y = random1.nextInt(tablero.getFilas());
             Coordenada coord = new Coordenada(x, y);
-            Casilla casillaConejo = new Casilla(coord);
+            Casilla casillaConejo = tablero.getCasilla(coord);
             Conejo nuevoConejo = new Conejo("ConejoPrueba", 1, casillaConejo);
             ArrayList<Conejo> conejosEnCasilla = tablero.getCasilla(nuevoConejo.getCasilla().getCoordenada()).getNumConejos();
             conejosEnCasilla.add(nuevoConejo);

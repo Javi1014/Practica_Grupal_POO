@@ -68,7 +68,7 @@ public class Devorar extends Ataque {
                     if (comestible instanceof Humano humano) {
                         if (humano.getAguante() <= impactos) {
                             humano.calmarHambreZombie(zombie); // Devorar al humano
-                            //AQUI DEBERIAMOS METER EL SYSTEM.OUT.PRINTLN("TAL HUMANO HA MUERTO O HA SIDO DEVORADO POR TAL ZOMBIE")
+                            System.out.println("El humano ha muerto.");
                             humanosEnCasilla.remove(humano);
                             objetivo.setNumHumano(humanosEnCasilla); // Eliminar el humano de la casilla
                             ArrayList<Comestible> elementosConsumidos = zombie.getElementosConsumidos();
