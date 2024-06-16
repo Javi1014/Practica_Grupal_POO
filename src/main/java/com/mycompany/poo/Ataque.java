@@ -13,7 +13,7 @@ public abstract class Ataque {
     private int potencia;
     private int valorExito;
     private int alcance;
-
+   
     public Ataque(String nombre, int potencia, int valorExito, int alcance) {
         this.nombre = nombre;
         this.potencia = potencia;

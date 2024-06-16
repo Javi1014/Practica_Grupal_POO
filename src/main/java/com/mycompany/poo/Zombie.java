@@ -166,20 +166,34 @@ public class Zombie implements Activable {
     public void activarse(Tablero tablero, Juego juego) {
         if (estado.equals("ACTIVO")) {
             while (this.getNumAcciones() < this.maxAcciones) {
-                System.out.println("ZOMBIE : " + this.getNombre() + " ACCIONES DISPONIBLES: " + this.getNumAcciones());
+                System.out.println("ZOMBIE : " + this.getNombre() + " ACCIONES DISPONIBLES: " + this.getNumAcciones() + " NIVEL DE HAMBRE: " + this.getHambre());
                 System.out.println("Ingrese la accion que desea hacer (Atacar(1)/Moverse(2)/Buscar Comida(3)/No Hacer Nada(4)");
                 Scanner ent = new Scanner(System.in);
                 int opcion = ent.nextInt();
                 switch (opcion) {
                     case 1:
+                        System.out.println("Selecciona el ataque que deseas realizar:"+"\n"+"Devorar(1)[Alcance 0]//Ataque especial(2)");
+                        int op = ent.nextInt();
+                        switch (op){
+                            case 1:
+                                devorar.realizarAtaque(this, this.getCasilla());
+                                tablero.imprimirTablero();//PROVISIONAL
+                                break; 
+                            case 2:
+                                
+                                break;
+                        }
+                        /*
                         System.out.println("Ingrese la coordenada que desea atacar X:");
                         int x = ent.nextInt();
                         System.out.println("Y:");
                         int y = ent.nextInt();
                         Coordenada coordAtacar = new Coordenada(x, y);
                         Casilla objetivoAtacar = tablero.getCasilla(coordAtacar);
+                        
                         atacar(tablero, objetivoAtacar,juego);//ESTO SE PODRIA CAMBIAR ELIMINANDO EL ATRIBUTO DE TABLERO EN ATACAR Y PASNADOLE LA CASILLA DEL TABLERO DIRECT
                         tablero.imprimirTablero();//PROVISIONAL
+                        */
                         break;
                     case 2:
                         System.out.println("Ingrese la direccion en la que desea moverse:"+"\n"+"Arriba(1)/Abajo(2)/Izquierda(3)/Derecha(4)");

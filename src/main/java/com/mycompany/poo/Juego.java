@@ -151,9 +151,9 @@ public class Juego {
     }
     public void turnoZombi(){
     for(int i=0;i<this.getNumJug();i++){
-        //this.getListaJugadores().get(1).activarse(tablero, this);
+        
         tablero.imprimirTablero();
-        listaJugadores.get(0).activarse(tablero,this);
+        listaJugadores.get(i).activarse(tablero,this);
         
     }
     
@@ -161,7 +161,7 @@ public class Juego {
 
 public void turnoHumano(){
     for(int i=0;i<this.getListaHumanos().size();i++){
-        //this.getListaHumanos().get(1).activarse(tablero, this);
+        
         listaHumanos.get(i).activarse(tablero,this);
     }
     

@@ -71,17 +71,8 @@ public class HumanoHuidizo extends Humano {
 
     @Override
     public void atacar(Tablero tablero, Casilla posicion,Juego juego){
-        this.getCasilla().getNumZombie().get(0).setNumHeridas(this.getCasilla().getNumZombie().get(0).getNumHeridas()+1);
-        System.out.println("El zombie "+this.getCasilla().getNumZombie().get(0).getNombre()+" tiene "+this.getCasilla().getNumZombie().get(0).getNumHeridas()+" heridas");
-        if(this.getCasilla().getNumZombie().get(0).getNumHeridas()==5){
-            ArrayList<Zombie> zombies = this.getCasilla().getNumZombie();
-            ArrayList<Zombie> jugadores = this.getCasilla().getNumZombie();
-            System.out.println("El humano blindado ha matado al zombie "+this.getCasilla().getNumZombie().get(0).getNombre());
-            zombies.remove(this.getCasilla().getNumZombie().get(0));
-            this.getCasilla().setNumZombie(zombies);
-            juego.getListaJugadores().remove(jugadores.get(0));
-            juego.setListaJugadores(juego.getListaJugadores());
-        }
+       //EL H. HUIDIZO NO ATACA
+        
     } 
 
     @Override
@@ -94,7 +85,7 @@ public class HumanoHuidizo extends Humano {
         System.out.println("El humano huidizo se ha escapado.");
         
         }else{//SE MUEVE HACIA LA CASILLA DE SALIDA
-            if(!(this.getCasilla().getCoordenada().getX()==tablero.getColumnas())){
+            if(!(this.getCasilla().getCoordenada().getY()==tablero.getColumnas())){
                Coordenada objetivo = new Coordenada(this.getCasilla().getCoordenada().getX(),this.getCasilla().getCoordenada().getY()+1);
                Casilla nueva = new Casilla(objetivo);
                moverse(tablero, nueva);
