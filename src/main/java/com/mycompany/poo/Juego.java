@@ -23,6 +23,10 @@ public class Juego {
         this.tablero= new Tablero(numJug);
     }
 
+    public Tablero getTablero() {
+        return tablero;
+    }
+
     public int getNumJug() {
         return numJug;
     }
@@ -81,10 +85,17 @@ public class Juego {
         tablero.getCasilla(new Coordenada(1,0)).getNumConejos().add(con1);
         tablero.getCasilla(new Coordenada(1,0)).setNumConejos(tablero.getCasilla(new Coordenada(1,0)).getNumConejos());
         
+        //1
         tablero.imprimirTablero();
            
         Coordenada nueva=new Coordenada(tablero.getFilas()-1, tablero.getColumnas()-1);
         Casilla objetivo=tablero.getCasilla(nueva);
+        
+        
+        
+        
+        this.jugarJuego();
+        /*
         while(!listaJugadores.get(0).getCasilla().equals(objetivo)||!listaJugadores.isEmpty()){
             for(int i=0;i<listaJugadores.size();i++){
                 listaJugadores.get(i).activarse(tablero,this);
@@ -113,7 +124,49 @@ public class Juego {
         if(listaJugadores.isEmpty()){
                 System.out.println("El juego ha terminado porque los zombies han muerto");
             }
+*/
+
     }
+    
+    
+    public void jugarJuego(){
+       while(0==0){
+           this.turnoZombi();
+           this.turnoHumano();
+           
+           for(int i=0;i<this.getNumJug();i++){
+                Random random=new Random();
+                int numeroAleatorio1= random.nextInt(tablero.getFilas()-1);
+                int numeroAleatorio2= random.nextInt(tablero.getColumnas()-1);
+                Coordenada coor=new Coordenada(numeroAleatorio1, numeroAleatorio2);
+                Casilla posicion=tablero.getCasilla(coor);
+                Humano humano=Humano.aparicion(posicion);
+                this.listaHumanos.add(humano);
+                tablero.getCasilla(coor).getNumHumano().add(humano);
+                tablero.getCasilla(coor).setNumHumano(tablero.getCasilla(coor).getNumHumano());
+            }
+            tablero.imprimirTablero();
+       }
+       
+        
+    }
+    public void turnoZombi(){
+    for(int i=0;i<this.getNumJug();i++){
+        //this.getListaJugadores().get(1).activarse(tablero, this);
+        tablero.imprimirTablero();
+        listaJugadores.get(0).activarse(tablero,this);
+        
+    }
+    
+}
+
+public void turnoHumano(){
+    for(int i=0;i<this.getListaHumanos().size();i++){
+        //this.getListaHumanos().get(1).activarse(tablero, this);
+        listaHumanos.get(i).activarse(tablero,this);
+    }
+    
+}
         
 }
 
