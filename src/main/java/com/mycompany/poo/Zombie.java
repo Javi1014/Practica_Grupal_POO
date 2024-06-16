@@ -242,7 +242,7 @@ public class Zombie implements Activable {
                         tablero.imprimirTablero();//PROVISIONAL
                         break;
                     case 3:
-                        buscarComida(tablero);
+                        buscarComida(tablero,juego);
                         tablero.imprimirTablero();//PROVISIONAL
                         break;
                     case 4:
@@ -287,7 +287,7 @@ public class Zombie implements Activable {
         return casilla.getCoordenada();
     }
      */
-    public void buscarComida(Tablero tablero) {
+    public void buscarComida(Tablero tablero,Juego jue) {
         Random random = new Random();
         int resultado = random.nextInt(100); // Genera un número entre 0 y 99
 
@@ -309,7 +309,9 @@ public class Zombie implements Activable {
             //AGREGAMOS EL HUMANO HUIDIZO A ESA CASILLA
             ArrayList<Humano> humanosEnCasilla = tablero.getCasilla(humano1.getCasilla().getCoordenada()).getNumHumano();
             humanosEnCasilla.add(humano1);
+            jue.getListaHumanos().add(humano1);
             tablero.getCasilla(humano1.getCasilla().getCoordenada()).setNumHumano(humanosEnCasilla);
+            
             System.out.println("Ha aparecido un Humano Huidizo en la coordenada " + humano1.getCasilla().getCoordenada().toString());
         } else if (resultado < 80) {
             // 50% de probabilidad de aparecer un conejo (30+50=80)
