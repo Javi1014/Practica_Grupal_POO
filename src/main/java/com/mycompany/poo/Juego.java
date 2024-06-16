@@ -85,8 +85,8 @@ public class Juego {
         tablero.getCasilla(new Coordenada(1,0)).getNumConejos().add(con1);
         tablero.getCasilla(new Coordenada(1,0)).setNumConejos(tablero.getCasilla(new Coordenada(1,0)).getNumConejos());
         
-        //1
-        tablero.imprimirTablero();
+        
+        //tablero.imprimirTablero();
            
         Coordenada nueva=new Coordenada(tablero.getFilas()-1, tablero.getColumnas()-1);
         Casilla objetivo=tablero.getCasilla(nueva);
@@ -144,8 +144,7 @@ public class Juego {
                 this.listaHumanos.add(humano);
                 tablero.getCasilla(coor).getNumHumano().add(humano);
                 tablero.getCasilla(coor).setNumHumano(tablero.getCasilla(coor).getNumHumano());
-            }
-            tablero.imprimirTablero();
+            }      
        }
        
         

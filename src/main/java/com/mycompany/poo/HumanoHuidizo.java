@@ -5,6 +5,8 @@
 package com.mycompany.poo;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -84,6 +86,26 @@ public class HumanoHuidizo extends Humano {
 
     @Override
     public void activarse(Tablero tablero, Juego juego){
+        
+        if(this.getCasilla().getCoordenada()== new Coordenada(tablero.getFilas(),tablero.getColumnas())) {
+            //COMPRUEBA SI ESTA EN LA CASILLA DE SALIDA
+            //BORRA EL ZOMBI Q HA HUIDO
+            juego.getListaHumanos().remove(this);
+        System.out.println("El humano huidizo se ha escapado.");
+        
+        }else{//SE MUEVE HACIA LA CASILLA DE SALIDA
+            if(!(this.getCasilla().getCoordenada().getX()==tablero.getColumnas())){
+               Coordenada objetivo = new Coordenada(this.getCasilla().getCoordenada().getX(),this.getCasilla().getCoordenada().getY()+1);
+               Casilla nueva = new Casilla(objetivo);
+               moverse(tablero, nueva);
+            }else{
+                Coordenada objetivo = new Coordenada(this.getCasilla().getCoordenada().getX()+1,this.getCasilla().getCoordenada().getY());
+               Casilla nueva = new Casilla(objetivo);
+               moverse(tablero, nueva);
+            }
+        }
+        
+       /* 
         if(this.getCasilla().getNumZombie().isEmpty()){
             Coordenada objetivo=this.zombieMasCercano(tablero, juego);
             Casilla nueva= tablero.getCasilla(objetivo);
@@ -92,8 +114,11 @@ public class HumanoHuidizo extends Humano {
         }else{
             this.atacar(tablero,this.getCasilla(),juego);
         }
+*/
+
     }
+}
 
     
 
-}
+

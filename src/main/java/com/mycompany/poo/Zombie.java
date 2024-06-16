@@ -193,21 +193,25 @@ public class Zombie implements Activable {
                                 }
                                 break;
                             case 2:
-                               
+                               if(!(this.getCasilla().getCoordenada().getX()==tablero.getColumnas())){
                                 Coordenada coordMoverse2 = new Coordenada(this.getCasilla().getCoordenada().getX()+1, this.getCasilla().getCoordenada().getY());
                                 Casilla objetivoMoverse2 = tablero.getCasilla(coordMoverse2);
                                 moverse(tablero,objetivoMoverse2);
-                                
+                               }
                                 break;
                             case 3:
+                                if(!(this.getCasilla().getCoordenada().getY()==0)){
                                 Coordenada coordMoverse3 = new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY()-1);
                                 Casilla objetivoMoverse3 = tablero.getCasilla(coordMoverse3);
                                 moverse(tablero,objetivoMoverse3);
+                                }
                                 break;
                             case 4:
+                                if(!(this.getCasilla().getCoordenada().getX()==tablero.getFilas())){
                                 Coordenada coordMoverse4 = new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY()+1);
                                 Casilla objetivoMoverse4 = tablero.getCasilla(coordMoverse4);
                                 moverse(tablero,objetivoMoverse4);
+                                }
                                 break;
                                
                         }

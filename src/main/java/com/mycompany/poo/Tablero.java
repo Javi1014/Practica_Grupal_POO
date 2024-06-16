@@ -35,8 +35,8 @@ public class Tablero {
                 throw new IllegalArgumentException("Número no válido. Introduce un número del 1 al 4.");
         }
 
-        tableroGrafico = new TableroGrafico(this, filas, columnas);
-        actualizarTableroGrafico();
+       // tableroGrafico = new TableroGrafico(this, filas, columnas);
+        //actualizarTableroGrafico();
     }
 
     private void inicializarTablero(int filas, int columnas) {
