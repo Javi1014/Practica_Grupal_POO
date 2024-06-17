@@ -56,17 +56,16 @@ public class Devorar extends Ataque {
         if (!comestiblesEnCasilla.isEmpty()) {
             int dados = this.getPotencia() + zombie.getHambre(); //SI EN LA CASILLA HAY COMESTIBLES ENTONCES EMPEZAMOS
             int impactos = 0;
-            System.out.print("Valor Exito: " + this.getValorExito() + ". Has obtenido los siguentes numeros: ");
+            System.out.print("Valor Exito: " + this.getValorExito() + ". Has obtenido los siguentes numeros en el dado: ");
             for (int i = 0; i < dados; i++) {
                 int resultado = Dado.tirarDado();
-                System.out.print(resultado + ", ");//ESTO HAY QUE HACERLO UN POCO MAS EXPLICATIVO
+                System.out.print(resultado + ", ");
                 if (resultado >= this.getValorExito()) {
                     impactos++;
                 }
             }
             for (Comestible comestible : comestiblesEnCasilla) {
                 if (impactos > 0) {
-                    System.out.println("Has tenido exito en la accion devorar");
                     if (comestible instanceof Humano humano) {
                         if (humano.getAguante() <= impactos) {
                             humano.calmarHambreZombie(zombie); // Devorar al humano

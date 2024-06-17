@@ -22,8 +22,8 @@ public class AtaqueEspecial extends Ataque {
         "Grito Mortal",
         "Sombra de la Muerte"
     };
-    
-     public AtaqueEspecial() {
+
+    public AtaqueEspecial() {
         this(NOMBRES_ATAQUES[new Random().nextInt(NOMBRES_ATAQUES.length)]);
     }
 
@@ -131,12 +131,15 @@ public class AtaqueEspecial extends Ataque {
         if (!comestiblesEnCasilla.isEmpty()) {
             int dados = this.getPotencia() + zombie.getHambre(); //SI EN LA CASILLA HAY COMESTIBLES ENTONCES EMPEZAMOS
             int impactos = 0;
+            System.out.print("Valor Exito: " + this.getValorExito() + ". Has obtenido los siguentes numeros en el dado: ");
             for (int i = 0; i < dados; i++) {
                 int resultado = Dado.tirarDado();
+                System.out.print(resultado + ", ");
                 if (resultado >= this.getValorExito()) {
                     impactos++;
                 }
             }
+            System.out.print("Por lo que tienes "+impactos+" impactos.");
             for (Comestible comestible : comestiblesEnCasilla) {
                 if (impactos <= 0) {
                     break; // No quedan impactos
