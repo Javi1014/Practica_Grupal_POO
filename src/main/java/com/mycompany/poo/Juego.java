@@ -139,6 +139,11 @@ public class Juego {
                    this.getListaJugadores().get(i).setNumHeridas(this.getListaJugadores().get(i).getNumHeridas()+1);
                    System.out.println("El zombi "+this.getListaJugadores().get(i).getNombre()+" ha sufrido una herida por tener demasiado hambre.");
                }
+               //COMPROBAMOS SI SE HA MUERTO DE HAMBRE
+               
+               if(this.getListaJugadores().get(i).getNumHeridas()==5){
+                   this.getListaJugadores().get(i).setEstado("ELIMINADO");
+               }
            }
            
            this.turnoHumano();
@@ -164,8 +169,10 @@ public class Juego {
     for(int i=0;i<this.getNumJug();i++){
         
         tablero.imprimirTablero();
+        //COMPRUEBA SI ESTA VIVO O NO 
+        if(this.getListaJugadores().get(i).getEstado()=="ACTIVO"){
         listaJugadores.get(i).activarse(tablero,this);
-        
+        }
     }
     
 }

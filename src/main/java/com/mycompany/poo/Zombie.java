@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class Zombie implements Activable {
 
     private String nombre;
-    private String estado = "ACTIVO";
+    private String estado ;//SERA "ACTIVO" O "ELIMINADO"
     private final int maxAcciones = 3;
     private int numAcciones = 0;
     private ArrayList<Comestible> elementosConsumidos = new ArrayList<>();
