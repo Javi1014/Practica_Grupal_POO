@@ -132,6 +132,15 @@ public class Juego {
     public void jugarJuego(){
        while(0==0){
            this.turnoZombi();
+           
+           //SI TIENE 5 DE HAMBRE SUFRE UNA HERIDA
+           for(int i = 0;i<this.getNumJug();i++){
+               if(this.getListaJugadores().get(i).getHambre()==5){
+                   this.getListaJugadores().get(i).setNumHeridas(this.getListaJugadores().get(i).getNumHeridas()+1);
+                   System.out.println("El zombi "+this.getListaJugadores().get(i).getNombre()+" ha sufrido una herida por tener demasiado hambre.");
+               }
+           }
+           
            this.turnoHumano();
            
            for(int i=0;i<this.getNumJug();i++){
@@ -144,11 +153,13 @@ public class Juego {
                 this.listaHumanos.add(humano);
                 tablero.getCasilla(coor).getNumHumano().add(humano);
                 tablero.getCasilla(coor).setNumHumano(tablero.getCasilla(coor).getNumHumano());
-            }      
+            }  
+           
+           }
        }
        
         
-    }
+    
     public void turnoZombi(){
     for(int i=0;i<this.getNumJug();i++){
         

@@ -269,7 +269,8 @@ public class Seleccion extends javax.swing.JFrame {
             jLabel6.setVisible(true);
         }else{
             Juego juego = new Juego(numeroJug);
-            //juego.iniciarJuego();
+            juego.iniciarJuego();
+            
             this.dispose();
         }
     }//GEN-LAST:event_jButton5ActionPerformed
