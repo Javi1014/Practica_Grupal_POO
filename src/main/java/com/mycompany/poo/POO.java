@@ -19,7 +19,7 @@ public class POO {
         
         Scanner ent= new Scanner(System.in);
         System.out.println("Introduzca el numero de jugadores: ");
-        int numJug= ent.nextInt();
+        int numJug= ent .nextInt();
         Juego juego = new Juego(numJug);
         juego.iniciarJuego();
         

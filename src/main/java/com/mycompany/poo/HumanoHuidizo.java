@@ -70,7 +70,7 @@ public class HumanoHuidizo extends Humano {
 
 
     @Override
-    public void atacar(Tablero tablero, Casilla posicion,Juego juego){
+    public void atacar(Tablero tablero,Juego juego){
        //EL H. HUIDIZO NO ATACA
         
     } 

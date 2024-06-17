@@ -68,14 +68,14 @@ public class Soldado extends HumanoCombatiente {
             Casilla nueva= tablero.getCasilla(objetivo);
             this.moverse(tablero,nueva);
         }else{
-            this.atacar(tablero,this.getCasilla(),juego);
+            this.atacar(tablero,juego);
         }
     }
 
 
 
     @Override
-    public void atacar(Tablero tablero, Casilla posicion,Juego juego){
+    public void atacar(Tablero tablero,Juego juego){
         this.getCasilla().getNumZombie().get(0).setNumHeridas(this.getCasilla().getNumZombie().get(0).getNumHeridas()+1);
         System.out.println("El zombie "+this.getCasilla().getNumZombie().get(0).getNombre()+" tiene "+this.getCasilla().getNumZombie().get(0).getNumHeridas()+" heridas");
         if(this.getCasilla().getNumZombie().get(0).getNumHeridas()==5){

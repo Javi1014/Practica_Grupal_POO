@@ -74,7 +74,7 @@ public class Informatico extends HumanoCombatiente {
     }
 
     @Override
-    public void atacar(Tablero tablero, Casilla posicion,Juego juego){
+    public void atacar(Tablero tablero,Juego juego){
         this.getCasilla().getNumZombie().get(0).setNumHeridas(this.getCasilla().getNumZombie().get(0).getNumHeridas()+1);
         System.out.println("El zombie "+this.getCasilla().getNumZombie().get(0).getNombre()+" tiene "+this.getCasilla().getNumZombie().get(0).getNumHeridas()+" heridas");
         if(this.getCasilla().getNumZombie().get(0).getNumHeridas()==5){
@@ -111,8 +111,8 @@ public class Informatico extends HumanoCombatiente {
             opcion4 = tablero.getCasilla(opc4);
         }
         if(!this.getCasilla().getNumZombie().isEmpty()){
-            this.atacar(tablero,this.getCasilla(),juego);
-            this.atacar(tablero,this.getCasilla(),juego);
+            this.atacar(tablero,juego);
+            this.atacar(tablero,juego);
         }else if(opcion1.getNumZombie().isEmpty()&&opcion2.getNumZombie().isEmpty()&&opcion3.getNumZombie().isEmpty()&&opcion4.getNumZombie().isEmpty()){
             Coordenada objetivo=this.zombieMasCercano(tablero, juego);
             Casilla nueva= tablero.getCasilla(objetivo);
@@ -123,16 +123,16 @@ public class Informatico extends HumanoCombatiente {
         }
         else{
             if(!opcion1.getNumZombie().isEmpty()){
-                this.atacar(tablero,opcion1,juego);
+                this.atacar(tablero,juego);
             }
             else if(!opcion2.getNumZombie().isEmpty()){
-                this.atacar(tablero,opcion2,juego);
+                this.atacar(tablero,juego);
             }
             else if(!opcion3.getNumZombie().isEmpty()){
-                this.atacar(tablero,opcion3,juego);
+                this.atacar(tablero,juego);
             }
             else{
-                this.atacar(tablero,opcion4,juego);
+                this.atacar(tablero,juego);
             }
         }
     }
