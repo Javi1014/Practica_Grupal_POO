@@ -69,14 +69,15 @@ public class Devorar extends Ataque {
                     if (comestible instanceof Humano humano) {
                         if (humano.getAguante() <= impactos) {
                             humano.calmarHambreZombie(zombie); // Devorar al humano
-                            System.out.println("El humano ha muerto.");
                             humanosEnCasilla.remove(humano);
                             objetivo.setNumHumano(humanosEnCasilla); // Eliminar el humano de la casilla
                             ArrayList<Comestible> elementosConsumidos = zombie.getElementosConsumidos();
                             elementosConsumidos.add(humano);
                             zombie.setElementosConsumidos(elementosConsumidos);
-                            System.out.println(this.getNombre() + " ha matado un humano ");
-                            juego.getListaHumanos().remove(humano);
+                            ArrayList<Humano> humanosJuego = juego.getListaHumanos();
+                            humanosJuego.remove(humano);
+                            juego.setListaHumanos(humanosJuego);
+                            System.out.println(this.getNombre() + " ha matado a un " + humano.getClass().getSimpleName());
                             break; // Salir del bucle FOR COMESTIBLE después de devorar un objetivo
                         }
                     } else if (comestible instanceof Conejo conejo) {
@@ -88,7 +89,9 @@ public class Devorar extends Ataque {
                         elementosConsumidos.add(conejo);
                         zombie.setElementosConsumidos(elementosConsumidos);
                         System.out.println(this.getNombre() + " ha matado al conejo " + conejo.getNombre());
-                        juego.getListaConejos().remove(conejo);
+                        ArrayList<Conejo> conejosJuego = juego.getListaConejos();
+                        conejosJuego.remove(conejo);
+                        juego.setListaConejos(conejosJuego);;
                         break; // Salir del bucle después de devorar un objetivo
                     }
                 } else {

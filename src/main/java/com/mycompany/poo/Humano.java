@@ -19,7 +19,7 @@ public abstract class Humano implements Comestible, Activable {
     public Humano(int num_activaciones, int aguante, Casilla casilla) {
         this.num_activaciones = num_activaciones;
         this.aguante = aguante;
-        this.casilla=casilla;
+        this.casilla = casilla;
     }
 
     public int getNum_activaciones() {
@@ -49,33 +49,38 @@ public abstract class Humano implements Comestible, Activable {
     public static Humano aparicion(Casilla casilla) {
         Humano humano;
         Random random = new Random();
-        int numeroAleatorio= random.nextInt(99)+1;
-        if (numeroAleatorio<=60){
-            int numeroAleatorio2 = random.nextInt(100)+1;
-            if (numeroAleatorio2 <=60){
+        int numeroAleatorio = random.nextInt(99) + 1;
+        if (numeroAleatorio <= 60) {
+            int numeroAleatorio2 = random.nextInt(100) + 1;
+            if (numeroAleatorio2 <= 60) {
                 humano = new Blindado(casilla);
-            }else if (numeroAleatorio2>60 && numeroAleatorio2<=90){
+            } else if (numeroAleatorio2 > 60 && numeroAleatorio2 <= 90) {
                 humano = new Especialista(casilla);
-            }else {
+            } else {
                 humano = new Soldado(casilla);
             }
-        }else if((numeroAleatorio>60)&&(numeroAleatorio<=85)){
-            humano=new HumanoHuidizo(casilla);
-        }else{
+        } else if ((numeroAleatorio > 60) && (numeroAleatorio <= 85)) {
+            humano = new HumanoHuidizo(casilla);
+        } else {
             humano = new Informatico(casilla);
         }
         return humano;
     }
-    
-    public Coordenada zombieMasCercano(Tablero tablero, Juego juego){
-      Coordenada coormascerca = juego.getListaJugadores().get(0).getCasilla().getCoordenada();
-        int distancia = 300;
-        for(int i=0;i<juego.getNumJug();i++){
-            if( (tablero.calcularDistancia(this.getCasilla(),juego.getListaJugadores().get(i).getCasilla()) < distancia)){
-                coormascerca.setX(juego.getListaJugadores().get(i).getCasilla().getCoordenada().getX());
-                coormascerca.setY(juego.getListaJugadores().get(i).getCasilla().getCoordenada().getY());
+
+    public Coordenada zombieMasCercano(Tablero tablero, Juego juego) {
+        Coordenada coormascerca = null;
+        int distanciaMinima = 300;
+
+        for (int i = 0; i < juego.getNumJug(); i++) {
+            Coordenada coordZombie = juego.getListaJugadores().get(i).getCasilla().getCoordenada();
+            int distancia = tablero.calcularDistancia(this.getCasilla(), juego.getListaJugadores().get(i).getCasilla());
+
+            if (distancia < distanciaMinima) {
+                distanciaMinima = distancia;
+                coormascerca = coordZombie;
             }
         }
+
         return coormascerca;
     }
 }

@@ -13,19 +13,16 @@ import java.util.Scanner;
  * @author nieto
  */
 public class Juego {
+
     private int numJug;
     private Tablero tablero;
     private ArrayList<Zombie> listaJugadores = new ArrayList<>();
     private ArrayList<Humano> listaHumanos = new ArrayList<>();
     private ArrayList<Conejo> listaConejos = new ArrayList<>();
-    
-    public Juego(int numJug){
-        this.numJug=numJug;
-        this.tablero= new Tablero(numJug);
-    }
 
-    public Tablero getTablero() {
-        return tablero;
+    public Juego(int numJug) {
+        this.numJug = numJug;
+        this.tablero = new Tablero(numJug);
     }
 
     public int getNumJug() {
@@ -59,143 +56,89 @@ public class Juego {
     public void setListaConejos(ArrayList<Conejo> listaConejos) {
         this.listaConejos = listaConejos;
     }
-    
-    
-    
-    public void iniciarJuego(){
-        //INICIA JUEGO CON EL NUMERO DE JUGADORES QUE VAN A SER
-        Coordenada inicio=new Coordenada(0,0);
-        Casilla comienzo=tablero.getCasilla(inicio);
-        for(int i=1;i<=this.numJug;i++){
+
+    public void iniciarJuego() {
+
+        Coordenada inicio = new Coordenada(0, 0);
+        Casilla comienzo = new Casilla(inicio);
+        for (int i = 1; i <= this.numJug; i++) {
             Scanner ent = new Scanner(System.in);
-            System.out.println("Nombre "+i);
-            String nombre=ent.nextLine();
-            Zombie zom=new Zombie(nombre, "ACTIVO",0,0,comienzo );
+            System.out.println("Nombre " + i);
+            String nombre = ent.nextLine();
+            Zombie zom = new Zombie(nombre, "ACTIVO", 0, 0, comienzo);
             tablero.getCasilla(inicio).getNumZombie().add(zom);
-            //tablero.getCasilla(inicio).setNumZombie(tablero.getCasilla(inicio).getNumZombie()); NO HACE FALTA PQ CON EL GET SE PASA UNA REFERENCIA
+            tablero.getCasilla(inicio).setNumZombie(tablero.getCasilla(inicio).getNumZombie());
             this.listaJugadores.add(zom);
         }
-        //SE CREAN 3 HUMANOS POR CADA JUGADOR
-        for(int i=0;i<numJug;i++){
-            for(int j=0;j<3;j++){
-                Random random=new Random();
-                int numeroAleatorio1= random.nextInt(tablero.getFilas()-1);
-                int numeroAleatorio2= random.nextInt(tablero.getColumnas()-1);
-                Coordenada coor=new Coordenada(numeroAleatorio1, numeroAleatorio2);
-                Casilla posicion=tablero.getCasilla(coor);
-                Humano humano=Humano.aparicion(posicion);
+        for (int i = 0; i < numJug; i++) {
+            for (int j = 0; j < 3; j++) {
+                Random random = new Random();
+                int numeroAleatorio1 = random.nextInt(tablero.getFilas() - 1);
+                int numeroAleatorio2 = random.nextInt(tablero.getColumnas() - 1);
+                Coordenada coor = new Coordenada(numeroAleatorio1, numeroAleatorio2);
+                Casilla posicion = tablero.getCasilla(coor);
+                Humano humano = Humano.aparicion(posicion);
                 this.listaHumanos.add(humano);
                 tablero.getCasilla(coor).getNumHumano().add(humano);
                 //tablero.getCasilla(coor).setNumHumano(tablero.getCasilla(coor).getNumHumano());
             }
         }
-        //SE CREA UN CONEJO DE PRUEBA
-        Conejo con1=new Conejo("Pep",1,tablero.getCasilla(new Coordenada(1,0)));
-        tablero.getCasilla(new Coordenada(1,0)).getNumConejos().add(con1);
-        tablero.getCasilla(new Coordenada(1,0)).setNumConejos(tablero.getCasilla(new Coordenada(1,0)).getNumConejos());
+        Conejo con1 = new Conejo("Pep", 1, tablero.getCasilla(new Coordenada(1, 0)));
+        tablero.getCasilla(new Coordenada(1, 0)).getNumConejos().add(con1);
+        tablero.getCasilla(new Coordenada(1, 0)).setNumConejos(tablero.getCasilla(new Coordenada(1, 0)).getNumConejos());
         this.listaConejos.add(con1);
-        
-        
-        //tablero.imprimirTablero();
-           
-        Coordenada nueva=new Coordenada(tablero.getFilas()-1, tablero.getColumnas()-1);
-        Casilla objetivo=tablero.getCasilla(nueva);
-        
-        
-        
-        
-        this.jugarJuego();
-        /*
-        while(!listaJugadores.get(0).getCasilla().equals(objetivo)||!listaJugadores.isEmpty()){
-            for(int i=0;i<listaJugadores.size();i++){
-                listaJugadores.get(i).activarse(tablero,this);
-            }
-            for(int j=0;j<listaHumanos.size();j++){
-                if(listaJugadores.isEmpty()){
-                    break;
-                }
-                else{
-                    listaHumanos.get(j).activarse(tablero, this);
+
+        Coordenada nueva = new Coordenada(tablero.getFilas() - 1, tablero.getColumnas() - 1);
+        Casilla objetivo = tablero.getCasilla(nueva);
+
+        tablero.imprimirTablero();
+
+        while (0 == 0) {
+            for (int i = 0; i < this.getNumJug(); i++) {
+                //COMPRUEBA SI ESTA VIVO O NO 
+                if ("ACTIVO".equals(this.getListaJugadores().get(i).getEstado())) {
+                    listaJugadores.get(i).activarse(this.tablero, this);
                 }
             }
-            for(int x=0;x<listaJugadores.size();x++){
-                Random random=new Random();
-                int numeroAleatorio1= random.nextInt(tablero.getFilas()-1);
-                int numeroAleatorio2= random.nextInt(tablero.getColumnas()-1);
-                Coordenada coor=new Coordenada(numeroAleatorio1, numeroAleatorio2);
-                Casilla posicion=tablero.getCasilla(coor);
-                Humano humano=Humano.aparicion(posicion);
+            for (Humano humano : this.getListaHumanos()) {
+                if (!listaJugadores.isEmpty()) {
+                    humano.activarse(this.tablero, this);
+                }
+            }
+            for (int i = 0; i < this.getNumJug(); i++) {
+                Random random = new Random();
+                int numeroAleatorio1 = random.nextInt(tablero.getFilas() - 1);
+                int numeroAleatorio2 = random.nextInt(tablero.getColumnas() - 1);
+                Coordenada coor = new Coordenada(numeroAleatorio1, numeroAleatorio2);
+                Casilla posicion = tablero.getCasilla(coor);
+                Humano humano = Humano.aparicion(posicion);
                 this.listaHumanos.add(humano);
                 tablero.getCasilla(coor).getNumHumano().add(humano);
-                tablero.getCasilla(coor).setNumHumano(tablero.getCasilla(coor).getNumHumano());
+                //tablero.getCasilla(coor).setNumHumano(tablero.getCasilla(coor).getNumHumano());
             }
             tablero.imprimirTablero();
         }
-        if(listaJugadores.isEmpty()){
-                System.out.println("El juego ha terminado porque los zombies han muerto");
-            }
-*/
 
-    }
-    
-    
-    public void jugarJuego(){
-       while(0==0){
-           this.turnoZombi();
-           
-           //SI TIENE 5 DE HAMBRE SUFRE UNA HERIDA
-           for(int i = 0;i<this.getNumJug();i++){
-               if(this.getListaJugadores().get(i).getHambre()==5){
-                   this.getListaJugadores().get(i).setNumHeridas(this.getListaJugadores().get(i).getNumHeridas()+1);
-                   System.out.println("El zombi "+this.getListaJugadores().get(i).getNombre()+" ha sufrido una herida por tener demasiado hambre.");
-               }
-               //COMPROBAMOS SI SE HA MUERTO DE HAMBRE
-               
-               if(this.getListaJugadores().get(i).getNumHeridas()==5){
-                   this.getListaJugadores().get(i).setEstado("ELIMINADO");
-                   System.out.println("El zombie "+this.getListaJugadores().get(i).getNombre()+" se ha muerto de hambre.");
-               }
-           }
-           
-           this.turnoHumano();
-           
-           for(int i=0;i<this.getNumJug();i++){
-                Random random=new Random();
-                int numeroAleatorio1= random.nextInt(tablero.getFilas()-1);
-                int numeroAleatorio2= random.nextInt(tablero.getColumnas()-1);
-                Coordenada coor=new Coordenada(numeroAleatorio1, numeroAleatorio2);
-                Casilla posicion=tablero.getCasilla(coor);
-                Humano humano=Humano.aparicion(posicion);
-                this.listaHumanos.add(humano);
-                tablero.getCasilla(coor).getNumHumano().add(humano);
-                tablero.getCasilla(coor).setNumHumano(tablero.getCasilla(coor).getNumHumano());
-            }  
-           
-           }
-       }
-       
-        
-    
-    public void turnoZombi(){
-    for(int i=0;i<this.getNumJug();i++){
-        
+        /*
+        Humano humano1 = new HumanoHuidizo(tablero.getCasilla(new Coordenada(2,1)));
+        tablero.getCasilla(new Coordenada(2,1)).getNumHumano().add(humano1);
+        tablero.getCasilla(new Coordenada(2,1)).setNumHumano(tablero.getCasilla(new Coordenada(2,1)).getNumHumano());
+        Humano humano2 = new HumanoHuidizo(tablero.getCasilla(new Coordenada(2,3)));
+        tablero.getCasilla(new Coordenada(2,3)).getNumHumano().add(humano2);
+        tablero.getCasilla(new Coordenada(2,3)).setNumHumano(tablero.getCasilla(new Coordenada(2,3)).getNumHumano());
+        Conejo con1=new Conejo("Pep",1,tablero.getCasilla(new Coordenada(1,0)));
+        tablero.getCasilla(new Coordenada(1,0)).getNumConejos().add(con1);
+        tablero.getCasilla(new Coordenada(1,0)).setNumConejos(tablero.getCasilla(new Coordenada(1,0)).getNumConejos());
+        Zombie zombie1 = tablero.getCasilla(inicio).getNumZombie().get(0);
+        Zombie zombie2 = tablero.getCasilla(inicio).getNumZombie().get(1);
         tablero.imprimirTablero();
-        //COMPRUEBA SI ESTA VIVO O NO 
-        if("ACTIVO".equals(this.getListaJugadores().get(i).getEstado())){
-        listaJugadores.get(i).activarse(tablero,this);
-        }
-    }
-    
-}
 
-public void turnoHumano(){
-    for(int i=0;i<this.getListaHumanos().size();i++){
-        if(!listaJugadores.isEmpty()){
-            listaHumanos.get(i).activarse(tablero,this);
+        for(int i=0;i<=1;i++){
+            zombie1.activarse(this.tablero,this);
+            zombie2.activarse(this.tablero,this);
+            
         }
+         */
     }
-    
-}
-        
-}
 
+}

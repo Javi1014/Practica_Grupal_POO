@@ -96,7 +96,7 @@ public class Zombie implements Activable {
         int xDestino = posicion.getCoordenada().getX();
         int yDestino = posicion.getCoordenada().getY();
 
-        // Verifica si la casilla posicion es contigua en sentido vertical u horizontal
+        // Verifica si la casilla Destino o Posicion es contigua en sentido vertical u horizontal
         boolean esContiguaHorizontalmente = (xActual == xDestino) && (Math.abs(yActual - yDestino) == 1);
         boolean esContiguaVerticalmente = (yActual == yDestino) && (Math.abs(xActual - xDestino) == 1);
 
@@ -172,7 +172,7 @@ public class Zombie implements Activable {
                 int opcion = ent.nextInt();
                 switch (opcion) {
                     case 1:
-                        atacar(tablero,juego);
+                        this.atacar(tablero, juego);
                         tablero.imprimirTablero();
                         /*System.out.println("Selecciona el ataque que deseas realizar:"+"\n"+"Devorar(1)[Alcance 0]//Ataque especial(2)");
                         int op = ent.nextInt();
@@ -245,7 +245,19 @@ public class Zombie implements Activable {
             }
             if (this.getHambre() < 5) {
                 this.setHambre(this.getHambre() + 1);
+            } else {
+                this.setNumHeridas(this.getNumHeridas() + 1);
+                System.out.println("El zombi " + this.getNombre() + " ha sufrido una herida por tener demasiado hambre.");
             }
+            if (this.getNumHeridas() >= 5) {
+                this.setEstado("ELIMINADO");
+                Casilla casillaTablero= tablero.getCasilla(this.getCasilla().getCoordenada());
+                casillaTablero.getNumZombie().remove(this);
+                juego.getListaJugadores().remove(this);
+                
+                System.out.println("El zombie " + this.getNombre() + " se ha muerto de hambre.");
+            }
+
             setNumAcciones(0);
         }
     }
@@ -257,7 +269,7 @@ public class Zombie implements Activable {
         int opcion = op.nextInt();
         if (opcion == 1) {
             Casilla casillaTablero = tablero.getCasilla(this.getCasilla().getCoordenada());
-            devorar.realizarAtaque(this, casillaTablero,juego);
+            devorar.realizarAtaque(this, casillaTablero, juego);
         } else if (opcion == 2) {
             System.out.print("Ingrese la coordenada que desea atacar X:");
             int x = op.nextInt();

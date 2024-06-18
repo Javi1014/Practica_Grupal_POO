@@ -154,7 +154,9 @@ public class AtaqueEspecial extends Ataque {
                         elementosConsumidos.add(humano);
                         zombie.setElementosConsumidos(elementosConsumidos);
                         impactos -= humano.getAguante(); // Decrementar la cantidad de impactos restantes
-                        juego.getListaHumanos().remove(humano);
+                        ArrayList<Humano> humanosJuego=juego.getListaHumanos();
+                        humanosJuego.remove(humano);
+                        juego.setListaHumanos(humanosJuego);
                         System.out.println(this.getNombre() + " ha matado a un " + humano.getClass().getSimpleName());
                     }
                 } else if (comestible instanceof Conejo conejo) {
@@ -167,7 +169,9 @@ public class AtaqueEspecial extends Ataque {
                         elementosConsumidos.add(conejo);
                         zombie.setElementosConsumidos(elementosConsumidos);
                         impactos--; // Decrementar la cantidad de impactos restantes
-                        juego.getListaConejos().remove(conejo);
+                        ArrayList<Conejo> conejosJuego=juego.getListaConejos();
+                        conejosJuego.remove(conejo);
+                        juego.setListaConejos(conejosJuego);
                         System.out.println(this.getNombre() + " ha matado al conejo " + conejo.getNombre());
                     }
                 }

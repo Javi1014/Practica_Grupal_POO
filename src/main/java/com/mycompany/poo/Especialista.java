@@ -16,8 +16,8 @@ public class Especialista extends HumanoCombatiente {
         super(2, 1, casilla);
     }
 
-   @Override
-    public void moverse(Tablero tablero, Casilla posicion){
+    @Override
+    public void moverse(Tablero tablero, Casilla posicion) {
         Casilla nueva;
         if (Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX()) <= Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY()) && this.getCasilla().getCoordenada().getY() > posicion.getCoordenada().getY()) {
             nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() - 1));
@@ -28,7 +28,7 @@ public class Especialista extends HumanoCombatiente {
         } else {
             nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX() + 1, this.getCasilla().getCoordenada().getY()));
         }
-        
+
         int xActual = this.getCasilla().getCoordenada().getX();
         int yActual = this.getCasilla().getCoordenada().getY();
         int xDestino = nueva.getCoordenada().getX();
@@ -50,50 +50,49 @@ public class Especialista extends HumanoCombatiente {
             casillaObjetivo.setNumHumano(humanosCasillaObjetivo);
 
             this.setCasilla(casillaObjetivo);
-            System.out.println("El especialista se ha movido a la posicion "  + nueva.getCoordenada().getX()+" "+nueva.getCoordenada().getY());
-        }
-        else {
+            System.out.println("El especialista se ha movido a la posicion " + nueva.getCoordenada().getX() + " " + nueva.getCoordenada().getY());
+        } else {
             System.out.println("El especialista no se puede mover porque esta rodeado de zombies, utiliza la accion en otra accion diferente a moverse");
         }
-        
+
     }
-    
 
     @Override
     public void calmarHambreZombie(Zombie zombie) {
         zombie.setHambre(0);
     }
 
-
     @Override
-    public void atacar(Tablero tablero,Juego juego){
-        if(this.getCasilla().getNumZombie().get(0).getNumHeridas()==5){
-            //NO HACE NADA
-        }
-        else{
-            this.getCasilla().getNumZombie().get(0).setNumHeridas(this.getCasilla().getNumZombie().get(0).getNumHeridas()+1);
-            System.out.println("El zombie "+this.getCasilla().getNumZombie().get(0).getNombre()+" tiene "+this.getCasilla().getNumZombie().get(0).getNumHeridas()+" heridas");
-            if(this.getCasilla().getNumZombie().get(0).getNumHeridas()==5){
-                ArrayList<Zombie> zombies = this.getCasilla().getNumZombie();
-                ArrayList<Zombie> jugadores = this.getCasilla().getNumZombie();
-                System.out.println("El humano blindado ha matado al zombie "+this.getCasilla().getNumZombie().get(0).getNombre());
-                zombies.remove(this.getCasilla().getNumZombie().get(0));
-                this.getCasilla().setNumZombie(zombies);
+    public void atacar(Tablero tablero, Juego juego) {
+        Casilla casillaTablero = tablero.getCasilla(this.getCasilla().getCoordenada());
+        if (casillaTablero.getNumZombie().get(0).getNumHeridas() < 5) {
+            casillaTablero.getNumZombie().get(0).setNumHeridas(casillaTablero.getNumZombie().get(0).getNumHeridas() + 1);
+            System.out.println("El zombie " + casillaTablero.getNumZombie().get(0).getNombre() + " tiene " + casillaTablero.getNumZombie().get(0).getNumHeridas() + " heridas");
+            if (casillaTablero.getNumZombie().get(0).getNumHeridas() == 5) {
+                ArrayList<Zombie> zombies = casillaTablero.getNumZombie();
+                ArrayList<Zombie> jugadores = casillaTablero.getNumZombie();
+                System.out.println("El humano blindado ha matado al zombie " + casillaTablero.getNumZombie().get(0).getNombre());
+                zombies.remove(casillaTablero.getNumZombie().get(0));
+                casillaTablero.setNumZombie(zombies);
                 juego.getListaJugadores().remove(jugadores.get(0));
                 juego.setListaJugadores(juego.getListaJugadores());
             }
         }
-    } 
-
+    }
 
     @Override
-    public void activarse(Tablero tablero, Juego juego){
-        if(this.getCasilla().getNumZombie().isEmpty()){
-            Coordenada objetivo=this.zombieMasCercano(tablero, juego);
-            Casilla nueva= tablero.getCasilla(objetivo);
-            this.moverse(tablero,nueva);
-        }else{
-            this.atacar(tablero,juego);
+    public void activarse(Tablero tablero, Juego juego) {
+        for (int i = 1; i <= this.getNum_activaciones(); i++) {
+            if (this.getCasilla().getNumZombie().isEmpty()) {
+                Coordenada objetivo = this.zombieMasCercano(tablero, juego);
+                Casilla nueva = tablero.getCasilla(objetivo);
+                this.moverse(tablero, nueva);
+                tablero.imprimirTablero();
+            } else {
+                this.atacar(tablero, juego);
+                tablero.imprimirTablero();
+            }
         }
+
     }
 }

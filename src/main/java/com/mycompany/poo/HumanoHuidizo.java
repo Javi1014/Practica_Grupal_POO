@@ -21,7 +21,7 @@ public class HumanoHuidizo extends Humano {
     @Override
     public void moverse(Tablero tablero, Casilla posicion) {
         Casilla nueva;
-        if (Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX()) <= Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY()) && this.getCasilla().getCoordenada().getY() > posicion.getCoordenada().getY()) {
+        if ((Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX()) <= Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY())) && (this.getCasilla().getCoordenada().getY() > posicion.getCoordenada().getY())) {
             nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() - 1));
         } else if (Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX()) < Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY()) && this.getCasilla().getCoordenada().getY() < posicion.getCoordenada().getY()) {
             nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() + 1));
@@ -77,6 +77,7 @@ public class HumanoHuidizo extends Humano {
             //BORRA EL ZOMBI Q HA HUIDO
             juego.getListaHumanos().remove(this);
             System.out.println("El humano huidizo se ha escapado.");
+            tablero.imprimirTablero();
 
         } else {//SE MUEVE HACIA LA CASILLA DE SALIDA
             if (!(this.getCasilla().getCoordenada().getY() == tablero.getColumnas())) {
@@ -88,6 +89,7 @@ public class HumanoHuidizo extends Humano {
                 Casilla nueva = tablero.getCasilla(objetivo);
                 moverse(tablero, nueva);
             }
+            tablero.imprimirTablero();
         }
 
         

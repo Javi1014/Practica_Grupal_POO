@@ -58,7 +58,6 @@ public class Tablero {
 
                 if (!casillas[i][j].getNumZombie().isEmpty()) {
                     for (Zombie zombie : casillas[i][j].getNumZombie()) {
-                        //AQUI HABRIA QUE AÑADIR LA CONDICION DE QUE EL ZOMBIE NO ESTE ELIMINADO
                         contenido += "Z:" + zombie.getNombre() + " ";
                     }
                 }
@@ -113,11 +112,11 @@ public class Tablero {
     
     public int calcularDistancia(Casilla c1, Casilla c2){
         int disttotal = 0;
-        if (!(c1.getCoordenada().getX() == c2.getCoordenada().getX())) {
-            disttotal = disttotal + Math.abs(c1.getCoordenada().getX() - c2.getCoordenada().getX());
+        if (!(c1.getCoordenada().getX() == c2.getCoordenada().getX())) {//SI SUS X NO SON IGUALES
+            disttotal = disttotal + Math.abs(c1.getCoordenada().getX() - c2.getCoordenada().getX());//SUMA A 0 LA DISTANCIA DE X
         }
-        if (!(c1.getCoordenada().getY() == c2.getCoordenada().getY())) {
-            disttotal = disttotal + Math.abs(c1.getCoordenada().getY() - c2.getCoordenada().getY());
+        if (!(c1.getCoordenada().getY() == c2.getCoordenada().getY())) {//SI SUS Y NO SON IGUALES
+            disttotal = disttotal + Math.abs(c1.getCoordenada().getY() - c2.getCoordenada().getY());//SUMA A LO ANTERIOR LA DISTANCIA DE Y
         }
         
         return disttotal; 
