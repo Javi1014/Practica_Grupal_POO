@@ -257,7 +257,7 @@ public class Zombie implements Activable {
         int opcion = op.nextInt();
         if (opcion == 1) {
             Casilla casillaTablero = tablero.getCasilla(this.getCasilla().getCoordenada());
-            devorar.realizarAtaque(this, casillaTablero);
+            devorar.realizarAtaque(this, casillaTablero,juego);
         } else if (opcion == 2) {
             System.out.print("Ingrese la coordenada que desea atacar X:");
             int x = op.nextInt();
@@ -269,7 +269,7 @@ public class Zombie implements Activable {
             int dy = Math.abs(this.getCasilla().getCoordenada().getY() - objetivoAtacar.getCoordenada().getY());
 
             if ((dx + dy) <= ataqueEspecial.getAlcance()) {
-                ataqueEspecial.realizarAtaque(this, objetivoAtacar);
+                ataqueEspecial.realizarAtaque(this, objetivoAtacar, juego);
             } else {
                 System.out.println("El zombie " + this.getNombre() + " ha malgastado una accion ya que no se puede alcanzar con el ataque esta posicion " + this.getCasilla().getCoordenada().toString());
             }
@@ -341,6 +341,7 @@ public class Zombie implements Activable {
             ArrayList<Conejo> conejosEnCasilla = tablero.getCasilla(nuevoConejo.getCasilla().getCoordenada()).getNumConejos();
             conejosEnCasilla.add(nuevoConejo);
             tablero.getCasilla(nuevoConejo.getCasilla().getCoordenada()).setNumConejos(conejosEnCasilla);
+            jue.getListaConejos().add(nuevoConejo);
             System.out.println("Ha aparecido un Conejo en la coordenada " + nuevoConejo.getCasilla().getCoordenada().toString());
         } else {
             // 20% de probabilidad de no aparecer nada

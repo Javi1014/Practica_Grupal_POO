@@ -17,7 +17,7 @@ public class Devorar extends Ataque {
     }
 
     @Override
-    public void realizarAtaque(Zombie zombie, Casilla objetivo) {
+    public void realizarAtaque(Zombie zombie, Casilla objetivo, Juego juego) {
 
         ArrayList<Conejo> conejosEnCasilla = objetivo.getNumConejos();
         ArrayList<Humano> humanosEnCasilla = objetivo.getNumHumano();
@@ -76,6 +76,7 @@ public class Devorar extends Ataque {
                             elementosConsumidos.add(humano);
                             zombie.setElementosConsumidos(elementosConsumidos);
                             System.out.println(this.getNombre() + " ha matado un humano ");
+                            juego.getListaHumanos().remove(humano);
                             break; // Salir del bucle FOR COMESTIBLE después de devorar un objetivo
                         }
                     } else if (comestible instanceof Conejo conejo) {
@@ -87,6 +88,7 @@ public class Devorar extends Ataque {
                         elementosConsumidos.add(conejo);
                         zombie.setElementosConsumidos(elementosConsumidos);
                         System.out.println(this.getNombre() + " ha matado al conejo " + conejo.getNombre());
+                        juego.getListaConejos().remove(conejo);
                         break; // Salir del bucle después de devorar un objetivo
                     }
                 } else {

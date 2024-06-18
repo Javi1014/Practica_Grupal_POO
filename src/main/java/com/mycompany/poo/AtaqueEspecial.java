@@ -95,7 +95,7 @@ public class AtaqueEspecial extends Ataque {
     }
 
     @Override
-    public void realizarAtaque(Zombie zombie, Casilla objetivo) {
+    public void realizarAtaque(Zombie zombie, Casilla objetivo, Juego juego) {
         ArrayList<Conejo> conejosEnCasilla = objetivo.getNumConejos();
         ArrayList<Humano> humanosEnCasilla = objetivo.getNumHumano();
 
@@ -139,7 +139,7 @@ public class AtaqueEspecial extends Ataque {
                     impactos++;
                 }
             }
-            System.out.print("Por lo que tienes "+impactos+" impactos.");
+            System.out.println("Por lo que tienes "+impactos+" impactos.");
             for (Comestible comestible : comestiblesEnCasilla) {
                 if (impactos <= 0) {
                     break; // No quedan impactos
@@ -154,6 +154,7 @@ public class AtaqueEspecial extends Ataque {
                         elementosConsumidos.add(humano);
                         zombie.setElementosConsumidos(elementosConsumidos);
                         impactos -= humano.getAguante(); // Decrementar la cantidad de impactos restantes
+                        juego.getListaHumanos().remove(humano);
                         System.out.println(this.getNombre() + " ha matado a un " + humano.getClass().getSimpleName());
                     }
                 } else if (comestible instanceof Conejo conejo) {
@@ -166,6 +167,7 @@ public class AtaqueEspecial extends Ataque {
                         elementosConsumidos.add(conejo);
                         zombie.setElementosConsumidos(elementosConsumidos);
                         impactos--; // Decrementar la cantidad de impactos restantes
+                        juego.getListaConejos().remove(conejo);
                         System.out.println(this.getNombre() + " ha matado al conejo " + conejo.getNombre());
                     }
                 }

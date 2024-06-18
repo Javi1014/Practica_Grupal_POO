@@ -36,6 +36,6 @@ public abstract class Ataque {
     public int getAlcance() {
         return alcance;
     }
-    public abstract void realizarAtaque (Zombie zombie,Casilla objetivo);
+    public abstract void realizarAtaque (Zombie zombie,Casilla objetivo, Juego juego);
     
 }

@@ -17,6 +17,7 @@ public class Juego {
     private Tablero tablero;
     private ArrayList<Zombie> listaJugadores = new ArrayList<>();
     private ArrayList<Humano> listaHumanos = new ArrayList<>();
+    private ArrayList<Conejo> listaConejos = new ArrayList<>();
     
     public Juego(int numJug){
         this.numJug=numJug;
@@ -50,6 +51,14 @@ public class Juego {
     public void setListaHumanos(ArrayList<Humano> listaHumanos) {
         this.listaHumanos = listaHumanos;
     }
+
+    public ArrayList<Conejo> getListaConejos() {
+        return listaConejos;
+    }
+
+    public void setListaConejos(ArrayList<Conejo> listaConejos) {
+        this.listaConejos = listaConejos;
+    }
     
     
     
@@ -63,7 +72,7 @@ public class Juego {
             String nombre=ent.nextLine();
             Zombie zom=new Zombie(nombre, "ACTIVO",0,0,comienzo );
             tablero.getCasilla(inicio).getNumZombie().add(zom);
-            tablero.getCasilla(inicio).setNumZombie(tablero.getCasilla(inicio).getNumZombie());
+            //tablero.getCasilla(inicio).setNumZombie(tablero.getCasilla(inicio).getNumZombie()); NO HACE FALTA PQ CON EL GET SE PASA UNA REFERENCIA
             this.listaJugadores.add(zom);
         }
         //SE CREAN 3 HUMANOS POR CADA JUGADOR
@@ -77,13 +86,14 @@ public class Juego {
                 Humano humano=Humano.aparicion(posicion);
                 this.listaHumanos.add(humano);
                 tablero.getCasilla(coor).getNumHumano().add(humano);
-                tablero.getCasilla(coor).setNumHumano(tablero.getCasilla(coor).getNumHumano());
+                //tablero.getCasilla(coor).setNumHumano(tablero.getCasilla(coor).getNumHumano());
             }
         }
         //SE CREA UN CONEJO DE PRUEBA
         Conejo con1=new Conejo("Pep",1,tablero.getCasilla(new Coordenada(1,0)));
         tablero.getCasilla(new Coordenada(1,0)).getNumConejos().add(con1);
         tablero.getCasilla(new Coordenada(1,0)).setNumConejos(tablero.getCasilla(new Coordenada(1,0)).getNumConejos());
+        this.listaConejos.add(con1);
         
         
         //tablero.imprimirTablero();

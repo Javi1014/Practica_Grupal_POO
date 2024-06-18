@@ -58,6 +58,7 @@ public class Tablero {
 
                 if (!casillas[i][j].getNumZombie().isEmpty()) {
                     for (Zombie zombie : casillas[i][j].getNumZombie()) {
+                        //AQUI HABRIA QUE AÑADIR LA CONDICION DE QUE EL ZOMBIE NO ESTE ELIMINADO
                         contenido += "Z:" + zombie.getNombre() + " ";
                     }
                 }
