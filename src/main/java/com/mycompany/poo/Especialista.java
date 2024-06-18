@@ -19,17 +19,14 @@ public class Especialista extends HumanoCombatiente {
    @Override
     public void moverse(Tablero tablero, Casilla posicion){
         Casilla nueva;
-        if(Math.abs(this.getCasilla().getCoordenada().getX()-posicion.getCoordenada().getX())<=Math.abs(this.getCasilla().getCoordenada().getY()-posicion.getCoordenada().getY())&&this.getCasilla().getCoordenada().getY()>posicion.getCoordenada().getY()){
-            nueva=new Casilla(new Coordenada (this.getCasilla().getCoordenada().getX(),this.getCasilla().getCoordenada().getY()-1));
-        }
-        else if(Math.abs(this.getCasilla().getCoordenada().getX()-posicion.getCoordenada().getX())<Math.abs(this.getCasilla().getCoordenada().getY()-posicion.getCoordenada().getY())&&this.getCasilla().getCoordenada().getY()<posicion.getCoordenada().getY()){
-            nueva=new Casilla(new Coordenada (this.getCasilla().getCoordenada().getX(),this.getCasilla().getCoordenada().getY()+1));
-        }
-        else if(Math.abs(this.getCasilla().getCoordenada().getX()-posicion.getCoordenada().getX())>=Math.abs(this.getCasilla().getCoordenada().getY()-posicion.getCoordenada().getY())&&this.getCasilla().getCoordenada().getX()>posicion.getCoordenada().getX()){
-            nueva=new Casilla(new Coordenada (this.getCasilla().getCoordenada().getX()-1,this.getCasilla().getCoordenada().getY()));
-        }
-        else{
-            nueva=new Casilla(new Coordenada (this.getCasilla().getCoordenada().getX()+1,this.getCasilla().getCoordenada().getY()));
+        if (Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX()) <= Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY()) && this.getCasilla().getCoordenada().getY() > posicion.getCoordenada().getY()) {
+            nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() - 1));
+        } else if (Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX()) < Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY()) && this.getCasilla().getCoordenada().getY() < posicion.getCoordenada().getY()) {
+            nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() + 1));
+        } else if (Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX()) >= Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY()) && this.getCasilla().getCoordenada().getX() > posicion.getCoordenada().getX()) {
+            nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX() - 1, this.getCasilla().getCoordenada().getY()));
+        } else {
+            nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX() + 1, this.getCasilla().getCoordenada().getY()));
         }
         
         int xActual = this.getCasilla().getCoordenada().getX();
@@ -70,16 +67,21 @@ public class Especialista extends HumanoCombatiente {
 
     @Override
     public void atacar(Tablero tablero,Juego juego){
-        this.getCasilla().getNumZombie().get(0).setNumHeridas(this.getCasilla().getNumZombie().get(0).getNumHeridas()+1);
-        System.out.println("El zombie "+this.getCasilla().getNumZombie().get(0).getNombre()+" tiene "+this.getCasilla().getNumZombie().get(0).getNumHeridas()+" heridas");
         if(this.getCasilla().getNumZombie().get(0).getNumHeridas()==5){
-            ArrayList<Zombie> zombies = this.getCasilla().getNumZombie();
-            ArrayList<Zombie> jugadores = this.getCasilla().getNumZombie();
-            System.out.println("El humano blindado ha matado al zombie "+this.getCasilla().getNumZombie().get(0).getNombre());
-            zombies.remove(this.getCasilla().getNumZombie().get(0));
-            this.getCasilla().setNumZombie(zombies);
-            juego.getListaJugadores().remove(jugadores.get(0));
-            juego.setListaJugadores(juego.getListaJugadores());
+            //NO HACE NADA
+        }
+        else{
+            this.getCasilla().getNumZombie().get(0).setNumHeridas(this.getCasilla().getNumZombie().get(0).getNumHeridas()+1);
+            System.out.println("El zombie "+this.getCasilla().getNumZombie().get(0).getNombre()+" tiene "+this.getCasilla().getNumZombie().get(0).getNumHeridas()+" heridas");
+            if(this.getCasilla().getNumZombie().get(0).getNumHeridas()==5){
+                ArrayList<Zombie> zombies = this.getCasilla().getNumZombie();
+                ArrayList<Zombie> jugadores = this.getCasilla().getNumZombie();
+                System.out.println("El humano blindado ha matado al zombie "+this.getCasilla().getNumZombie().get(0).getNombre());
+                zombies.remove(this.getCasilla().getNumZombie().get(0));
+                this.getCasilla().setNumZombie(zombies);
+                juego.getListaJugadores().remove(jugadores.get(0));
+                juego.setListaJugadores(juego.getListaJugadores());
+            }
         }
     } 
 

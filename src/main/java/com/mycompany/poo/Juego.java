@@ -143,6 +143,7 @@ public class Juego {
                
                if(this.getListaJugadores().get(i).getNumHeridas()==5){
                    this.getListaJugadores().get(i).setEstado("ELIMINADO");
+                   System.out.println("El zombie "+this.getListaJugadores().get(i).getNombre()+" se ha muerto de hambre.");
                }
            }
            
@@ -170,7 +171,7 @@ public class Juego {
         
         tablero.imprimirTablero();
         //COMPRUEBA SI ESTA VIVO O NO 
-        if(this.getListaJugadores().get(i).getEstado()=="ACTIVO"){
+        if("ACTIVO".equals(this.getListaJugadores().get(i).getEstado())){
         listaJugadores.get(i).activarse(tablero,this);
         }
     }
@@ -179,8 +180,9 @@ public class Juego {
 
 public void turnoHumano(){
     for(int i=0;i<this.getListaHumanos().size();i++){
-        
-        listaHumanos.get(i).activarse(tablero,this);
+        if(!listaJugadores.isEmpty()){
+            listaHumanos.get(i).activarse(tablero,this);
+        }
     }
     
 }

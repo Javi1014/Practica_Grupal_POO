@@ -22,13 +22,13 @@ public class HumanoHuidizo extends Humano {
     public void moverse(Tablero tablero, Casilla posicion) {
         Casilla nueva;
         if (Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX()) <= Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY()) && this.getCasilla().getCoordenada().getY() > posicion.getCoordenada().getY()) {
-            nueva = new Casilla(new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() - 1));
+            nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() - 1));
         } else if (Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX()) < Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY()) && this.getCasilla().getCoordenada().getY() < posicion.getCoordenada().getY()) {
-            nueva = new Casilla(new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() + 1));
+            nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() + 1));
         } else if (Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX()) >= Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY()) && this.getCasilla().getCoordenada().getX() > posicion.getCoordenada().getX()) {
-            nueva = new Casilla(new Coordenada(this.getCasilla().getCoordenada().getX() - 1, this.getCasilla().getCoordenada().getY()));
+            nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX() - 1, this.getCasilla().getCoordenada().getY()));
         } else {
-            nueva = new Casilla(new Coordenada(this.getCasilla().getCoordenada().getX() + 1, this.getCasilla().getCoordenada().getY()));
+            nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX() + 1, this.getCasilla().getCoordenada().getY()));
         }
 
         int xActual = this.getCasilla().getCoordenada().getX();
@@ -72,7 +72,7 @@ public class HumanoHuidizo extends Humano {
     @Override
     public void activarse(Tablero tablero, Juego juego) {
 
-        if (this.getCasilla().getCoordenada() == new Coordenada(tablero.getFilas(), tablero.getColumnas())) {
+        if (this.getCasilla().getCoordenada().equals( new Coordenada(tablero.getFilas(), tablero.getColumnas()))) {
             //COMPRUEBA SI ESTA EN LA CASILLA DE SALIDA
             //BORRA EL ZOMBI Q HA HUIDO
             juego.getListaHumanos().remove(this);
@@ -81,24 +81,15 @@ public class HumanoHuidizo extends Humano {
         } else {//SE MUEVE HACIA LA CASILLA DE SALIDA
             if (!(this.getCasilla().getCoordenada().getY() == tablero.getColumnas())) {
                 Coordenada objetivo = new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() + 1);
-                Casilla nueva = new Casilla(objetivo);
+                Casilla nueva = tablero.getCasilla(objetivo);
                 moverse(tablero, nueva);
             } else {
                 Coordenada objetivo = new Coordenada(this.getCasilla().getCoordenada().getX() + 1, this.getCasilla().getCoordenada().getY());
-                Casilla nueva = new Casilla(objetivo);
+                Casilla nueva = tablero.getCasilla(objetivo);
                 moverse(tablero, nueva);
             }
         }
 
-        /* 
-        if(this.getCasilla().getNumZombie().isEmpty()){
-            Coordenada objetivo=this.zombieMasCercano(tablero, juego);
-            Casilla nueva= tablero.getCasilla(objetivo);
-            System.out.println(objetivo.getX());
-            this.moverse(tablero,nueva);
-        }else{
-            this.atacar(tablero,this.getCasilla(),juego);
-        }
-         */
+        
     }
 }
