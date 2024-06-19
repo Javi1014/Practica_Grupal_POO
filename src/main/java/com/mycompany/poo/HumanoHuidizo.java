@@ -21,26 +21,38 @@ public class HumanoHuidizo extends Humano {
     @Override
     public void moverse(Tablero tablero, Casilla posicion) {
         Casilla nueva;
-        if ((Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX()) <= Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY())) && (this.getCasilla().getCoordenada().getY() > posicion.getCoordenada().getY())) {
-            nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() - 1));
-        } else if (Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX()) < Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY()) && this.getCasilla().getCoordenada().getY() < posicion.getCoordenada().getY()) {
-            nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() + 1));
-        } else if (Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX()) >= Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY()) && this.getCasilla().getCoordenada().getX() > posicion.getCoordenada().getX()) {
-            nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX() - 1, this.getCasilla().getCoordenada().getY()));
-        } else {
-            nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX() + 1, this.getCasilla().getCoordenada().getY()));
-        }
-
         int xActual = this.getCasilla().getCoordenada().getX();
         int yActual = this.getCasilla().getCoordenada().getY();
+        int xLimite=tablero.getFilas()-1;
+        int yLimite=tablero.getColumnas()-1;
+        //SOLO SE PUEDE MOVER HACIA LA DERECHA O HACIA ABAJO
+        if((xActual<xLimite)&&(yActual<yLimite)){//ME PUEDO MOVER HACIA LA DERECHA O ABAJO
+            if((Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX()) <= Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY()))&&(yActual<yLimite)){
+                nueva=tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() + 1));
+            }else if((Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX()) > Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY()))&&(yActual<yLimite)){
+                nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX() + 1, this.getCasilla().getCoordenada().getY()));
+            }else{
+                //NO SE MUEVE
+                nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY()));
+            }
+        }else if(yActual<yLimite){
+            nueva=tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() + 1));
+        }else if(xActual<xLimite){
+            nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX() + 1, this.getCasilla().getCoordenada().getY()));
+        }else{
+            //NO SE MUEVE
+            nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY()));
+            
+        }
+      
         int xDestino = nueva.getCoordenada().getX();
         int yDestino = nueva.getCoordenada().getY();
 
         // Verifica si la casilla posicion es contigua en sentido vertical u horizontal
         boolean esContiguaHorizontalmente = (xActual == xDestino) && (Math.abs(yActual - yDestino) == 1);
         boolean esContiguaVerticalmente = (yActual == yDestino) && (Math.abs(xActual - xDestino) == 1);
-
-        if (esContiguaHorizontalmente || esContiguaVerticalmente) {
+        
+        if ((esContiguaHorizontalmente || esContiguaVerticalmente)&& !(this.getCasilla().getCoordenada().equals(nueva.getCoordenada()))) {
             Casilla casillaActual = tablero.getCasilla(this.getCasilla().getCoordenada());
             ArrayList<Humano> humanosCasillaActual = casillaActual.getNumHumano();
             humanosCasillaActual.remove(this);
@@ -71,27 +83,17 @@ public class HumanoHuidizo extends Humano {
 
     @Override
     public void activarse(Tablero tablero, Juego juego) {
-
-        if (this.getCasilla().getCoordenada().equals( new Coordenada(tablero.getFilas(), tablero.getColumnas()))) {
-            //COMPRUEBA SI ESTA EN LA CASILLA DE SALIDA
-            //BORRA EL ZOMBI Q HA HUIDO
+        Casilla objetivo = new Casilla(new Coordenada(tablero.getFilas()-1,tablero.getColumnas()-1));
+        this.moverse(tablero, objetivo);
+        if(this.getCasilla().getCoordenada().equals(objetivo.getCoordenada())){
+            Casilla casillaActual = tablero.getCasilla(this.getCasilla().getCoordenada());
+            ArrayList<Humano> humanosCasillaActual = casillaActual.getNumHumano();
+            humanosCasillaActual.remove(this);
+            casillaActual.setNumHumano(humanosCasillaActual);
             juego.getListaHumanos().remove(this);
-            System.out.println("El humano huidizo se ha escapado.");
-            tablero.imprimirTablero();
-
-        } else {//SE MUEVE HACIA LA CASILLA DE SALIDA
-            if (!(this.getCasilla().getCoordenada().getY() == tablero.getColumnas())) {
-                Coordenada objetivo = new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() + 1);
-                Casilla nueva = tablero.getCasilla(objetivo);
-                moverse(tablero, nueva);
-            } else {
-                Coordenada objetivo = new Coordenada(this.getCasilla().getCoordenada().getX() + 1, this.getCasilla().getCoordenada().getY());
-                Casilla nueva = tablero.getCasilla(objetivo);
-                moverse(tablero, nueva);
-            }
-            tablero.imprimirTablero();
+            
         }
-
+        tablero.imprimirTablero();
         
     }
 }
