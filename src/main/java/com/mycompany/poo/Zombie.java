@@ -267,7 +267,7 @@ public class Zombie implements Activable {
                                 }
                                 break;
                             case 4:
-                                if (!(this.getCasilla().getCoordenada().getX() == tablero.getColumnas() - 1)) {
+                                if (!(this.getCasilla().getCoordenada().getY() == tablero.getColumnas() - 1)) {
                                     Coordenada coordMoverse4 = new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() + 1);
                                     Casilla objetivoMoverse4 = tablero.getCasilla(coordMoverse4);
                                     moverse(tablero, objetivoMoverse4);
