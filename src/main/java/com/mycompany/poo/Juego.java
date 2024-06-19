@@ -57,6 +57,27 @@ public class Juego {
         this.listaConejos = listaConejos;
     }
 
+    public boolean todosObjetivoDevorandoHuidizo() {
+        Coordenada coordObjetivo = new Coordenada(tablero.getFilas() - 1, tablero.getColumnas() - 1);
+        Casilla objetivo = tablero.getCasilla(coordObjetivo);
+
+        for (int i = 1; i <= this.numJug; i++) {
+            if (!(listaJugadores.get(i).getCasilla().getCoordenada().equals(coordObjetivo)) || !(listaJugadores.get(i).haDevoradoHuidizo())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean todosJugadoresEliminados() {
+        for (int i = 1; i <= this.numJug; i++) {
+            if (listaJugadores.get(i).getEstado().equals("ACTIVO")) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void iniciarJuego() {
 
         Coordenada inicio = new Coordenada(0, 0);
@@ -93,7 +114,7 @@ public class Juego {
 
         tablero.imprimirTablero();
 
-        while (0 == 0) {
+        while (!todosObjetivoDevorandoHuidizo() && !todosJugadoresEliminados()) {
             for (int i = 0; i < this.getNumJug(); i++) {
                 //COMPRUEBA SI ESTA VIVO O NO 
                 if ("ACTIVO".equals(this.getListaJugadores().get(i).getEstado())) {

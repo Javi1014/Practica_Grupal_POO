@@ -18,8 +18,11 @@ public class Zombie implements Activable {
     private String estado;//SERA "ACTIVO" O "ELIMINADO"
     private final int maxAcciones = 3;
     private int numAcciones = 0;
-    private ArrayList<Comestible> elementosConsumidos = new ArrayList<>();
+    private ArrayList<Comestible> comestiblesDevorados = new ArrayList<>();
+    private ArrayList<Comestible> comestiblesEliminados = new ArrayList<>();
     private int numHeridas;
+    private ArrayList<String> heridasRecibidas = new ArrayList<>();
+    private final int maxHeridas = 5;
     private int hambre;
     private Ataque devorar = new Devorar();
     private Ataque ataqueEspecial = new AtaqueEspecial();
@@ -53,12 +56,20 @@ public class Zombie implements Activable {
         this.numAcciones = numAcciones;
     }
 
-    public ArrayList<Comestible> getElementosConsumidos() {
-        return elementosConsumidos;
+    public ArrayList<Comestible> getComestiblesDevorados() {
+        return comestiblesDevorados;
     }
 
-    public void setElementosConsumidos(ArrayList<Comestible> elementosConsumidos) {
-        this.elementosConsumidos = elementosConsumidos;
+    public void setComestiblesDevorados(ArrayList<Comestible> comestiblesDevorados) {
+        this.comestiblesDevorados = comestiblesDevorados;
+    }
+
+    public ArrayList<Comestible> getComestiblesEliminados() {
+        return comestiblesEliminados;
+    }
+
+    public void setComestiblesEliminados(ArrayList<Comestible> comestiblesEliminados) {
+        this.comestiblesEliminados = comestiblesEliminados;
     }
 
     public int getNumHeridas() {
@@ -87,6 +98,39 @@ public class Zombie implements Activable {
 
     public void incrementarAcciones() {
         this.numAcciones++;
+    }
+
+    public void agregarHerida(String tipoHumano) {
+        if (heridasRecibidas.size() < maxHeridas) {
+            heridasRecibidas.add(tipoHumano);
+        } else {
+            System.out.println("No se pueden agregar más de " + maxHeridas + " heridas.");
+        }
+    }
+
+    public ArrayList<String> getHeridasRecibidas() {
+        return heridasRecibidas;
+    }
+
+    public boolean haDevoradoHuidizo() {
+        for (Comestible comestible : comestiblesDevorados) {
+            if (comestible instanceof HumanoHuidizo) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Zombie zombi = (Zombie) obj;
+        return nombre.equals(zombi.nombre);
     }
 
     @Override
@@ -209,7 +253,7 @@ public class Zombie implements Activable {
                                 }
                                 break;
                             case 2:
-                                if (!(this.getCasilla().getCoordenada().getX() == tablero.getFilas())) {
+                                if (!(this.getCasilla().getCoordenada().getX() == tablero.getFilas() - 1)) {
                                     Coordenada coordMoverse2 = new Coordenada(this.getCasilla().getCoordenada().getX() + 1, this.getCasilla().getCoordenada().getY());
                                     Casilla objetivoMoverse2 = tablero.getCasilla(coordMoverse2);
                                     moverse(tablero, objetivoMoverse2);
@@ -223,7 +267,7 @@ public class Zombie implements Activable {
                                 }
                                 break;
                             case 4:
-                                if (!(this.getCasilla().getCoordenada().getX() == tablero.getColumnas())) {
+                                if (!(this.getCasilla().getCoordenada().getX() == tablero.getColumnas() - 1)) {
                                     Coordenada coordMoverse4 = new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() + 1);
                                     Casilla objetivoMoverse4 = tablero.getCasilla(coordMoverse4);
                                     moverse(tablero, objetivoMoverse4);
@@ -251,10 +295,10 @@ public class Zombie implements Activable {
             }
             if (this.getNumHeridas() >= 5) {
                 this.setEstado("ELIMINADO");
-                Casilla casillaTablero= tablero.getCasilla(this.getCasilla().getCoordenada());
+                Casilla casillaTablero = tablero.getCasilla(this.getCasilla().getCoordenada());
                 casillaTablero.getNumZombie().remove(this);
-                juego.getListaJugadores().remove(this);
                 
+
                 System.out.println("El zombie " + this.getNombre() + " se ha muerto de hambre.");
             }
 

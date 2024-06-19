@@ -68,15 +68,21 @@ public class Especialista extends HumanoCombatiente {
         if (casillaTablero.getNumZombie().get(0).getNumHeridas() < 5) {
             casillaTablero.getNumZombie().get(0).setNumHeridas(casillaTablero.getNumZombie().get(0).getNumHeridas() + 1);
             System.out.println("El zombie " + casillaTablero.getNumZombie().get(0).getNombre() + " tiene " + casillaTablero.getNumZombie().get(0).getNumHeridas() + " heridas");
+            casillaTablero.getNumZombie().get(0).agregarHerida("Especialista");
             if (casillaTablero.getNumZombie().get(0).getNumHeridas() == 5) {
                 ArrayList<Zombie> zombies = casillaTablero.getNumZombie();
                 ArrayList<Zombie> jugadores = casillaTablero.getNumZombie();
-                System.out.println("El humano blindado ha matado al zombie " + casillaTablero.getNumZombie().get(0).getNombre());
+                System.out.println("El humano especialista ha matado al zombie " + casillaTablero.getNumZombie().get(0).getNombre());
                 zombies.remove(casillaTablero.getNumZombie().get(0));
                 casillaTablero.setNumZombie(zombies);
-                juego.getListaJugadores().remove(jugadores.get(0));
-                juego.setListaJugadores(juego.getListaJugadores());
+
+                int indice = juego.getListaJugadores().indexOf(jugadores.get(0));
+
+                if (indice != -1) {
+                    juego.getListaJugadores().get(indice).setEstado("ELIMINADO");
+                }
             }
+
         }
     }
 
@@ -84,9 +90,11 @@ public class Especialista extends HumanoCombatiente {
     public void activarse(Tablero tablero, Juego juego) {
         for (int i = 1; i <= this.getNum_activaciones(); i++) {
             if (this.getCasilla().getNumZombie().isEmpty()) {
-                Coordenada objetivo = this.zombieMasCercano(tablero, juego);
-                Casilla nueva = tablero.getCasilla(objetivo);
-                this.moverse(tablero, nueva);
+                if (this.zombieMasCercano(tablero, juego) != null) {
+                    Coordenada objetivo = this.zombieMasCercano(tablero, juego);
+                    Casilla nueva = tablero.getCasilla(objetivo);
+                    this.moverse(tablero, nueva);
+                }
                 tablero.imprimirTablero();
             } else {
                 this.atacar(tablero, juego);

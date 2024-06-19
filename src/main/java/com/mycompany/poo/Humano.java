@@ -72,12 +72,14 @@ public abstract class Humano implements Comestible, Activable {
         int distanciaMinima = 300;
 
         for (int i = 0; i < juego.getNumJug(); i++) {
-            Coordenada coordZombie = juego.getListaJugadores().get(i).getCasilla().getCoordenada();
-            int distancia = tablero.calcularDistancia(this.getCasilla(), juego.getListaJugadores().get(i).getCasilla());
+            if (juego.getListaJugadores().get(i).getEstado().equals("ACTIVO")) {
+                Coordenada coordZombie = juego.getListaJugadores().get(i).getCasilla().getCoordenada();
+                int distancia = tablero.calcularDistancia(this.getCasilla(), juego.getListaJugadores().get(i).getCasilla());
 
-            if (distancia < distanciaMinima) {
-                distanciaMinima = distancia;
-                coormascerca = coordZombie;
+                if (distancia < distanciaMinima) {
+                    distanciaMinima = distancia;
+                    coormascerca = coordZombie;
+                }
             }
         }
 

@@ -71,9 +71,9 @@ public class Devorar extends Ataque {
                             humano.calmarHambreZombie(zombie); // Devorar al humano
                             humanosEnCasilla.remove(humano);
                             objetivo.setNumHumano(humanosEnCasilla); // Eliminar el humano de la casilla
-                            ArrayList<Comestible> elementosConsumidos = zombie.getElementosConsumidos();
-                            elementosConsumidos.add(humano);
-                            zombie.setElementosConsumidos(elementosConsumidos);
+                            ArrayList<Comestible> elementosDevorados = zombie.getComestiblesDevorados();
+                            elementosDevorados.add(humano);
+                            zombie.setComestiblesDevorados(elementosDevorados);
                             ArrayList<Humano> humanosJuego = juego.getListaHumanos();
                             humanosJuego.remove(humano);
                             juego.setListaHumanos(humanosJuego);
@@ -85,9 +85,9 @@ public class Devorar extends Ataque {
                         //AQUI DEBERIAMOS METER EL SYSTEM.OUT.PRINTLN("TAL HUMANO HA MUERTO O HA SIDO DEVORADO POR TAL ZOMBIE")
                         conejosEnCasilla.remove(conejo);
                         objetivo.setNumConejos(conejosEnCasilla); // Eliminar el conejo de la casilla
-                        ArrayList<Comestible> elementosConsumidos = zombie.getElementosConsumidos();
-                        elementosConsumidos.add(conejo);
-                        zombie.setElementosConsumidos(elementosConsumidos);
+                        ArrayList<Comestible> elementosDevorados = zombie.getComestiblesDevorados();
+                        elementosDevorados.add(conejo);
+                        zombie.setComestiblesDevorados(elementosDevorados);
                         System.out.println(this.getNombre() + " ha matado al conejo " + conejo.getNombre());
                         ArrayList<Conejo> conejosJuego = juego.getListaConejos();
                         conejosJuego.remove(conejo);

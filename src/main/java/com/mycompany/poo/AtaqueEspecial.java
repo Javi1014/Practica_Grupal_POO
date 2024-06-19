@@ -146,13 +146,13 @@ public class AtaqueEspecial extends Ataque {
                 }
                 if (comestible instanceof Humano humano) {
                     if (humano.getAguante() <= impactos) {
-                        humano.calmarHambreZombie(zombie); // Devorar al humano
+                        
                         //AQUI DEBERIAMOS METER EL SYSTEM.OUT.PRINTLN("TAL HUMANO HA MUERTO O HA SIDO DEVORADO POR TAL ZOMBIE")
                         humanosEnCasilla.remove(humano);
                         objetivo.setNumHumano(humanosEnCasilla); // Eliminar el humano de la casilla
-                        ArrayList<Comestible> elementosConsumidos = zombie.getElementosConsumidos();
-                        elementosConsumidos.add(humano);
-                        zombie.setElementosConsumidos(elementosConsumidos);
+                        ArrayList<Comestible> elementosEliminados = zombie.getComestiblesEliminados();
+                        elementosEliminados.add(humano);
+                        zombie.setComestiblesEliminados(elementosEliminados);
                         impactos -= humano.getAguante(); // Decrementar la cantidad de impactos restantes
                         ArrayList<Humano> humanosJuego=juego.getListaHumanos();
                         humanosJuego.remove(humano);
@@ -161,13 +161,13 @@ public class AtaqueEspecial extends Ataque {
                     }
                 } else if (comestible instanceof Conejo conejo) {
                     if (impactos > 0) {
-                        conejo.calmarHambreZombie(zombie); // Devorar al conejo y calmar el hambre del zombie
+                        
                         //AQUI DEBERIAMOS METER EL SYSTEM.OUT.PRINTLN("TAL HUMANO HA MUERTO O HA SIDO DEVORADO POR TAL ZOMBIE")
                         conejosEnCasilla.remove(conejo);
                         objetivo.setNumConejos(conejosEnCasilla); // Eliminar el conejo de la casilla
-                        ArrayList<Comestible> elementosConsumidos = zombie.getElementosConsumidos();
-                        elementosConsumidos.add(conejo);
-                        zombie.setElementosConsumidos(elementosConsumidos);
+                        ArrayList<Comestible> elementosEliminados = zombie.getComestiblesEliminados();
+                        elementosEliminados.add(conejo);
+                        zombie.setComestiblesEliminados(elementosEliminados);
                         impactos--; // Decrementar la cantidad de impactos restantes
                         ArrayList<Conejo> conejosJuego=juego.getListaConejos();
                         conejosJuego.remove(conejo);
