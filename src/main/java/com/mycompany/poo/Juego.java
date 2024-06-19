@@ -61,7 +61,7 @@ public class Juego {
         Coordenada coordObjetivo = new Coordenada(tablero.getFilas() - 1, tablero.getColumnas() - 1);
         Casilla objetivo = tablero.getCasilla(coordObjetivo);
 
-        for (int i = 1; i <= this.numJug; i++) {
+        for (int i = 0; i <= this.numJug-1; i++) {
             if (!(listaJugadores.get(i).getCasilla().getCoordenada().equals(coordObjetivo)) || !(listaJugadores.get(i).haDevoradoHuidizo())) {
                 return false;
             }
@@ -70,7 +70,7 @@ public class Juego {
     }
 
     public boolean todosJugadoresEliminados() {
-        for (int i = 1; i <= this.numJug; i++) {
+        for (int i = 0; i <= this.numJug-1; i++) {
             if (listaJugadores.get(i).getEstado().equals("ACTIVO")) {
                 return false;
             }
