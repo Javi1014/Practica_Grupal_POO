@@ -80,7 +80,7 @@ public class Blindado extends HumanoCombatiente {
     @Override
     public void atacar(Tablero tablero, Juego juego) {
         Casilla casillaTablero = tablero.getCasilla(this.getCasilla().getCoordenada());
-        if (casillaTablero.getNumZombie().get(0).getNumHeridas() < 5) {
+        if (casillaTablero.getNumZombie().get(0).getEstado().equals("ACTIVO")) {
             casillaTablero.getNumZombie().get(0).setNumHeridas(casillaTablero.getNumZombie().get(0).getNumHeridas() + 1);
             System.out.println("El zombie " + casillaTablero.getNumZombie().get(0).getNombre() + " tiene " + casillaTablero.getNumZombie().get(0).getNumHeridas() + " heridas");
             casillaTablero.getNumZombie().get(0).agregarHerida("Blindado");
@@ -88,13 +88,16 @@ public class Blindado extends HumanoCombatiente {
                 ArrayList<Zombie> zombies = casillaTablero.getNumZombie();
                 ArrayList<Zombie> jugadores = casillaTablero.getNumZombie();
                 System.out.println("El humano blindado ha matado al zombie " + casillaTablero.getNumZombie().get(0).getNombre());
-                zombies.remove(casillaTablero.getNumZombie().get(0));
-                casillaTablero.setNumZombie(zombies);
-
+                
                 int indice = juego.getListaJugadores().indexOf(jugadores.get(0));
 
                 if (indice != -1) {
                     juego.getListaJugadores().get(indice).setEstado("ELIMINADO");
+                
+                zombies.remove(casillaTablero.getNumZombie().get(0));
+                casillaTablero.setNumZombie(zombies);
+
+                
                 }
             }
 

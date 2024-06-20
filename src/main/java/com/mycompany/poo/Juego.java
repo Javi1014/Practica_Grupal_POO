@@ -122,10 +122,11 @@ public class Juego {
                 }
             }
             for (Humano humano : this.getListaHumanos()) {
-                if (!listaJugadores.isEmpty()) {
-                    humano.activarse(this.tablero, this);
+                if (!todosJugadoresEliminados()) {
+                    humano.activarse(tablero, this);
                 }
             }
+            
             for (int i = 0; i < this.getNumJug(); i++) {
                 Random random = new Random();
                 int numeroAleatorio1 = random.nextInt(tablero.getFilas() - 1);
