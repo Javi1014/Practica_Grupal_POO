@@ -121,7 +121,8 @@ public class Juego {
                     listaJugadores.get(i).activarse(this.tablero, this);
                 }
             }
-            for (Humano humano : this.getListaHumanos()) {
+            ArrayList<Humano> copiaListaHumanos=new ArrayList(this.getListaHumanos());
+            for (Humano humano : copiaListaHumanos) {
                 if (!todosJugadoresEliminados()) {
                     humano.activarse(tablero, this);
                 }

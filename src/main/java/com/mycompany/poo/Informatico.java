@@ -80,14 +80,15 @@ public class Informatico extends HumanoCombatiente {
                 ArrayList<Zombie> zombies = casillaTablero.getNumZombie();
                 ArrayList<Zombie> jugadores = casillaTablero.getNumZombie();
                 System.out.println("El humano informatico ha matado al zombie " + casillaTablero.getNumZombie().get(0).getNombre());
-                zombies.remove(casillaTablero.getNumZombie().get(0));
-                casillaTablero.setNumZombie(zombies);
+                
 
                 int indice = juego.getListaJugadores().indexOf(jugadores.get(0));
 
                 if (indice != -1) {
                     juego.getListaJugadores().get(indice).setEstado("ELIMINADO");
                 }
+                zombies.remove(casillaTablero.getNumZombie().get(0));
+                casillaTablero.setNumZombie(zombies);
             }
 
         }
@@ -102,14 +103,15 @@ public class Informatico extends HumanoCombatiente {
                 ArrayList<Zombie> zombies = casillaTablero.getNumZombie();
                 ArrayList<Zombie> jugadores = casillaTablero.getNumZombie();
                 System.out.println("El humano informatico ha matado al zombie " + casillaTablero.getNumZombie().get(0).getNombre());
-                zombies.remove(casillaTablero.getNumZombie().get(0));
-                casillaTablero.setNumZombie(zombies);
+                
 
                 int indice = juego.getListaJugadores().indexOf(jugadores.get(0));
 
                 if (indice != -1) {
                     juego.getListaJugadores().get(indice).setEstado("ELIMINADO");
                 }
+                zombies.remove(casillaTablero.getNumZombie().get(0));
+                casillaTablero.setNumZombie(zombies);
             }
         }
     }

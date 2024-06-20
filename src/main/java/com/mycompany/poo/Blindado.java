@@ -93,12 +93,12 @@ public class Blindado extends HumanoCombatiente {
 
                 if (indice != -1) {
                     juego.getListaJugadores().get(indice).setEstado("ELIMINADO");
-                
+                }
                 zombies.remove(casillaTablero.getNumZombie().get(0));
                 casillaTablero.setNumZombie(zombies);
 
                 
-                }
+                
             }
 
         }
