@@ -5,6 +5,7 @@
 package com.mycompany.poo;
 
 import java.util.Scanner;
+import gui.*;
 
 /**
  *
@@ -17,12 +18,15 @@ public class POO {
         //inicio.setVisible(true);
         
         
-        Scanner ent= new Scanner(System.in);
-        System.out.println("Introduzca el numero de jugadores: ");
+        
+        
+        /*System.out.println("Introduzca el numero de jugadores: ");
         int numJug= ent .nextInt();
         Juego juego = new Juego(numJug);
-        juego.iniciarJuego();
+        juego.iniciarJuego();*/
+        
         
         
     }
+    
 }

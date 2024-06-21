@@ -4,30 +4,47 @@
  */
 package com.mycompany.poo;
 
-import javax.swing.JLabel;
+import com.mycompany.poo.Juego;
+import javax.swing.ImageIcon;
 
 /**
  *
- * @author ramir
+ * @author nieto
  */
 public class Seleccion extends javax.swing.JFrame {
-        private int numeroJug;
+
+    private int numeroJug;
+    private String nom1;
+    private String nom2;
+    private String nom3;
+    private String nom4;
+
     /**
      * Creates new form Seleccion
      */
     public Seleccion() {
         initComponents();
-        jLabel2.setVisible(false);
-        jTextField1.setVisible(false);
-        jLabel3.setVisible(false);
-        jTextField2.setVisible(false);
-        jLabel4.setVisible(false);
-        jTextField3.setVisible(false);
-        jLabel5.setVisible(false);
-        jTextField4.setVisible(false);
-        jLabel6.setVisible(false);
-        jButton5.setVisible(false);
-        
+        setIconImage(new ImageIcon(getClass().getResource("/imagenes/images.png")).getImage());
+        setLocationRelativeTo(null);
+        nombre4.setVisible(false);
+        nombre2.setVisible(false);
+        nombre3.setVisible(false);
+        escribirNombres.setVisible(false);
+        nombre1.setVisible(false);
+        empezarPartida.setVisible(false);
+        nombre4in.setVisible(false);
+        nombre2in.setVisible(false);
+        nombre3in.setVisible(false);
+        nombre1in.setVisible(false);
+
+    }
+
+    public int getNumeroJug() {
+        return numeroJug;
+    }
+
+    public void setNumeroJug(int numeroJug) {
+        this.numeroJug = numeroJug;
     }
 
     /**
@@ -39,241 +56,283 @@ public class Seleccion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        jugadores4 = new javax.swing.JButton();
+        jugadores1 = new javax.swing.JButton();
+        jugadores2 = new javax.swing.JButton();
+        jugadores3 = new javax.swing.JButton();
+        nombre4 = new javax.swing.JLabel();
+        nombre4in = new javax.swing.JTextField();
+        nombre3 = new javax.swing.JLabel();
+        nombre3in = new javax.swing.JTextField();
+        nombre1 = new javax.swing.JLabel();
+        nombre1in = new javax.swing.JTextField();
+        nombre2 = new javax.swing.JLabel();
+        nombre2in = new javax.swing.JTextField();
+        empezarPartida = new javax.swing.JButton();
+        escribirNombres = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SELECCION");
+        setResizable(false);
 
-        jLabel1.setText("Elige el numero de jugadores:");
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("2");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Elige el numero de jugadores:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, 220, 30));
+
+        jugadores4.setText("4");
+        jugadores4.setPreferredSize(new java.awt.Dimension(40, 30));
+        jugadores4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jugadores4ActionPerformed(evt);
             }
         });
+        jPanel1.add(jugadores4, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 130, -1, -1));
 
-        jButton2.setText("1");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jugadores1.setText("1");
+        jugadores1.setPreferredSize(new java.awt.Dimension(40, 30));
+        jugadores1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jugadores1ActionPerformed(evt);
             }
         });
+        jPanel1.add(jugadores1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 130, -1, -1));
 
-        jButton3.setText("4");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jugadores2.setText("2");
+        jugadores2.setPreferredSize(new java.awt.Dimension(40, 30));
+        jugadores2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jugadores2ActionPerformed(evt);
             }
         });
+        jPanel1.add(jugadores2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 130, -1, -1));
 
-        jButton4.setText("3");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jugadores3.setText("3");
+        jugadores3.setPreferredSize(new java.awt.Dimension(40, 30));
+        jugadores3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jugadores3ActionPerformed(evt);
             }
         });
+        jPanel1.add(jugadores3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 130, -1, -1));
 
-        jLabel2.setText("Nombre del jugador 1:");
+        nombre4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        nombre4.setForeground(new java.awt.Color(0, 0, 0));
+        nombre4.setText("Nombre del jugador 4:");
+        jPanel1.add(nombre4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, -1, -1));
 
-        jLabel3.setText("Nombre del jugador 2:");
-
-        jLabel4.setText("Nombre del jugador 3:");
-
-        jLabel5.setText("Nombre del jugador 4:");
-
-        jButton5.setText("Empezar partida");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        nombre4in.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                nombre4inActionPerformed(evt);
             }
         });
+        jPanel1.add(nombre4in, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 260, 70, -1));
 
-        jLabel6.setText("Escribe todos los nombres de jugadores");
+        nombre3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        nombre3.setForeground(new java.awt.Color(0, 0, 0));
+        nombre3.setText("Nombre del jugador 3:");
+        jPanel1.add(nombre3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, -1, -1));
+
+        nombre3in.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombre3inActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nombre3in, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 230, 70, -1));
+
+        nombre1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        nombre1.setForeground(new java.awt.Color(0, 0, 0));
+        nombre1.setText("Nombre del jugador 1:");
+        jPanel1.add(nombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 170, -1, -1));
+        jPanel1.add(nombre1in, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 170, 70, -1));
+
+        nombre2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        nombre2.setForeground(new java.awt.Color(0, 0, 0));
+        nombre2.setText("Nombre del jugador 2:");
+        jPanel1.add(nombre2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 200, -1, -1));
+
+        nombre2in.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombre2inActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nombre2in, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 200, 70, -1));
+
+        empezarPartida.setText("Empezar partida");
+        empezarPartida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                empezarPartidaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(empezarPartida, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, 130, 30));
+
+        escribirNombres.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        escribirNombres.setForeground(new java.awt.Color(0, 0, 0));
+        escribirNombres.setText("Escribe todos los nombres de jugadores");
+        jPanel1.add(escribirNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 320, -1, -1));
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Diseño sin título.png"))); // NOI18N
+        jLabel8.setText("jLabel8");
+        jLabel8.setBorder(new javax.swing.border.MatteBorder(null));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 75, 450, 300));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Selecciones.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 560));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(128, 128, 128)
-                        .addComponent(jButton5)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(25, 25, 25))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton4)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5)
-                    .addComponent(jLabel6))
-                .addGap(30, 30, 30))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.setNumeroJug(1);
-        
-        this.jButton1.setVisible(false);
-        this.jButton2.setVisible(false);
-        this.jButton3.setVisible(false);
-        this.jButton4.setVisible(false);
-        
-        jLabel2.setVisible(true);
-        jTextField1.setVisible(true);
-        
-        jButton5.setVisible(true);
-        
-        jTextField2.setText("-");
-        jTextField3.setText("--");
-        jTextField4.setText("---");
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.setNumeroJug(2);
-        
-        this.jButton1.setVisible(false);
-        this.jButton2.setVisible(false);
-        this.jButton3.setVisible(false);
-        this.jButton4.setVisible(false);
-        
-        jLabel2.setVisible(true);
-        jTextField1.setVisible(true);
-        jLabel3.setVisible(true);
-        jTextField2.setVisible(true);
-       
-        jButton5.setVisible(true);
-        
-        jTextField3.setText("--");
-        jTextField4.setText("---");
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        this.setNumeroJug(3);
-        
-        this.jButton1.setVisible(false);
-        this.jButton2.setVisible(false);
-        this.jButton3.setVisible(false);
-        this.jButton4.setVisible(false);
-        
-        jLabel2.setVisible(true);
-        jTextField1.setVisible(true);
-        jLabel3.setVisible(true);
-        jTextField2.setVisible(true);
-        jLabel4.setVisible(true);
-        jTextField3.setVisible(true);
-        
-        jButton5.setVisible(true);
-        
-
-        jTextField4.setText("---");
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jugadores4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jugadores4ActionPerformed
+        // TODO add your handling code here:
         this.setNumeroJug(4);
-        
-        this.jButton1.setVisible(false);
-        this.jButton2.setVisible(false);
-        this.jButton3.setVisible(false);
-        this.jButton4.setVisible(false);
-        
-        jLabel2.setVisible(true);
-        jTextField1.setVisible(true);
-        jLabel3.setVisible(true);
-        jTextField2.setVisible(true);
-        jLabel4.setVisible(true);
-        jTextField3.setVisible(true);
-        jLabel5.setVisible(true);
-        jTextField4.setVisible(true);
-        
-        jButton5.setVisible(true);
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        if(jTextField1.getText().isEmpty()||jTextField2.getText().isEmpty()||jTextField3.getText().isEmpty()||jTextField4.getText().isEmpty()){
-            jLabel6.setVisible(true);
-        }else{
-            Juego juego = new Juego(numeroJug);
-            juego.iniciarJuego();
-            
-            this.dispose();
+        this.jugadores1.setVisible(false);
+        this.jugadores2.setVisible(false);
+        this.jugadores3.setVisible(false);
+        this.jugadores4.setVisible(false);
+        nombre1.setVisible(true);
+        nombre1in.setVisible(true);
+        nombre2.setVisible(true);
+        nombre2in.setVisible(true);
+        nombre3.setVisible(true);
+        nombre3in.setVisible(true);
+        nombre4.setVisible(true);
+        nombre4in.setVisible(true);
+        empezarPartida.setVisible(true);
+    }//GEN-LAST:event_jugadores4ActionPerformed
+
+    private void jugadores2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jugadores2ActionPerformed
+        // TODO add your handling code here:
+        this.setNumeroJug(2);
+
+        this.jugadores1.setVisible(false);
+        this.jugadores2.setVisible(false);
+        this.jugadores3.setVisible(false);
+        this.jugadores4.setVisible(false);
+
+        nombre1.setVisible(true);
+        nombre1in.setVisible(true);
+        nombre2.setVisible(true);
+        nombre2in.setVisible(true);
+
+        empezarPartida.setVisible(true);
+        nombre3in.setText("--");
+        nombre4in.setText("---");
+    }//GEN-LAST:event_jugadores2ActionPerformed
+
+    private void jugadores3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jugadores3ActionPerformed
+        // TODO add your handling code here:
+        this.setNumeroJug(3);
+
+        this.jugadores1.setVisible(false);
+        this.jugadores2.setVisible(false);
+        this.jugadores3.setVisible(false);
+        this.jugadores4.setVisible(false);
+        nombre1.setVisible(true);
+        nombre1in.setVisible(true);
+        nombre2.setVisible(true);
+        nombre2in.setVisible(true);
+        nombre3.setVisible(true);
+        nombre3in.setVisible(true);
+        empezarPartida.setVisible(true);
+        nombre4in.setText("---");
+
+    }//GEN-LAST:event_jugadores3ActionPerformed
+
+    private void empezarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empezarPartidaActionPerformed
+        if (nombre1in.getText().isEmpty() || nombre2in.getText().isEmpty() || nombre3in.getText().isEmpty() || nombre4in.getText().isEmpty()) {
+            escribirNombres.setVisible(true);
+        } else {
+            //aqui abria que meter iniciarJuego();
+
+            switch (numeroJug) {
+                case 1: {
+                    this.nom1 = nombre1in.getText();
+                    Juego juego = new Juego(numeroJug);
+                    juego.iniciarJuegoGUI(nom1);
+                    this.dispose();
+                    break;
+                }
+                case 2: {
+                    this.nom1 = nombre1in.getText();
+                    this.nom2 = nombre2in.getText();
+                    Juego juego = new Juego(numeroJug);
+                    juego.iniciarJuegoGUI(nom1, nom2);
+                    this.dispose();
+                    break;
+                }
+                case 3: {
+                    this.nom1 = nombre1in.getText();
+                    this.nom2 = nombre2in.getText();
+                    this.nom3 = nombre3in.getText();
+                    Juego juego = new Juego(numeroJug);
+                    juego.iniciarJuegoGUI(nom1, nom2,nom3);
+                    this.dispose();
+                    break;
+                }
+                case 4: {
+                    this.nom1 = nombre1in.getText();
+                    this.nom2 = nombre2in.getText();
+                    this.nom3 = nombre3in.getText();
+                    this.nom4 = nombre4in.getText();
+                    Juego juego = new Juego(numeroJug);
+                    juego.iniciarJuegoGUI(nom1, nom2,nom3,nom4);
+                    this.dispose();
+                    break;
+                }
+                default:
+                    break;
+            }
+
         }
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_empezarPartidaActionPerformed
+
+    private void nombre4inActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombre4inActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombre4inActionPerformed
+
+    private void nombre2inActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombre2inActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombre2inActionPerformed
+
+    private void nombre3inActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombre3inActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombre3inActionPerformed
+
+    private void jugadores1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jugadores1ActionPerformed
+        this.setNumeroJug(1);
+
+        this.jugadores1.setVisible(false);
+        this.jugadores2.setVisible(false);
+        this.jugadores3.setVisible(false);
+        this.jugadores4.setVisible(false);
+
+        nombre1.setVisible(true);
+        nombre1in.setVisible(true);
+
+        empezarPartida.setVisible(true);
+        nombre2in.setText("-");
+        nombre3in.setText("--");
+        nombre4in.setText("---");
+    }//GEN-LAST:event_jugadores1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -301,7 +360,6 @@ public class Seleccion extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Seleccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -311,32 +369,24 @@ public class Seleccion extends javax.swing.JFrame {
         });
     }
 
-    public int getNumeroJug() {
-        return numeroJug;
-    }
-
-    public void setNumeroJug(int numeroJug) {
-        this.numeroJug = numeroJug;
-    }
-    
-    
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton empezarPartida;
+    private javax.swing.JLabel escribirNombres;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton jugadores1;
+    private javax.swing.JButton jugadores2;
+    private javax.swing.JButton jugadores3;
+    private javax.swing.JButton jugadores4;
+    private javax.swing.JLabel nombre1;
+    private javax.swing.JTextField nombre1in;
+    private javax.swing.JLabel nombre2;
+    private javax.swing.JTextField nombre2in;
+    private javax.swing.JLabel nombre3;
+    private javax.swing.JTextField nombre3in;
+    private javax.swing.JLabel nombre4;
+    private javax.swing.JTextField nombre4in;
     // End of variables declaration//GEN-END:variables
 }

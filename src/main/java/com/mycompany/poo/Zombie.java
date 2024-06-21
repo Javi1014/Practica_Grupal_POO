@@ -7,6 +7,8 @@ package com.mycompany.poo;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import javax.swing.SwingUtilities;
+import gui.*;
 
 /**
  *
@@ -103,18 +105,20 @@ public class Zombie implements Activable {
     public void agregarHerida(String tipoHumano) {
         if (heridasRecibidas.size() < maxHeridas) {
             heridasRecibidas.add(tipoHumano);
-        } else {
-            System.out.println("No se pueden agregar más de " + maxHeridas + " heridas.");
-        }
+        } 
     }
 
     public ArrayList<String> getHeridasRecibidas() {
         return heridasRecibidas;
     }
 
+    public Ataque getAtaqueEspecial() {
+        return ataqueEspecial;
+    }
+
     public boolean haDevoradoHuidizo() {
         for (Comestible comestible : comestiblesDevorados) {
-            if (comestible instanceof HumanoHuidizo) {
+            if (comestible instanceof Huidizo) {
                 return true;
             }
         }
@@ -134,7 +138,7 @@ public class Zombie implements Activable {
     }
 
     @Override
-    public void moverse(Tablero tablero, Casilla posicion) {
+    public void moverse(Tablero tablero, Casilla posicion, Juego juego) {
         int xActual = this.getCasilla().getCoordenada().getX();
         int yActual = this.getCasilla().getCoordenada().getY();
         int xDestino = posicion.getCoordenada().getX();
@@ -157,7 +161,7 @@ public class Zombie implements Activable {
                 casillaObjetivo.setNumZombie(zombiesCasillaObjetivo);
 
                 this.setCasilla(casillaObjetivo);
-                System.out.println("El zombie " + this.getNombre() + " se ha movido a la posicion " + posicion.getCoordenada().toString());
+                juego.getPantallaJuego().agregarEvento("El zombie " + this.getNombre() + " se ha movido a la posicion " + posicion.getCoordenada().toString() + " gastando 1 accion");
                 numAcciones++;
 
             } else if (casillaActual.getNumHumano().size() == 1) {
@@ -172,10 +176,10 @@ public class Zombie implements Activable {
                     casillaObjetivo.setNumZombie(zombiesCasillaObjetivo);
 
                     this.setCasilla(casillaObjetivo);
-                    System.out.println("El zombie " + this.getNombre() + " se ha movido a la posicion " + posicion.getCoordenada().toString());
+                    juego.getPantallaJuego().agregarEvento("El zombie " + this.getNombre() + " se ha movido a la posicion " + posicion.getCoordenada().toString() + " gastando 2 acciones");
                     this.setNumAcciones(this.getNumAcciones() + 2);
                 } else {
-                    System.out.println("El zombie " + this.getNombre() + " no se puede mover, utiliza la accion en otra accion diferente a moverse");
+                    juego.getPantallaJuego().agregarEvento("El zombie " + this.getNombre() + " no se puede mover, utiliza la accion en otra accion diferente a moverse");
                 }
 
             } else if (casillaActual.getNumHumano().size() == 2) {
@@ -190,134 +194,177 @@ public class Zombie implements Activable {
                     casillaObjetivo.setNumZombie(zombiesCasillaObjetivo);
 
                     this.setCasilla(casillaObjetivo);
-                    System.out.println("El zombie " + this.getNombre() + " se ha movido a la posicion " + posicion.getCoordenada().toString());
+                    juego.getPantallaJuego().agregarEvento("El zombie " + this.getNombre() + " se ha movido a la posicion " + posicion.getCoordenada().toString() + " gastando 3 acciones");
                     this.setNumAcciones(this.getNumAcciones() + 3);
                 } else {
-                    System.out.println("El zombie " + this.getNombre() + " no se puede mover, utiliza la accion en otra accion diferente a moverse");
+                    juego.getPantallaJuego().agregarEvento("El zombie " + this.getNombre() + " no se puede mover, utiliza la accion en otra accion diferente a moverse");
                 }
 
             } else {
-                System.out.println("El zombie " + this.getNombre() + " no se puede mover porque esta rodeado de zombies, utiliza la accion en otra accion diferente a moverse");
+                juego.getPantallaJuego().agregarEvento("El zombie " + this.getNombre() + " no se puede mover porque esta rodeado de zombies, utiliza la accion en otra accion diferente a moverse");
             }
 
         } else {
-            System.out.println("El zombie " + this.getNombre() + " no se puede mover hasta esa posicion porque esta muy lejos, prueba con una coordenada valida");
+            juego.getPantallaJuego().agregarEvento("El zombie " + this.getNombre() + " no se puede mover hasta esa posicion porque esta muy lejos, prueba con una coordenada valida");
         }
 
     }
 
     @Override
     public void activarse(Tablero tablero, Juego juego) {
-        if (estado.equals("ACTIVO")) { //CONDICION DE VIVO Y QUE NO ESTE MUERTO
+        if ((estado.equals("ACTIVO")) && !(this.getCasilla().getCoordenada().equals(new Coordenada(tablero.getFilas() - 1, tablero.getColumnas() - 1)) && haDevoradoHuidizo())) { //CONDICION DE VIVO Y QUE NO ESTE MUERTO
+            juego.getPantallaJuego().agregarEvento("********** TURNO DE " + getNombre() + " **********");
             while (this.getNumAcciones() < this.maxAcciones) {
-                System.out.println("ZOMBIE : " + this.getNombre() + " ACCIONES REALIZADAS: " + this.getNumAcciones() + "/3 NIVEL DE HAMBRE: " + this.getHambre());
-                System.out.println("Ingrese la accion que desea hacer (Atacar(1)/Moverse(2)/Buscar Comida(3)/No Hacer Nada(4)");
-                Scanner ent = new Scanner(System.in);
-                int opcion = ent.nextInt();
-                switch (opcion) {
-                    case 1:
-                        this.atacar(tablero, juego);
-                        tablero.imprimirTablero();
-                        /*System.out.println("Selecciona el ataque que deseas realizar:"+"\n"+"Devorar(1)[Alcance 0]//Ataque especial(2)");
-                        int op = ent.nextInt();
-                        switch (op){
-                            case 1:
-                                devorar.realizarAtaque(this, this.getCasilla());
-                                tablero.imprimirTablero();//PROVISIONAL
-                                break; 
-                            case 2:
-                                
-                                break;
+                //juego.getPantallaJuego().agregarEvento("ZOMBIE : " + this.getNombre() + " ACCIONES REALIZADAS: " + this.getNumAcciones() + "/3 NIVEL DE HAMBRE: " + this.getHambre());
+                //juego.getPantallaJuego().agregarEvento("Ingrese la accion que desea hacer (Atacar(1)/Moverse(2)/Buscar Comida(3)/No Hacer Nada(4)");
+                PanelTurnoJugador panelTurno = new PanelTurnoJugador(this.getNombre(), this.getNumAcciones(), this.getAtaqueEspecial().getAlcance());
+                juego.getPantallaJuego().setPanelControles(panelTurno);
+                while (panelTurno.getAccion() == null) {
+                    try {
+                        // Espera 100 milisegundos antes de volver a comprobar
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                switch (panelTurno.getAccion()) {
+                    case "Devorar":
+                        juego.getPantallaJuego().agregarEvento(getNombre() + " elige Devorar:");
+                        Casilla casillaTablero = tablero.getCasilla(this.getCasilla().getCoordenada());
+                        devorar.realizarAtaque(this, casillaTablero, juego);
+                        numAcciones++;
+                        SwingUtilities.invokeLater(() -> juego.getPantallaJuego().actualizarTablero(juego));
+
+                        break;
+                    case "Ataque Especial":
+                        juego.getPantallaJuego().agregarEvento(getNombre() + " elige Ataque Especial:");
+                        PanelAtaqueEspecial panelAtaque = new PanelAtaqueEspecial();
+                        juego.getPantallaJuego().setPanelControles(panelAtaque);
+                        while (panelAtaque.getCoordX() == -1 && panelAtaque.getCoordY() == -1) {
+                            try {
+                                // Espera 100 milisegundos antes de volver a comprobar
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
-                        
-                        System.out.println("Ingrese la coordenada que desea atacar X:");
-                        int x = ent.nextInt();
-                        System.out.println("Y:");
-                        int y = ent.nextInt();
+                        int x = panelAtaque.getCoordX();
+                        int y = panelAtaque.getCoordY();
                         Coordenada coordAtacar = new Coordenada(x, y);
                         Casilla objetivoAtacar = tablero.getCasilla(coordAtacar);
-                        
-                        atacar(tablero, objetivoAtacar,juego);//ESTO SE PODRIA CAMBIAR ELIMINANDO EL ATRIBUTO DE TABLERO EN ATACAR Y PASNADOLE LA CASILLA DEL TABLERO DIRECT
-                        tablero.imprimirTablero();//PROVISIONAL
-                         */
+                        int dx = Math.abs(this.getCasilla().getCoordenada().getX() - objetivoAtacar.getCoordenada().getX());
+                        int dy = Math.abs(this.getCasilla().getCoordenada().getY() - objetivoAtacar.getCoordenada().getY());
+
+                        if ((dx + dy) <= ataqueEspecial.getAlcance()) {
+                            ataqueEspecial.realizarAtaque(this, objetivoAtacar, juego);
+                        } else {
+                            juego.getPantallaJuego().agregarEvento("El zombie " + this.getNombre() + " ha malgastado una accion ya que no se puede alcanzar con el ataque la posicion " + coordAtacar.toString());
+                        }
+                        numAcciones++;
+                        SwingUtilities.invokeLater(() -> juego.getPantallaJuego().actualizarTablero(juego));
                         break;
-                    case 2:
-                        System.out.println("Ingrese la direccion en la que desea moverse:" + "\n" + "Arriba(1)/Abajo(2)/Izquierda(3)/Derecha(4)");
-                        int direccion = ent.nextInt();
-                        switch (direccion) {
-                            case 1:
+                    case "Moverse":
+
+                        PanelMoverse panelMoverse = new PanelMoverse();
+                        juego.getPantallaJuego().setPanelControles(panelMoverse);
+                        while (panelMoverse.getDireccion() == null) {
+                            try {
+                                // Espera 100 milisegundos antes de volver a comprobar
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        switch (panelMoverse.getDireccion()) {
+                            case "Arriba":
                                 if (!(this.getCasilla().getCoordenada().getX() == 0)) {
+                                    juego.getPantallaJuego().agregarEvento(getNombre() + " elige Moverse hacia Arriba:");
                                     Coordenada coordMoverse = new Coordenada(this.getCasilla().getCoordenada().getX() - 1, this.getCasilla().getCoordenada().getY());
                                     Casilla objetivoMoverse = tablero.getCasilla(coordMoverse);
-                                    moverse(tablero, objetivoMoverse);
+                                    moverse(tablero, objetivoMoverse, juego);
                                 }
                                 break;
-                            case 2:
+                            case "Abajo":
                                 if (!(this.getCasilla().getCoordenada().getX() == tablero.getFilas() - 1)) {
+                                    juego.getPantallaJuego().agregarEvento(getNombre() + " elige Moverse hacia Abajo:");
                                     Coordenada coordMoverse2 = new Coordenada(this.getCasilla().getCoordenada().getX() + 1, this.getCasilla().getCoordenada().getY());
                                     Casilla objetivoMoverse2 = tablero.getCasilla(coordMoverse2);
-                                    moverse(tablero, objetivoMoverse2);
+                                    moverse(tablero, objetivoMoverse2, juego);
                                 }
                                 break;
-                            case 3:
+                            case "Izquierda":
                                 if (!(this.getCasilla().getCoordenada().getY() == 0)) {
+                                    juego.getPantallaJuego().agregarEvento(getNombre() + " elige Moverse hacia la Izquierda:");
                                     Coordenada coordMoverse3 = new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() - 1);
                                     Casilla objetivoMoverse3 = tablero.getCasilla(coordMoverse3);
-                                    moverse(tablero, objetivoMoverse3);
+                                    moverse(tablero, objetivoMoverse3, juego);
                                 }
                                 break;
-                            case 4:
+                            case "Derecha":
                                 if (!(this.getCasilla().getCoordenada().getY() == tablero.getColumnas() - 1)) {
+                                    juego.getPantallaJuego().agregarEvento(getNombre() + " elige Moverse hacia la Derecha:");
                                     Coordenada coordMoverse4 = new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() + 1);
                                     Casilla objetivoMoverse4 = tablero.getCasilla(coordMoverse4);
-                                    moverse(tablero, objetivoMoverse4);
+                                    moverse(tablero, objetivoMoverse4, juego);
                                 }
                                 break;
 
                         }
-                        tablero.imprimirTablero();//PROVISIONAL
+                        SwingUtilities.invokeLater(() -> juego.getPantallaJuego().actualizarTablero(juego));//PROVISIONAL
                         break;
-                    case 3:
+                    case "Buscar Comida":
+                        juego.getPantallaJuego().agregarEvento(getNombre() + " elige Buscar Comida:");
                         buscarComida(tablero, juego);
-                        tablero.imprimirTablero();//PROVISIONAL
+                        SwingUtilities.invokeLater(() -> juego.getPantallaJuego().actualizarTablero(juego));//PROVISIONAL
                         break;
-                    case 4:
-                        noHacerNada();
-                        tablero.imprimirTablero();//PROVISIONAL
+                    case "No Hacer Nada":
+                        juego.getPantallaJuego().agregarEvento(getNombre() + " elige No Hacer Nada:");
+                        noHacerNada(juego);
+                        SwingUtilities.invokeLater(() -> juego.getPantallaJuego().actualizarTablero(juego));//PROVISIONAL
                         break;
+                }
+                if (this.getCasilla().getCoordenada().equals(new Coordenada(tablero.getFilas() - 1, tablero.getColumnas() - 1)) && haDevoradoHuidizo()) {
+                    this.setNumAcciones(3);
                 }
             }
             if (this.getHambre() < 5) {
                 this.setHambre(this.getHambre() + 1);
             } else {
                 this.setNumHeridas(this.getNumHeridas() + 1);
-                System.out.println("El zombi " + this.getNombre() + " ha sufrido una herida por tener demasiado hambre.");
+                this.agregarHerida("Hambre");
+                juego.getPantallaJuego().agregarEvento("El zombi " + this.getNombre() + " ha sufrido una herida por tener demasiado hambre.");
             }
             if (this.getNumHeridas() >= 5) {
                 this.setEstado("ELIMINADO");
                 Casilla casillaTablero = tablero.getCasilla(this.getCasilla().getCoordenada());
                 casillaTablero.getNumZombie().remove(this);
-                
 
-                System.out.println("El zombie " + this.getNombre() + " se ha muerto de hambre.");
+                juego.getPantallaJuego().agregarEvento("El zombie " + this.getNombre() + " se ha muerto de hambre.");
             }
+            if (!(this.getCasilla().getCoordenada().equals(new Coordenada(tablero.getFilas() - 1, tablero.getColumnas() - 1)) && haDevoradoHuidizo())) {
+                this.setNumAcciones(0);
 
-            setNumAcciones(0);
+            }
+            
+
+        }
+        if(this.getCasilla().getCoordenada().equals(new Coordenada(tablero.getFilas() - 1, tablero.getColumnas() - 1))){
+            juego.getPantallaJuego().agregarEvento("El zombie " + this.getNombre() + " ha llegado a la casilla objetivo.");
         }
     }
 
     @Override
-    public void atacar(Tablero tablero, Juego juego) {
-        System.out.println("Selecciona el ataque que deseas realizar:" + "\n" + "Devorar(1)[Alcance 0]//Ataque especial(2)[Alcance " + this.ataqueEspecial.getAlcance() + "]");
+    public void atacar(Tablero tablero, Juego juego) {//ESTO EN PRINCIPIO SE VA A REALIZAR DIRECTAMENTE EN ACTIVARSE
+        juego.getPantallaJuego().agregarEvento("Selecciona el ataque que deseas realizar:" + "\n" + "Devorar(1)[Alcance 0]//Ataque especial(2)[Alcance " + this.ataqueEspecial.getAlcance() + "]");
         Scanner op = new Scanner(System.in);
         int opcion = op.nextInt();
         if (opcion == 1) {
             Casilla casillaTablero = tablero.getCasilla(this.getCasilla().getCoordenada());
             devorar.realizarAtaque(this, casillaTablero, juego);
         } else if (opcion == 2) {
-            System.out.print("Ingrese la coordenada que desea atacar X:");
+            juego.getPantallaJuego().agregarEvento("Ingrese la coordenada que desea atacar X:");
             int x = op.nextInt();
-            System.out.print(" Y:");
+            juego.getPantallaJuego().agregarEvento(" Y:");
             int y = op.nextInt();
             Coordenada coordAtacar = new Coordenada(x, y);
             Casilla objetivoAtacar = tablero.getCasilla(coordAtacar);
@@ -327,7 +374,7 @@ public class Zombie implements Activable {
             if ((dx + dy) <= ataqueEspecial.getAlcance()) {
                 ataqueEspecial.realizarAtaque(this, objetivoAtacar, juego);
             } else {
-                System.out.println("El zombie " + this.getNombre() + " ha malgastado una accion ya que no se puede alcanzar con el ataque esta posicion " + this.getCasilla().getCoordenada().toString());
+                juego.getPantallaJuego().agregarEvento("El zombie " + this.getNombre() + " ha malgastado una accion ya que no se puede alcanzar con el ataque esta posicion " + this.getCasilla().getCoordenada().toString());
             }
         }
         numAcciones++;
@@ -378,14 +425,14 @@ public class Zombie implements Activable {
             } while (tablero.getCasilla(coord).getNumHumano().size() > 3);
             Casilla casillaHumano = tablero.getCasilla(coord);
             //CONSTRUCTOR DE HUMANO HUIDIZO
-            HumanoHuidizo humano1 = new HumanoHuidizo(casillaHumano);
+            Huidizo humano1 = new Huidizo(casillaHumano);
             //AGREGAMOS EL HUMANO HUIDIZO A ESA CASILLA
             ArrayList<Humano> humanosEnCasilla = tablero.getCasilla(humano1.getCasilla().getCoordenada()).getNumHumano();
             humanosEnCasilla.add(humano1);
             jue.getListaHumanos().add(humano1);
             tablero.getCasilla(humano1.getCasilla().getCoordenada()).setNumHumano(humanosEnCasilla);
 
-            System.out.println("Ha aparecido un Humano Huidizo en la coordenada " + humano1.getCasilla().getCoordenada().toString());
+            jue.getPantallaJuego().agregarEvento("Ha aparecido un Humano Huidizo en la coordenada " + humano1.getCasilla().getCoordenada().toString());
         } else if (resultado < 80) {
             // 50% de probabilidad de aparecer un conejo (30+50=80)
             Random random1 = new Random();
@@ -398,16 +445,16 @@ public class Zombie implements Activable {
             conejosEnCasilla.add(nuevoConejo);
             tablero.getCasilla(nuevoConejo.getCasilla().getCoordenada()).setNumConejos(conejosEnCasilla);
             jue.getListaConejos().add(nuevoConejo);
-            System.out.println("Ha aparecido un Conejo en la coordenada " + nuevoConejo.getCasilla().getCoordenada().toString());
+            jue.getPantallaJuego().agregarEvento("Ha aparecido un Conejo en la coordenada " + nuevoConejo.getCasilla().getCoordenada().toString());
         } else {
             // 20% de probabilidad de no aparecer nada
-            System.out.println("No ha aparecido ningún comestible.");
+            jue.getPantallaJuego().agregarEvento("No ha aparecido ningún comestible.");
         }
         numAcciones++;
     }
 
-    public void noHacerNada() {
-        System.out.println("El zombie " + this.getNombre() + " no ha hecho nada");
+    public void noHacerNada(Juego juego) {
+        juego.getPantallaJuego().agregarEvento("El zombie " + this.getNombre() + " no ha hecho nada");
         numAcciones++;
     }
 }

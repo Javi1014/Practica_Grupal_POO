@@ -9,7 +9,7 @@ package com.mycompany.poo;
  * @author nieto
  */
 public interface Activable {
-    public void moverse(Tablero tablero, Casilla posicion);  
+    public void moverse(Tablero tablero, Casilla posicion,Juego juego);  
     public void activarse(Tablero tablero, Juego juego);
     public void atacar (Tablero tablero,Juego juego);
 }

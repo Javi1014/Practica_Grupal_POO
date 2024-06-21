@@ -60,7 +60,7 @@ public abstract class Humano implements Comestible, Activable {
                 humano = new Soldado(casilla);
             }
         } else if ((numeroAleatorio > 60) && (numeroAleatorio <= 85)) {
-            humano = new HumanoHuidizo(casilla);
+            humano = new Huidizo(casilla);
         } else {
             humano = new Informatico(casilla);
         }

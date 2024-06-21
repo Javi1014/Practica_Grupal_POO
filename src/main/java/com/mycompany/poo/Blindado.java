@@ -5,6 +5,7 @@
 package com.mycompany.poo;
 
 import java.util.ArrayList;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -13,11 +14,11 @@ import java.util.ArrayList;
 public class Blindado extends HumanoCombatiente {
 
     public Blindado(Casilla casilla) {
-        super(1, 2, casilla);
+        super(1,2,casilla);
     }
 
     @Override
-    public void moverse(Tablero tablero, Casilla posicion) {
+    public void moverse(Tablero tablero, Casilla posicion, Juego juego){
         Casilla nueva;
         if (Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX()) <= Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY()) && this.getCasilla().getCoordenada().getY() > posicion.getCoordenada().getY()) {
             nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() - 1));
@@ -28,7 +29,7 @@ public class Blindado extends HumanoCombatiente {
         } else {
             nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX() + 1, this.getCasilla().getCoordenada().getY()));
         }
-
+        
         int xActual = this.getCasilla().getCoordenada().getX();
         int yActual = this.getCasilla().getCoordenada().getY();
         int xDestino = nueva.getCoordenada().getX();
@@ -50,45 +51,48 @@ public class Blindado extends HumanoCombatiente {
             casillaObjetivo.setNumHumano(humanosCasillaObjetivo);
 
             this.setCasilla(casillaObjetivo);
-            System.out.println("El blindado se ha movido a la posicion " + nueva.getCoordenada().getX() + " " + nueva.getCoordenada().getY());
-        } else {
-            System.out.println("El blindado no se puede mover porque esta rodeado de zombies, utiliza la accion en otra accion diferente a moverse");
+            //System.out.println("El blindado se ha movido a la posicion "  + nueva.getCoordenada().getX()+" "+nueva.getCoordenada().getY());
+            juego.getPantallaJuego().agregarEvento("El humano blindado se ha movido a la posicion "  + nueva.getCoordenada().toString());
         }
-
+        else {
+            juego.getPantallaJuego().agregarEvento("El humano blindado no se puede mover porque esta rodeado de zombies, utiliza la accion en otra accion diferente a moverse");
+        }
+        
     }
-
+    
     @Override
-    public void activarse(Tablero tablero, Juego juego) {
-        if (this.getCasilla().getNumZombie().isEmpty()) {
+    public void activarse(Tablero tablero, Juego juego){
+        if(this.getCasilla().getNumZombie().isEmpty()){
             if (this.zombieMasCercano(tablero, juego)!=null) {
                 Coordenada objetivo = this.zombieMasCercano(tablero, juego);
                 Casilla nueva = tablero.getCasilla(objetivo);
-                this.moverse(tablero, nueva);
+                this.moverse(tablero, nueva,juego);
             }
-            tablero.imprimirTablero();
-        } else {
-            this.atacar(tablero, juego);
-            tablero.imprimirTablero();
+            SwingUtilities.invokeLater(()->juego.getPantallaJuego().actualizarTablero(juego));
+        }else{
+            this.atacar(tablero,juego);
+            SwingUtilities.invokeLater(()->juego.getPantallaJuego().actualizarTablero(juego));
         }
     }
+   
 
     @Override
     public void calmarHambreZombie(Zombie zombie) {
         zombie.setHambre(0);
     }
 
+
     @Override
-    public void atacar(Tablero tablero, Juego juego) {
-        Casilla casillaTablero = tablero.getCasilla(this.getCasilla().getCoordenada());
-        if (casillaTablero.getNumZombie().get(0).getEstado().equals("ACTIVO")) {
-            casillaTablero.getNumZombie().get(0).setNumHeridas(casillaTablero.getNumZombie().get(0).getNumHeridas() + 1);
-            System.out.println("El zombie " + casillaTablero.getNumZombie().get(0).getNombre() + " tiene " + casillaTablero.getNumZombie().get(0).getNumHeridas() + " heridas");
+    public void atacar(Tablero tablero,Juego juego){
+        Casilla casillaTablero= tablero.getCasilla(this.getCasilla().getCoordenada());
+        if(casillaTablero.getNumZombie().get(0).getNumHeridas()<5){
+            casillaTablero.getNumZombie().get(0).setNumHeridas(casillaTablero.getNumZombie().get(0).getNumHeridas()+1);
+            juego.getPantallaJuego().agregarEvento("El humano blindado ha hecho 1 herida a "+casillaTablero.getNumZombie().get(0).getNombre()+" por lo que tiene "+casillaTablero.getNumZombie().get(0).getNumHeridas()+" heridas");
             casillaTablero.getNumZombie().get(0).agregarHerida("Blindado");
-            if (casillaTablero.getNumZombie().get(0).getNumHeridas() == 5) {
+            if(casillaTablero.getNumZombie().get(0).getNumHeridas()==5){
                 ArrayList<Zombie> zombies = casillaTablero.getNumZombie();
                 ArrayList<Zombie> jugadores = casillaTablero.getNumZombie();
-                System.out.println("El humano blindado ha matado al zombie " + casillaTablero.getNumZombie().get(0).getNombre());
-                
+                juego.getPantallaJuego().agregarEvento("El humano blindado ha matado al zombie "+casillaTablero.getNumZombie().get(0).getNombre());
                 int indice = juego.getListaJugadores().indexOf(jugadores.get(0));
 
                 if (indice != -1) {
@@ -96,11 +100,8 @@ public class Blindado extends HumanoCombatiente {
                 }
                 zombies.remove(casillaTablero.getNumZombie().get(0));
                 casillaTablero.setNumZombie(zombies);
-
-                
                 
             }
-
-        }
+        }    
     }
 }

@@ -124,29 +124,30 @@ public class AtaqueEspecial extends Ataque {
         }
         comestiblesEnCasilla.addAll(conejosEnCasilla);
         for (Humano humano : humanosEnCasilla) {
-            if (humano instanceof HumanoHuidizo) {
+            if (humano instanceof Huidizo) {
                 comestiblesEnCasilla.add(humano);
             }
         }
         if (!comestiblesEnCasilla.isEmpty()) {
             int dados = this.getPotencia() + zombie.getHambre(); //SI EN LA CASILLA HAY COMESTIBLES ENTONCES EMPEZAMOS
             int impactos = 0;
-            System.out.print("Valor Exito: " + this.getValorExito() + ". Has obtenido los siguentes numeros en el dado: ");
+            //System.out.print("Valor Exito: " + this.getValorExito() + ". Has obtenido los siguentes numeros en el dado: ");
+            juego.getPantallaJuego().agregarEvento("Valor Exito: " + this.getValorExito() + ". Has obtenido los siguentes numeros en el dado: ");
             for (int i = 0; i < dados; i++) {
                 int resultado = Dado.tirarDado();
-                System.out.print(resultado + ", ");
+                juego.getPantallaJuego().agregarEvento(resultado + " ");
                 if (resultado >= this.getValorExito()) {
                     impactos++;
                 }
             }
-            System.out.println("Por lo que tienes "+impactos+" impactos.");
+            juego.getPantallaJuego().agregarEvento("Por lo que tienes " + impactos + " impactos.");
             for (Comestible comestible : comestiblesEnCasilla) {
                 if (impactos <= 0) {
                     break; // No quedan impactos
                 }
                 if (comestible instanceof Humano humano) {
                     if (humano.getAguante() <= impactos) {
-                        
+
                         //AQUI DEBERIAMOS METER EL SYSTEM.OUT.PRINTLN("TAL HUMANO HA MUERTO O HA SIDO DEVORADO POR TAL ZOMBIE")
                         humanosEnCasilla.remove(humano);
                         objetivo.setNumHumano(humanosEnCasilla); // Eliminar el humano de la casilla
@@ -154,14 +155,16 @@ public class AtaqueEspecial extends Ataque {
                         elementosEliminados.add(humano);
                         zombie.setComestiblesEliminados(elementosEliminados);
                         impactos -= humano.getAguante(); // Decrementar la cantidad de impactos restantes
-                        ArrayList<Humano> humanosJuego=juego.getListaHumanos();
+                        ArrayList<Humano> humanosJuego = juego.getListaHumanos();
                         humanosJuego.remove(humano);
                         juego.setListaHumanos(humanosJuego);
-                        System.out.println(this.getNombre() + " ha matado a un " + humano.getClass().getSimpleName());
+                        juego.getPantallaJuego().agregarEvento(this.getNombre() + " ha matado a un " + humano.getClass().getSimpleName()+" que tenia aguante "+humano.getAguante());
+                    }else{
+                        juego.getPantallaJuego().agregarEvento("No puedes matar al humano "+humano.getClass().getSimpleName()+" de aguante "+humano.getAguante()+ " porque no has obtenido suficientes impactos");
                     }
                 } else if (comestible instanceof Conejo conejo) {
                     if (impactos > 0) {
-                        
+
                         //AQUI DEBERIAMOS METER EL SYSTEM.OUT.PRINTLN("TAL HUMANO HA MUERTO O HA SIDO DEVORADO POR TAL ZOMBIE")
                         conejosEnCasilla.remove(conejo);
                         objetivo.setNumConejos(conejosEnCasilla); // Eliminar el conejo de la casilla
@@ -169,16 +172,16 @@ public class AtaqueEspecial extends Ataque {
                         elementosEliminados.add(conejo);
                         zombie.setComestiblesEliminados(elementosEliminados);
                         impactos--; // Decrementar la cantidad de impactos restantes
-                        ArrayList<Conejo> conejosJuego=juego.getListaConejos();
+                        ArrayList<Conejo> conejosJuego = juego.getListaConejos();
                         conejosJuego.remove(conejo);
                         juego.setListaConejos(conejosJuego);
-                        System.out.println(this.getNombre() + " ha matado al conejo " + conejo.getNombre());
+                        juego.getPantallaJuego().agregarEvento(this.getNombre() + " ha matado al conejo " + conejo.getNombre());
                     }
                 }
             }
 
         } else {
-            System.out.println("Has malgastado la accion porque en esta casilla no habia ningun humano o conejo");
+            juego.getPantallaJuego().agregarEvento("Has malgastado la accion porque en esta casilla no habia ningun humano o conejo");
         }
     }
 

@@ -47,7 +47,7 @@ public class Devorar extends Ataque {
         }
         comestiblesEnCasilla.addAll(conejosEnCasilla);
         for (Humano humano : humanosEnCasilla) {
-            if (humano instanceof HumanoHuidizo) {
+            if (humano instanceof Huidizo) {
                 comestiblesEnCasilla.add(humano);
             }
         }
@@ -56,14 +56,15 @@ public class Devorar extends Ataque {
         if (!comestiblesEnCasilla.isEmpty()) {
             int dados = this.getPotencia() + zombie.getHambre(); //SI EN LA CASILLA HAY COMESTIBLES ENTONCES EMPEZAMOS
             int impactos = 0;
-            System.out.print("Valor Exito: " + this.getValorExito() + ". Has obtenido los siguentes numeros en el dado: ");
+            juego.getPantallaJuego().agregarEvento("Valor Exito: " + this.getValorExito() + ". Has obtenido los siguentes numeros en el dado: ");
             for (int i = 0; i < dados; i++) {
                 int resultado = Dado.tirarDado();
-                System.out.print(resultado + ", ");
+                juego.getPantallaJuego().agregarEvento(resultado + " ");
                 if (resultado >= this.getValorExito()) {
                     impactos++;
                 }
             }
+            juego.getPantallaJuego().agregarEvento("Por lo que tienes " + impactos + " impactos.");
             for (Comestible comestible : comestiblesEnCasilla) {
                 if (impactos > 0) {
                     if (comestible instanceof Humano humano) {
@@ -77,8 +78,10 @@ public class Devorar extends Ataque {
                             ArrayList<Humano> humanosJuego = juego.getListaHumanos();
                             humanosJuego.remove(humano);
                             juego.setListaHumanos(humanosJuego);
-                            System.out.println(this.getNombre() + " ha matado a un " + humano.getClass().getSimpleName());
+                            juego.getPantallaJuego().agregarEvento(this.getNombre() + " ha matado a un " + humano.getClass().getSimpleName() + " que tenia aguante " + humano.getAguante());
                             break; // Salir del bucle FOR COMESTIBLE después de devorar un objetivo
+                        }else{
+                            juego.getPantallaJuego().agregarEvento("No puedes matar al humano "+humano.getClass().getSimpleName()+" de aguante "+humano.getAguante()+ " porque no has obtenido suficientes impactos");
                         }
                     } else if (comestible instanceof Conejo conejo) {
                         conejo.calmarHambreZombie(zombie); // Devorar al conejo y calmar el hambre del zombie
@@ -88,20 +91,20 @@ public class Devorar extends Ataque {
                         ArrayList<Comestible> elementosDevorados = zombie.getComestiblesDevorados();
                         elementosDevorados.add(conejo);
                         zombie.setComestiblesDevorados(elementosDevorados);
-                        System.out.println(this.getNombre() + " ha matado al conejo " + conejo.getNombre());
+                        juego.getPantallaJuego().agregarEvento(this.getNombre() + " ha matado al conejo " + conejo.getNombre());
                         ArrayList<Conejo> conejosJuego = juego.getListaConejos();
                         conejosJuego.remove(conejo);
-                        juego.setListaConejos(conejosJuego);;
+                        juego.setListaConejos(conejosJuego);
                         break; // Salir del bucle después de devorar un objetivo
                     }
                 } else {
-                    System.out.println("NO has tenido exito en la accion devorar");
+                    juego.getPantallaJuego().agregarEvento("NO has tenido exito en la accion devorar");
                     break; // Salir del bucle FOR COMESTIBLE si no quedan impactos disponibles
                 }
             }
 
         } else {
-            System.out.println("Has malgastado la accion porque en esta casilla no habia ningun humano o conejo");
+            juego.getPantallaJuego().agregarEvento("Has malgastado la accion porque en esta casilla no habia ningun humano o conejo");
         }
 
     }

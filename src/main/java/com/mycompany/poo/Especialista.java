@@ -5,6 +5,7 @@
 package com.mycompany.poo;
 
 import java.util.ArrayList;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -17,7 +18,7 @@ public class Especialista extends HumanoCombatiente {
     }
 
     @Override
-    public void moverse(Tablero tablero, Casilla posicion) {
+    public void moverse(Tablero tablero, Casilla posicion, Juego juego) {
         Casilla nueva;
         if (Math.abs(this.getCasilla().getCoordenada().getX() - posicion.getCoordenada().getX()) <= Math.abs(this.getCasilla().getCoordenada().getY() - posicion.getCoordenada().getY()) && this.getCasilla().getCoordenada().getY() > posicion.getCoordenada().getY()) {
             nueva = tablero.getCasilla(new Coordenada(this.getCasilla().getCoordenada().getX(), this.getCasilla().getCoordenada().getY() - 1));
@@ -50,9 +51,9 @@ public class Especialista extends HumanoCombatiente {
             casillaObjetivo.setNumHumano(humanosCasillaObjetivo);
 
             this.setCasilla(casillaObjetivo);
-            System.out.println("El especialista se ha movido a la posicion " + nueva.getCoordenada().getX() + " " + nueva.getCoordenada().getY());
+            juego.getPantallaJuego().agregarEvento("El humano especialista se ha movido a la posicion " + nueva.getCoordenada().toString());
         } else {
-            System.out.println("El especialista no se puede mover porque esta rodeado de zombies, utiliza la accion en otra accion diferente a moverse");
+            juego.getPantallaJuego().agregarEvento("El humano especialista no se puede mover porque esta rodeado de zombies, utiliza la accion en otra accion diferente a moverse");
         }
 
     }
@@ -67,13 +68,12 @@ public class Especialista extends HumanoCombatiente {
         Casilla casillaTablero = tablero.getCasilla(this.getCasilla().getCoordenada());
         if (casillaTablero.getNumZombie().get(0).getNumHeridas() < 5) {
             casillaTablero.getNumZombie().get(0).setNumHeridas(casillaTablero.getNumZombie().get(0).getNumHeridas() + 1);
-            System.out.println("El zombie " + casillaTablero.getNumZombie().get(0).getNombre() + " tiene " + casillaTablero.getNumZombie().get(0).getNumHeridas() + " heridas");
+            juego.getPantallaJuego().agregarEvento("El humano especialista ha hecho 1 herida a "+casillaTablero.getNumZombie().get(0).getNombre()+" por lo que tiene "+casillaTablero.getNumZombie().get(0).getNumHeridas()+" heridas");
             casillaTablero.getNumZombie().get(0).agregarHerida("Especialista");
             if (casillaTablero.getNumZombie().get(0).getNumHeridas() == 5) {
                 ArrayList<Zombie> zombies = casillaTablero.getNumZombie();
                 ArrayList<Zombie> jugadores = casillaTablero.getNumZombie();
-                System.out.println("El humano especialista ha matado al zombie " + casillaTablero.getNumZombie().get(0).getNombre());
-                
+                juego.getPantallaJuego().agregarEvento("El humano especialista ha matado al zombie " + casillaTablero.getNumZombie().get(0).getNombre());
                 int indice = juego.getListaJugadores().indexOf(jugadores.get(0));
 
                 if (indice != -1) {
@@ -81,9 +81,9 @@ public class Especialista extends HumanoCombatiente {
                 }
                 zombies.remove(casillaTablero.getNumZombie().get(0));
                 casillaTablero.setNumZombie(zombies);
+
                 
             }
-
         }
     }
 
@@ -94,12 +94,12 @@ public class Especialista extends HumanoCombatiente {
                 if (this.zombieMasCercano(tablero, juego) != null) {
                     Coordenada objetivo = this.zombieMasCercano(tablero, juego);
                     Casilla nueva = tablero.getCasilla(objetivo);
-                    this.moverse(tablero, nueva);
+                    this.moverse(tablero, nueva,juego);
                 }
-                tablero.imprimirTablero();
+                SwingUtilities.invokeLater(()->juego.getPantallaJuego().actualizarTablero(juego));
             } else {
                 this.atacar(tablero, juego);
-                tablero.imprimirTablero();
+                SwingUtilities.invokeLater(()->juego.getPantallaJuego().actualizarTablero(juego));
             }
         }
 
